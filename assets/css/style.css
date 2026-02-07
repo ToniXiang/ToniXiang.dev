@@ -290,7 +290,7 @@ body>main {
 }
 
 .theme-select:hover {
-    background: var(--sidebar-select-hover-bg, rgba(255, 255, 255, 0.08));
+    background: rgba(102, 126, 234, 0.12) !important;
     border-color: var(--sidebar-select-hover-border, rgba(255, 255, 255, 0.25));
 }
 
@@ -303,6 +303,10 @@ body>main {
     background: var(--dropdown-bg, #1e1e1e);
     color: var(--dropdown-text, #ffffff);
     padding: 8px;
+}
+
+.theme-select option:hover {
+    background: rgba(102, 126, 234, 0.12) !important;
 }
 
 .menu {
@@ -420,108 +424,117 @@ span>a {
 }
 
 :root {
-    /* Light Theme Colors */
-    --background-color-light: #FFFFFF;
-    --text-color-light: #1F2328;
-    --primary-color-light: #0969DA;
-    --secondary-color-light: #218BFF;
-    --tertiary-color-light: #c2d3e6;
-    --card-border-light: #D0D7DE;
-    --border-light: #D0D7DE;
-    --accent-color-light: #218BFF;
+    /* ============ Light Theme Base Colors ============ */
+    --white: #FFFFFF;
+    --gray-50: #F6F8FA;
+    --gray-100: #c2d3e6;
+    --gray-200: #D0D7DE;
+    --gray-500: #57606A;
+    --gray-600: #8B949E;
+    --gray-900: #1F2328;
+    --blue-400: #218BFF;
+    --blue-500: #0969DA;
+    --blue-600: #1990b8;
     
-    --img-color-light: #1990b8;
-    --a-color-light: #0969DA;
+    /* Light Theme Variables */
+    --background-color-light: var(--white);
+    --text-color-light: var(--gray-900);
+    --primary-color-light: var(--blue-500);
+    --secondary-color-light: var(--blue-400);
+    --tertiary-color-light: var(--gray-100);
+    --border-light: var(--gray-200);
+    --accent-color-light: var(--blue-400);
+    --img-color-light: var(--blue-600);
+    
     --sidebar-bg-light: rgba(246, 248, 250, 0.98);
-    --sidebar-border-light: #D0D7DE;
-    --sidebar-text-light: #1F2328;
-    --sidebar-text-secondary-light: #57606A;
-    --sidebar-text-tertiary-light: #57606A;
-    --sidebar-divider-light: #D0D7DE;
-    --sidebar-accent-light: #0969DA;
+    --sidebar-text-light: var(--gray-900);
+    --sidebar-text-secondary-light: var(--gray-500);
     --sidebar-shadow-light: rgba(0, 0, 0, 0.1);
     --sidebar-accent-rgb-light: 9, 105, 218;
-    --code-bg-light: #F6F8FA;
-    --code-border-light: #D0D7DE;
-    --code-text-light: #1F2328;
-    --prompt-color-light: #0969DA;
+    
+    --code-bg-light: var(--gray-50);
     --status-bg-light: rgba(246, 248, 250, 0.8);
-    --status-border-light: #D0D7DE;
-    --status-text-light: #57606A;
     --sidebar-select-bg-light: rgba(0, 0, 0, 0.03);
     --sidebar-select-hover-bg-light: rgba(0, 0, 0, 0.06);
-    --sidebar-select-hover-border-light: #8B949E;
-    --dropdown-bg-light: #FFFFFF;
-    --dropdown-text-light: #1F2328;
+    --sidebar-select-hover-border-light: var(--gray-600);
     --select-focus-shadow-light: rgba(9, 105, 218, 0.1);
     --hover-bg-light: rgba(0, 0, 0, 0.05);
 
-    /* Dark Theme Colors */
-    --background-color-dark: #0D1117;
-    --text-color-dark: #C9D1D9;
-    --primary-color-dark: #58A6FF;
-    --secondary-color-dark: #1F6FEB;
-    --tertiary-color-dark: #8B949E;
-    --card-border-dark: #30363D;
-    --border-dark: #30363D;
-    --accent-color-dark: #1F6FEB;
+    /* ============ Dark Theme Base Colors ============ */
+    --black: #0D1117;
+    --dark-gray-100: #161B22;
+    --dark-gray-200: #1e1e1e;
+    --dark-gray-300: #333333;
+    --dark-gray-500: #30363D;
+    --dark-gray-600: #8B949E;
+    --dark-gray-900: #C9D1D9;
+    --dark-blue-400: #1F6FEB;
+    --dark-blue-500: #58A6FF;
     
-    --img-color-dark: #333333;
-    --a-color-dark: #58A6FF;
+    /* Dark Theme Variables */
+    --background-color-dark: var(--black);
+    --text-color-dark: var(--dark-gray-900);
+    --primary-color-dark: var(--dark-blue-500);
+    --secondary-color-dark: var(--dark-blue-400);
+    --tertiary-color-dark: var(--dark-gray-600);
+    --border-dark: var(--dark-gray-500);
+    --accent-color-dark: var(--dark-blue-400);
+    --img-color-dark: var(--dark-gray-300);
+    
     --sidebar-bg-dark: rgba(22, 27, 34, 0.98);
-    --sidebar-border-dark: #30363D;
-    --sidebar-text-dark: #C9D1D9;
-    --sidebar-text-secondary-dark: #8B949E;
-    --sidebar-text-tertiary-dark: #8B949E;
-    --sidebar-divider-dark: #30363D;
-    --sidebar-accent-dark: #58A6FF;
+    --sidebar-text-dark: var(--dark-gray-900);
+    --sidebar-text-secondary-dark: var(--dark-gray-600);
     --sidebar-shadow-dark: rgba(0, 0, 0, 0.3);
     --sidebar-accent-rgb-dark: 88, 166, 255;
-    --code-bg-dark: #161B22;
-    --code-border-dark: #30363D;
-    --code-text-dark: #C9D1D9;
-    --prompt-color-dark: #58A6FF;
+    
+    --code-bg-dark: var(--dark-gray-100);
     --sidebar-select-bg-dark: rgba(255, 255, 255, 0.05);
     --sidebar-select-hover-bg-dark: rgba(255, 255, 255, 0.08);
     --sidebar-select-hover-border-dark: rgba(255, 255, 255, 0.25);
-    --dropdown-bg-dark: #1e1e1e;
-    --dropdown-text-dark: #C9D1D9;
+    --dropdown-bg-dark: var(--dark-gray-200);
     --select-focus-shadow-dark: rgba(88, 166, 255, 0.1);
     --hover-bg-dark: rgba(255, 255, 255, 0.05);
-    /* default theme colors */
+
+    /* ============ Default Theme (Dark) ============ */
     --background-color: var(--background-color-dark);
     --text-color: var(--text-color-dark);
     --primary-color: var(--primary-color-dark);
     --secondary-color: var(--secondary-color-dark);
     --tertiary-color: var(--tertiary-color-dark);
-    --card-bg: rgba(102, 126, 234, 0.12);
-    --card-border: var(--card-border-dark);
-    --icon-filter: invert(0) brightness(1) contrast(1);
     --accent-color: var(--accent-color-dark);
+    --border: var(--border-dark);
     --img-color: var(--img-color-dark);
-    --a-color: var(--a-color-dark);
+    
+    --card-bg: rgba(102, 126, 234, 0.12);
+    --card-border: var(--border);
+    --icon-filter: invert(0) brightness(1) contrast(1);
+    
+    --sidebar-bg: var(--sidebar-bg-dark);
+    --sidebar-border: var(--border);
     --sidebar-text: var(--sidebar-text-dark);
     --sidebar-text-secondary: var(--sidebar-text-secondary-dark);
-    --sidebar-text-tertiary: var(--sidebar-text-tertiary-dark);
-    --sidebar-divider: var(--sidebar-divider-dark);
-    --sidebar-accent: var(--sidebar-accent-dark);
+    --sidebar-divider: var(--border);
+    --sidebar-accent: var(--primary-color);
     --sidebar-shadow: var(--sidebar-shadow-dark);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-dark);
+    
     --code-bg: var(--code-bg-dark);
-    --code-border: var(--code-border-dark);
-    --code-text: var(--code-text-dark);
-    --prompt-color: var(--prompt-color-dark);
-    --status-bg: var(--status-bg-dark);
-    --status-border: var(--status-border-dark);
-    --status-text: var(--status-text-dark);
+    --code-border: var(--border);
+    --code-text: var(--text-color);
+    
+    --a-color: var(--primary-color);
+    --prompt-color: var(--primary-color);
+    --status-bg: var(--sidebar-bg);
+    --status-border: var(--border);
+    --status-text: var(--sidebar-text-secondary);
+    --dropdown-bg: var(--dropdown-bg-dark);
+    --dropdown-text: var(--text-color);
+    
     --sidebar-select-bg: var(--sidebar-select-bg-dark);
     --sidebar-select-hover-bg: var(--sidebar-select-hover-bg-dark);
     --sidebar-select-hover-border: var(--sidebar-select-hover-border-dark);
-    --dropdown-bg: var(--dropdown-bg-dark);
-    --dropdown-text: var(--dropdown-text-dark);
     --select-focus-shadow: var(--select-focus-shadow-dark);
     --hover-bg: var(--hover-bg-dark);
-    --sidebar-bg: var(--sidebar-bg-dark);
 }
 
 .dark-theme {
@@ -530,27 +543,24 @@ span>a {
     --primary-color: var(--primary-color-dark);
     --secondary-color: var(--secondary-color-dark);
     --tertiary-color: var(--tertiary-color-dark);
-    --card-border: var(--card-border-dark);
     --accent-color: var(--accent-color-dark);
+    --border: var(--border-dark);
     --img-color: var(--img-color-dark);
-    --a-color: var(--a-color-dark);
     --icon-filter: invert(0) brightness(1) contrast(1);
+    
+    --sidebar-bg: var(--sidebar-bg-dark);
     --sidebar-text: var(--sidebar-text-dark);
     --sidebar-text-secondary: var(--sidebar-text-secondary-dark);
-    --sidebar-text-tertiary: var(--sidebar-text-tertiary-dark);
-    --sidebar-divider: var(--sidebar-divider-dark);
-    --sidebar-accent: var(--sidebar-accent-dark);
     --sidebar-shadow: var(--sidebar-shadow-dark);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-dark);
+    
     --code-bg: var(--code-bg-dark);
-    --code-border: var(--code-border-dark);
-    --code-text: var(--code-text-dark);
-    --prompt-color: var(--prompt-color-dark);
-    --status-bg: var(--status-bg-dark);
-    --status-border: var(--status-border-dark);
-    --status-text: var(--status-text-dark);
+    --dropdown-bg: var(--dropdown-bg-dark);
+    --sidebar-select-bg: var(--sidebar-select-bg-dark);
+    --sidebar-select-hover-bg: var(--sidebar-select-hover-bg-dark);
+    --sidebar-select-hover-border: var(--sidebar-select-hover-border-dark);
+    --select-focus-shadow: var(--select-focus-shadow-dark);
     --hover-bg: var(--hover-bg-dark);
-    --sidebar-bg: var(--sidebar-bg-dark);
 }
 
 .light-theme {
@@ -559,32 +569,26 @@ span>a {
     --primary-color: var(--primary-color-light);
     --secondary-color: var(--secondary-color-light);
     --tertiary-color: var(--tertiary-color-light);
-    --card-border: var(--card-border-light);
     --accent-color: var(--accent-color-light);
+    --border: var(--border-light);
     --img-color: var(--img-color-light);
-    --a-color: var(--a-color-light);
     --icon-filter: invert(0) brightness(0) contrast(1);
+    
     --sidebar-bg: var(--sidebar-bg-light);
-    --sidebar-border: var(--sidebar-border-light);
+    --sidebar-border: var(--border);
     --sidebar-text: var(--sidebar-text-light);
     --sidebar-text-secondary: var(--sidebar-text-secondary-light);
-    --sidebar-text-tertiary: var(--sidebar-text-tertiary-light);
-    --sidebar-divider: var(--sidebar-divider-light);
-    --sidebar-accent: var(--sidebar-accent-light);
+    --sidebar-divider: var(--border);
+    --sidebar-accent: var(--primary-color);
     --sidebar-shadow: var(--sidebar-shadow-light);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-light);
+    
     --code-bg: var(--code-bg-light);
-    --code-border: var(--code-border-light);
-    --code-text: var(--code-text-light);
-    --prompt-color: var(--prompt-color-light);
-    --status-bg: var(--status-bg-light);
-    --status-border: var(--status-border-light);
-    --status-text: var(--status-text-light);
+    --dropdown-bg: var(--white);
+    --dropdown-text: var(--text-color-light);
     --sidebar-select-bg: var(--sidebar-select-bg-light);
     --sidebar-select-hover-bg: var(--sidebar-select-hover-bg-light);
     --sidebar-select-hover-border: var(--sidebar-select-hover-border-light);
-    --dropdown-bg: var(--dropdown-bg-light);
-    --dropdown-text: var(--dropdown-text-light);
     --select-focus-shadow: var(--select-focus-shadow-light);
     --hover-bg: var(--hover-bg-light);
 }
@@ -1454,11 +1458,6 @@ footer .specialty-text {
     cursor: pointer;
 }
 
-.education-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
 .item-content {
     flex: 1;
     display: flex;
@@ -1487,6 +1486,7 @@ footer .specialty-text {
 
 .achievement-item,
 .education-item {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -1522,7 +1522,6 @@ footer .specialty-text {
 
 .achievement-item:hover,
 .education-item:hover {
-    transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 

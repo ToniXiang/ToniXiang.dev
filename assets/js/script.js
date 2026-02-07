@@ -19,80 +19,6 @@ function loadPage(){
         }
     }, 300);
 }
-// 版本檢查（手動觸發）
-async function checkVersion() {
-    let CURRENT_VERSION = 'unknown';
-
-    try {
-        const response = await fetch('assets/js/commits.json?t=' + Date.now());
-        if (response.ok) {
-            const data = await response.json();
-            if (data.version) {
-                CURRENT_VERSION = data.version;
-            } else if (data.timestamp) {
-                const d = new Date(data.timestamp);
-                if (!Number.isNaN(d.getTime())) {
-                    const y = d.getFullYear();
-                    const m = String(d.getMonth() + 1).padStart(2, '0');
-                    const day = String(d.getDate()).padStart(2, '0');
-                    CURRENT_VERSION = `${y}.${m}.${day}`;
-                }
-            }
-        }
-    } catch (error) {
-        console.error('Failed to load version from commits.json:', error);
-    }
-
-    const savedVersion = localStorage.getItem('tonixiang_version');
-
-    if (savedVersion !== CURRENT_VERSION) {
-        // 使用命名空間式清除，只清除本站相關資料
-        Object.keys(localStorage).forEach(key => {
-            if (key.startsWith('tonixiang_')|| key === 'theme') {
-                localStorage.removeItem(key);
-            }
-        });
-        localStorage.setItem('tonixiang_version', CURRENT_VERSION);
-
-        // 清除 sessionStorage
-        sessionStorage.clear();
-
-        // 提示用戶並強制重新載入（清除快取）
-        alert(`當前版本：${CURRENT_VERSION}\n已更新至最新版本，網站資料已重置。\n\n即將強制重新載入以獲取最新資源...`);
-
-        // 使用 location.reload(true) 強制從伺服器重新載入，繞過快取
-        // 對於現代瀏覽器，使用 hard reload
-        if (window.location.reload) {
-            window.location.reload(true);
-        } else {
-            // 備用方案：添加時間戳強制重新載入
-            window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
-        }
-    } else {
-        // 即使版本相同，也提供強制重新載入選項
-        const forceReload = confirm(`當前版本：${CURRENT_VERSION}\n版本已是最新！\n\n是否要強制重新載入以獲取最新資源？\n（這將清除快取並重新下載所有檔案）`);
-
-        if (forceReload) {
-            // 清除快取並重新載入
-            sessionStorage.clear();
-
-            // 使用多種方法確保清除快取
-            if ('caches' in window) {
-                // 清除 Service Worker 快取（如果有）
-                caches.keys().then(names => {
-                    names.forEach(name => {
-                        caches.delete(name);
-                    });
-                });
-            }
-
-            // 強制重新載入
-            setTimeout(() => {
-                window.location.reload(true);
-            }, 100);
-        }
-    }
-}
 // 載入預設主題
 function loadDefaultTheme() {
     const savedTheme = localStorage.getItem('theme') || 'auto';
@@ -153,7 +79,7 @@ function loadNavigationAndFooter() {
         <div class="sidebar-header">
             <div class="brand-info">
                 <img src="assets/images/me.jpg" class="sidebar-avatar" alt="Avatar">
-                <p>Guo-Xiang Chen</p>
+                <p>CHEN, GUO-XIANG</p>
                 <div class="sidebar-tags">
                     <span class="tag tag-experience">10+Repo</span>
                     <span class="tag tag-leetcode">LC500+DSA</span>
@@ -203,18 +129,6 @@ function loadNavigationAndFooter() {
                 </div>
             </div>
         </div>
-        
-        <div class="nav-section">
-            <div class="nav-label">系統</div>
-            <nav class="nav-item" onclick="checkVersion()" title="檢查網站版本">
-                <img src="assets/images/code.svg" alt="version" width="20" height="20" class="nav-icon-img" aria-hidden="true">
-                <div class="nav-text">
-                    <p>版本檢查</p>
-                    <span class="nav-description">檢查更新</span>
-                </div>
-                <div class="nav-indicator"></div>
-            </nav>
-        </div>
         `;
     foot.innerHTML = `
         <button id="backToTop" class="back-to-top" aria-label="回到頂部" title="回到頂部">
@@ -247,14 +161,14 @@ function loadNavigationAndFooter() {
                 </div>
                 
                 <div class="footer-nav">
-                    <h3 onclick="redirectToPage('origin.html#site-links')" style="cursor: pointer;">本站連結</h3>
+                    <h3 onclick="redirectToPage('origin.html')" style="cursor: pointer;">本站連結</h3>
                     <a href="index.html">主要頁面</a>
                     <a href="notes.html">學習筆記</a>
                     <a href="origin.html">關於本站</a>
                 </div>
                 
                 <div class="footer-nav">
-                    <h3 onclick="redirectToPage('origin.html#external-links')" style="cursor: pointer;">外部連結</h3>
+                    <h3 onclick="redirectToPage('origin.html')" style="cursor: pointer;">外部連結</h3>
                     <a href="https://github.com/ToniXiang" target="_blank">GitHub</a>
                     <a href="https://leetcode.com/u/chen199940/" target="_blank">Leetcode</a>
                     <a href="https://github.com/ToniXiang/ToniXiang.github.io" target="_blank">儲存庫</a>
