@@ -57,11 +57,7 @@ try {
     }
 
     # Create output data
-    # version: 使用腳本執行當下的日期，格式 yyyy.MM.dd
     $outputData = @{
-        version = (Get-Date -Format "yyyy.MM.dd")
-        timestamp = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        total = $commits.Count
         commits = $commits
     }
 

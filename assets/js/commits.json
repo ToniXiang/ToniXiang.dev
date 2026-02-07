@@ -1,6 +1,21 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-07 18:23:41 +0800",
+                        "message":  "feat: update theme styles and remove version check functionality",
+                        "sha":  "d307def1bd567094f37132312789d29d6b386661"
+                    },
+                    {
+                        "date":  "2026-01-29 21:50:10 +0800",
+                        "message":  "Create CNAME",
+                        "sha":  "fd544f85e72b7813dc328cf98ce2ea2307de20ea"
+                    },
+                    {
+                        "date":  "2026-01-26 20:52:58 +0800",
+                        "message":  "feat: Enhance commit handling and sorting functionality",
+                        "sha":  "55e073351037781f947639dffdd42ca55705ae61"
+                    },
+                    {
                         "date":  "2026-01-25 08:49:47 +0000",
                         "message":  "chore(ci): update commits.json [skip ci]",
                         "sha":  "825a271db16b93a07d949ccf319a89ef6e52f32c"
@@ -1260,8 +1275,5 @@
                         "message":  "first commit",
                         "sha":  "dc986fddfc3aa39deb9dd5eb4c30bcfb7b1a2610"
                     }
-                ],
-    "timestamp":  "2026-01-26T12:29:04.350Z",
-    "version":  "2026.01.26",
-    "total":  252
+                ]
 }
