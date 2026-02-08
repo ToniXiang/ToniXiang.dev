@@ -16,7 +16,7 @@
 > 但最後一次 commit 不會提交到 `commits.json`，如果需要則完成步驟 2 後用 Actions `Update Commits Data` 更新
 1. 在專案根目錄執行 `& "scripts\generate-commits.ps1" -MaxCommits 10000 -ShowAll`
 2. 提交到 GitHub
-3. 用戶可以透過側邊欄的「版本檢查」按鈕手動檢查更新
+3. 用戶可以在網站上看到最新的 commit 訊息
 
 ### 未來擴充
 目前以靜態網站為主，專注於筆記內容品質與整體架構的穩定性，不會放專案作品集動態等內容。未來可能會視需求與資源評估，考慮以下擴充功能：

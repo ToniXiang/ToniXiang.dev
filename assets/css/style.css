@@ -1383,7 +1383,6 @@ footer .specialty-text {
 }
 .name{
     font-weight: 400;
-    color: var(--primary-color) !important;
 }
 .name-en {
     font-size: 1rem;

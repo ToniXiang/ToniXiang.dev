@@ -28,6 +28,7 @@ body.split-view-active>main {
 .notes-container {
     padding: 40px 20px 80px 20px;
     max-width: 1000px;
+    min-width: 80%;
     margin: 0 auto;
     position: relative;
     transition: all 0.3s ease;
@@ -35,6 +36,7 @@ body.split-view-active>main {
 
 .split-view .notes-container {
     max-width: 500px;
+    min-width: 10%;
     width: 500px;
     margin: 0;
     flex-shrink: 0;
@@ -73,21 +75,20 @@ body.split-view-active>main {
 
 
 .category-title {
-    margin: 0 0 8px 0;
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    position: relative;
-    display: flex;
-    align-items: center;
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    color: aliceblue !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.category-desc {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin: 0;
-    font-weight: normal;
-    line-height: 1.4;
+.category-title:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .note-list {
@@ -95,15 +96,12 @@ body.split-view-active>main {
     margin: 0;
     list-style: none;
     overflow: visible;
-    background: var(--note-list-bg);
     border-radius: 8px;
-    box-shadow: var(--inner-shadow);
 }
 
 .note-item {
     padding: 8px 12px 8px 20px;
-    border: none;
-    background: none;
+    color: var(--secondary-color);
     transition: all 0.2s ease;
     position: relative;
     cursor: pointer;
@@ -112,7 +110,7 @@ body.split-view-active>main {
 }
 
 .note-item:hover {
-    background: rgba(102, 126, 234, 0.12) !important;
+    text-decoration: underline;
 }
 
 .note-title {
@@ -318,20 +316,12 @@ body:not(.dark-theme) {
         padding: 12px 16px;
     }
 
-    .category-title {
-        font-size: 1.2rem;
-    }
-
     .note-list {
         padding: 8px 16px;
     }
 
     .note-item {
         padding: 6px 8px 6px 16px;
-    }
-
-    .note-item::before {
-        display: none;
     }
 }
 
@@ -342,10 +332,6 @@ body:not(.dark-theme) {
 
     .note-item {
         padding: 10px 0;
-    }
-
-    .note-item::before {
-        display: none;
     }
 }
 
@@ -1188,138 +1174,4 @@ code[class*="language-"] {
 
 .dark-theme .note-list::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.15);
-}
-
-.search-container {
-    display: none !important;
-    padding: 80px 20px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    min-height: 100vh;
-}
-
-.search-container.active {
-    display: block !important;
-}
-
-@media (max-width: 768px) {
-    .search-container {
-        padding: 80px 16px 20px;
-        margin: 0;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .search-header {
-        text-align: center;
-        margin-bottom: 24px;
-    }
-
-    .search-header h2 {
-        font-size: 1.5rem;
-        margin-bottom: 8px;
-    }
-
-    .search-subtitle {
-        font-size: 0.9rem;
-    }
-}
-
-@media (min-width: 769px) {
-    body.split-view-active {
-        overflow: visible;
-        position: static;
-        height: auto;
-    }
-
-    .split-view .note-viewer {
-        position: relative;
-        height: auto;
-        max-height: none;
-    }
-
-    .split-view .note-viewer-body {
-        height: auto;
-        max-height: none;
-    }
-}
-
-.search-toggle-btn {
-    background: transparent;
-    color: var(--text-color);
-    border: none;
-    border-radius: 12px;
-    padding: 12px 24px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.search-toggle-btn:hover {
-    background: rgb(102, 126, 234, 0.12) !important;
-}
-
-@media (max-width: 768px) {
-    .search-toggle-btn {
-        text-align: center;
-        padding: 16px 24px;
-        font-size: 1rem;
-        margin: 0 auto 24px auto;
-        border-radius: 28px;
-    }
-
-    .search-header {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 768px) {
-    body.search-active {
-        padding-top: 0;
-        margin-top: 0;
-    }
-
-    .search-container {
-        position: relative;
-        top: 0;
-        left: 0;
-        right: 0;
-        transform: none;
-        overflow-x: hidden;
-    }
-
-    .search-container.active {
-        display: block !important;
-        position: relative;
-        width: 100vw;
-        min-height: 100vh;
-        margin: 0;
-        padding-top: 90px;
-        padding-left: 12px;
-        padding-right: 12px;
-        box-sizing: border-box;
-    }
-
-    .search-results {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .search-container.active {
-        padding-top: 80px;
-        padding-left: 8px;
-        padding-right: 8px;
-    }
 }

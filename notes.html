@@ -8,7 +8,6 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/notes.css">
-    <link rel="stylesheet" href="assets/css/search.css">
     <link rel="stylesheet" href="assets/css/prism-tomorrow.min.css">
     <link rel="shortcut icon" href="assets/images/me.jpg" type="image/x-icon">
 </head>
@@ -26,75 +25,11 @@
         <img src="assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
     </div>
     <main>
-        <div class="search-container">
-            <div class="search-header">
-                <h2>筆記搜尋</h2>
-            </div>
-
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="輸入關鍵字搜尋..." autocomplete="off">
-                <button id="searchBtn" type="button">
-                    <img src="assets/images/search.svg" alt="搜尋" width="20" height="20" class="icon-img"
-                        aria-hidden="true">
-                </button>
-            </div>
-
-            <div class="search-stats">
-                <span id="searchStats">輸入關鍵字開始搜尋</span>
-            </div>
-
-            <div class="search-results" id="searchResults">
-                <div class="notes-grid" id="notesGrid">
-                    <!-- 搜尋結果將在這裡顯示 -->
-                </div>
-            </div>
-
-            <div class="search-loading" id="searchLoading" style="display: none;">
-                <div class="loading-spinner"></div>
-                <p>搜尋中...</p>
-            </div>
-        </div>
-
         <div class="notes-layout">
             <article class="notes-container">
+                <h2>學習筆記</h2>
                 <div class="notes-grid">
-                    <div class="note-category">
-                        <div class="category-header">
-                            <h2 class="category-title">演算法</h2>
-                            <div class="category-desc">資料結構與演算法</div>
-                        </div>
-                        <ul class="note-list">
-                            <li class="note-item">
-                                <span class="note-title" note="Algorithm">演算法解題</span>
-                            </li>
-                            <li class="note-item">
-                                <span class="note-title" note="Unordered">雜湊表應用</span>
-                            </li>
-                            <li class="note-item">
-                                <span class="note-title" note="Queue">佇列與雙端佇列</span>
-                            </li>
-                            <li class="note-item">
-                                <span class="note-title" note="Binary_Search">二分搜尋演算法</span>
-                            </li>
-                            <li class="note-item">
-                                <span class="note-title" note="Priority">堆積與優先佇列</span>
-                            </li>
-                            <li class="note-item">
-                                <span class="note-title" note="Tree">樹與圖論演算法</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="note-category">
-                        <div class="category-header">
-                            <h2 class="category-title">系統開發</h2>
-                            <div class="category-desc">後端架構與系統整合</div>
-                        </div>
-                        <ul class="note-list">
-                            <li class="note-item">
-                                <span class="note-title" note="後端整合">後端服務整合</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- 筆記分類將由 JavaScript 動態生成 -->
                 </div>
             </article>
             <div class="note-viewer">
@@ -113,7 +48,6 @@
     <footer></footer>
     <script src="assets/js/script.js" defer></script>
     <script src="assets/js/notes.js" defer></script>
-    <script src="assets/js/search.js" defer></script>
     <script src="assets/js/prism-core.min.js" defer></script>
     <script src="assets/js/prism-clike.min.js" defer></script>
     <script src="assets/js/prism-c.min.js" defer></script>

@@ -1,13 +1,36 @@
-// 筆記檔案配置 - 將檔案名稱與顯示標題對應
-const noteFiles = [
-    { filename: 'Binary_Search.md', title: '二分搜尋演算法' },
-    { filename: 'Algorithm.md', title: '演算法解題' },
-    { filename: 'Priority.md', title: '堆積與優先佇列' },
-    { filename: 'Tree.md', title: '樹與圖論演算法' },
-    { filename: 'Unordered.md', title: '雜湊表應用' },
-    { filename: '後端整合.md', title: '後端系統整合' },
-    { filename: 'Queue.md', title: '佇列與雙端佇列' },
+// 筆記分類配置 - 使用分類結構管理
+const noteCategories = [
+    {
+        id: 'algorithm',
+        title: '演算法',
+        notes: [
+            { filename: 'Algorithm.md', title: '演算法解題', id: 'Algorithm' },
+            { filename: 'Unordered.md', title: '雜湊表應用', id: 'Unordered' },
+            { filename: 'Queue.md', title: '佇列與雙端佇列', id: 'Queue' },
+            { filename: 'Binary_Search.md', title: '二分搜尋演算法', id: 'Binary_Search' },
+            { filename: 'Priority.md', title: '堆積與優先佇列', id: 'Priority' },
+            { filename: 'Tree.md', title: '樹與圖論演算法', id: 'Tree' }
+        ]
+    },
+    {
+        id: 'system',
+        title: '系統開發',
+        notes: [
+            { filename: '後端整合.md', title: '後端服務整合', id: '後端整合' }
+        ]
+    }
 ];
+
+// 砲佳相容性 - 保留舊的 noteFiles 配置方式
+const noteFiles = [];
+noteCategories.forEach(category => {
+    category.notes.forEach(note => {
+        noteFiles.push({
+            filename: note.filename,
+            title: note.title
+        });
+    });
+});
 
 // 根據 note 屬性查找對應的檔案資訊
 function getNoteFileInfo(noteAttr) {
@@ -28,8 +51,48 @@ function getNoteFileInfo(noteAttr) {
     };
 }
 
+// 動態產生筆記列表 HTML
+function generateNotesHTML() {
+    const notesGrid = document.querySelector('.notes-grid');
+    if (!notesGrid) return;
+
+    // 清除現有內容
+    notesGrid.innerHTML = '';
+
+    // 為每個分類產生 HTML
+    noteCategories.forEach(category => {
+        const categoryElement = document.createElement('div');
+        categoryElement.className = 'note-category';
+        
+        // 分類標題
+        const headerElement = document.createElement('div');
+        headerElement.className = 'category-header';
+        headerElement.innerHTML = `
+            <div class="category-title">${category.title}</div>
+        `;
+        
+        // 筆記列表
+        const listElement = document.createElement('ul');
+        listElement.className = 'note-list';
+        
+        category.notes.forEach(note => {
+            const listItem = document.createElement('li');
+            listItem.className = 'note-item';
+            listItem.innerHTML = `
+                <span class="note-title" note="${note.id}">${note.title}</span>
+            `;
+            listElement.appendChild(listItem);
+        });
+        
+        categoryElement.appendChild(headerElement);
+        categoryElement.appendChild(listElement);
+        notesGrid.appendChild(categoryElement);
+    });
+}
+
 // 筆記頁面功能
 document.addEventListener('DOMContentLoaded', () => {
+    generateNotesHTML();
     initializeNotes();
     setupNoteInteractions();
     handleUrlHash();
