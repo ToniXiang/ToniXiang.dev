@@ -1,5 +1,5 @@
 body > main {
-    max-width: 1600px;
+    max-width: 1100px;
     transition: max-width 0.3s ease;
     margin: 0 auto;
 }

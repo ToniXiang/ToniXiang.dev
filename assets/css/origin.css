@@ -8,11 +8,62 @@ body {
     max-width: 100vw;
 }
 
+/* 深色主題的麵包屑顏色 */
+:root {
+    --accent-color-bright: #7ee6b3;
+    --text-secondary: rgba(0, 0, 0, 0.55);
+}
+
+.dark-theme {
+    --accent-color-bright: #7ee6b3;
+    --text-secondary: rgba(255, 255, 255, 0.55);
+}
+
+/* 淺色主題的麵包屑顏色 */
+.light-theme {
+    --accent-color-bright: #047857;
+    --text-secondary: rgba(255, 255, 255, 0.55);
+}
+
+body:not(.dark-theme) {
+    --accent-color-bright: #047857;
+    --text-secondary: rgba(0, 0, 0, 0.55);
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-link {
+    color: var(--accent-color-bright);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    color: var(--accent-color-bright);
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.breadcrumb-current {
+    color: var(--text-secondary);
+}
+
 .site-info-section {
     max-width: 1100px;
     width: 100%;
-    margin: 2rem auto 3rem;
-    padding: 0 20px;
+    margin: 0 auto;
+    padding: 40px 24px 80px 24px;
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -21,12 +72,6 @@ body {
     padding: 2rem;
 }
 
-.site-info-main {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 2rem;
-    align-items: start;
-}
 .dark-theme .site-info-image {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -265,8 +310,8 @@ body {
 .changelog-header {
     max-width: 1100px;
     width: 100%;
-    margin: 2rem auto 0;
-    padding: 0 20px;
+    margin: 0 auto 0;
+    padding: 0 24px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -354,7 +399,7 @@ body {
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px 30px 20px;
+    padding: 0 24px 30px 24px;
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -704,10 +749,16 @@ body {
 }
 
 @media (max-width: 480px) {
-    .site-info-section,
-    .resources-section {
-        padding: 0 10px;
-        width: calc(100% - 20px);
+    .site-info-section {
+        padding: 16px 12px 50px 12px;
+    }
+
+    .changelog-header {
+        padding: 0 12px;
+    }
+
+    .changelog-container {
+        padding: 0 12px 30px 12px;
     }
     
     .commit-type {

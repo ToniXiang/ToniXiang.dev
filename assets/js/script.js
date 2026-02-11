@@ -148,11 +148,7 @@ function loadNavigationAndFooter() {
                             <span class="specialty-text">系統導向全端架構</span>
                         </div>
                         <div class="specialty-item">
-                            <span class="specialty-icon">#技術實作</span>
-                            <span class="specialty-text">Flutter（App 架構）、Django（API / 資料流）、C/C++（底層理解）</span>
-                        </div>
-                        <div class="specialty-item">
-                            <span class="specialty-icon">#我的郵件</span>
+                            <span class="specialty-icon">#聯絡</span>
                             <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>

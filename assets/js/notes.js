@@ -298,11 +298,22 @@ function showNoteModal(filename, title) {
     const notesLayout = document.querySelector('.notes-layout');
     const noteViewerTitle = document.querySelector('.note-viewer-title');
     const noteViewerBody = document.querySelector('.note-viewer-body');
-    const breadcrumbCurrent = document.querySelector('.breadcrumb-current');
 
-    // 更新麵包屑導航
-    if (breadcrumbCurrent) {
-        breadcrumbCurrent.textContent = title;
+    // 更新麵包屑導航 - 顯示筆記標題
+    const breadcrumbNotes = document.querySelector('.breadcrumb-notes');
+    const breadcrumbNoteSeparator = document.querySelector('.breadcrumb-note-separator');
+    const breadcrumbNoteTitle = document.querySelector('.breadcrumb-note-title');
+
+    if (breadcrumbNotes && breadcrumbNoteSeparator && breadcrumbNoteTitle) {
+        // 將"學習筆記"改為連結
+        breadcrumbNotes.classList.remove('breadcrumb-current');
+        breadcrumbNotes.classList.add('breadcrumb-link');
+        // 當是連結狀態時添加指標樣式
+        breadcrumbNotes.style.cursor = 'pointer';
+        // 顯示第三層麵包屑
+        breadcrumbNoteSeparator.style.display = '';
+        breadcrumbNoteTitle.style.display = '';
+        breadcrumbNoteTitle.textContent = title;
     }
 
     // 檢查是否已經在分割視圖模式
@@ -386,6 +397,9 @@ function closeNoteModal() {
     console.log('正在關閉筆記檢視器');
     const notesLayout = document.querySelector('.notes-layout');
     const noteViewerBody = document.querySelector('.note-viewer-body');
+    const breadcrumbNotes = document.querySelector('.breadcrumb-notes');
+    const breadcrumbNoteSeparator = document.querySelector('.breadcrumb-note-separator');
+    const breadcrumbNoteTitle = document.querySelector('.breadcrumb-note-title');
 
     // 移除所有筆記項目的 active 狀態
     document.querySelectorAll('.note-item').forEach(item => {
@@ -398,6 +412,18 @@ function closeNoteModal() {
 
     // 重置內容
     noteViewerBody.innerHTML = '<div class="loading">選擇一個筆記以查看內容</div>';
+
+    // 重置麵包屑導航 - 隱藏第三層，將"學習筆記"恢復為非連結
+    if (breadcrumbNotes && breadcrumbNoteSeparator && breadcrumbNoteTitle) {
+        // 將"學習筆記"改回非連結狀態
+        breadcrumbNotes.classList.remove('breadcrumb-link');
+        breadcrumbNotes.classList.add('breadcrumb-current');
+        breadcrumbNotes.style.cursor = 'inherit';
+        // 隱藏第三層麵包屑
+        breadcrumbNoteSeparator.style.display = 'none';
+        breadcrumbNoteTitle.style.display = 'none';
+        breadcrumbNoteTitle.textContent = '';
+    }
 
     // 清除 URL hash
     history.replaceState(null, null, window.location.pathname);
@@ -418,6 +444,18 @@ function setupNoteInteractions() {
             category.classList.toggle('expanded');
         });
     });
+
+    // 設置麵包屑「學習筆記」的點擊事件
+    const breadcrumbNotes = document.querySelector('.breadcrumb-notes');
+    if (breadcrumbNotes) {
+        breadcrumbNotes.addEventListener('click', (e) => {
+            // 只有當它是連結狀態時才觸發關閉
+            if (breadcrumbNotes.classList.contains('breadcrumb-link')) {
+                e.preventDefault();
+                closeNoteModal();
+            }
+        });
+    }
 
     // 設置關閉按鈕
     const closeBtn = document.querySelector('.note-viewer-close');
