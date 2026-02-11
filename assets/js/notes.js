@@ -295,6 +295,12 @@ function showNoteModal(filename, title) {
     const notesLayout = document.querySelector('.notes-layout');
     const noteViewerTitle = document.querySelector('.note-viewer-title');
     const noteViewerBody = document.querySelector('.note-viewer-body');
+    const breadcrumbCurrent = document.querySelector('.breadcrumb-current');
+
+    // 更新麵包屑導航
+    if (breadcrumbCurrent) {
+        breadcrumbCurrent.textContent = title;
+    }
 
     // 檢查是否已經在分割視圖模式
     const isAlreadySplit = notesLayout.classList.contains('split-view');
