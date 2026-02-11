@@ -1,9 +1,9 @@
-body>main {
+body > main {
     max-width: 1400px;
     transition: max-width 0.3s ease;
 }
 
-body.split-view-active>main {
+body.split-view-active > main {
     max-width: 100%;
 }
 
@@ -66,16 +66,18 @@ body.split-view-active>main {
 }
 
 .category-header {
-    padding: 16px 20px;
     border: none;
     position: relative;
-    margin-bottom: 8px;
     border-radius: 12px;
+    cursor: pointer;
+    user-select: none;
 }
 
 
 .category-title {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 0.4rem 1rem;
     border-radius: 8px;
     background: var(--secondary-color);
@@ -91,17 +93,37 @@ body.split-view-active>main {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Chevron icon rotation */
+.category-chevron {
+    transition: transform 0.3s ease;
+    filter: brightness(0) invert(1);
+}
+
+.note-category.expanded .category-chevron {
+    transform: rotate(90deg);
+}
+
 .note-list {
-    padding: 12px 20px;
+    padding: 12px 10px;
     margin: 0;
     list-style: none;
-    overflow: visible;
+    overflow: hidden;
     border-radius: 8px;
+    max-height: 1000px;
+    opacity: 1;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+/* Collapsed state */
+.note-category:not(.expanded) .note-list {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+    margin-top: -8px;
 }
 
 .note-item {
     padding: 8px 12px 8px 20px;
-    color: var(--secondary-color);
     transition: all 0.2s ease;
     position: relative;
     cursor: pointer;
@@ -110,7 +132,17 @@ body.split-view-active>main {
 }
 
 .note-item:hover {
-    text-decoration: underline;
+    background: var(--note-item-hover-bg);
+}
+
+.note-item.active {
+    background: var(--note-item-hover-bg);
+    padding-left: 17px;
+}
+
+.note-item.active .note-title {
+    color: var(--accent-color);
+    font-weight: 600;
 }
 
 .note-title {
@@ -303,17 +335,6 @@ body:not(.dark-theme) {
 
     .page-title {
         font-size: 1.8rem;
-    }
-
-    .note-category {
-        margin-bottom: 36px;
-        flex: none;
-        min-width: auto;
-        max-width: none;
-    }
-
-    .category-header {
-        padding: 12px 16px;
     }
 
     .note-list {
@@ -707,12 +728,12 @@ body:not(.dark-theme) {
 }
 
 /* 列表項目內容樣式 */
-.markdown-content li>p {
+.markdown-content li > p {
     margin: 0;
     display: inline;
 }
 
-.markdown-content li>p:not(:last-child) {
+.markdown-content li > p:not(:last-child) {
     margin-bottom: 6px;
     display: block;
 }

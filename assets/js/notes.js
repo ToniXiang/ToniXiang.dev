@@ -62,13 +62,16 @@ function generateNotesHTML() {
     // 為每個分類產生 HTML
     noteCategories.forEach(category => {
         const categoryElement = document.createElement('div');
-        categoryElement.className = 'note-category';
-        
+        categoryElement.className = 'note-category expanded'; // 預設展開
+
         // 分類標題
         const headerElement = document.createElement('div');
         headerElement.className = 'category-header';
         headerElement.innerHTML = `
-            <div class="category-title">${category.title}</div>
+            <div class="category-title">
+                <span class="category-title-text">${category.title}</span>
+                <img src="assets/images/chevron_right.svg" alt="展開" class="category-chevron" width="16" height="16">
+            </div>
         `;
         
         // 筆記列表
@@ -276,6 +279,19 @@ function showNoteModal(filename, title) {
         history.replaceState(null, null, newHash);
     }
 
+    // 移除所有筆記項目的 active 狀態
+    document.querySelectorAll('.note-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // 找到對應的筆記項目並添加 active 狀態
+    document.querySelectorAll('.note-item').forEach(item => {
+        const noteTitle = item.querySelector('.note-title');
+        if (noteTitle && noteTitle.textContent === title) {
+            item.classList.add('active');
+        }
+    });
+
     const notesLayout = document.querySelector('.notes-layout');
     const noteViewerTitle = document.querySelector('.note-viewer-title');
     const noteViewerBody = document.querySelector('.note-viewer-body');
@@ -362,6 +378,11 @@ function closeNoteModal() {
     const notesLayout = document.querySelector('.notes-layout');
     const noteViewerBody = document.querySelector('.note-viewer-body');
 
+    // 移除所有筆記項目的 active 狀態
+    document.querySelectorAll('.note-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
     // 移除分割視圖模式
     notesLayout.classList.remove('split-view');
     document.body.classList.remove('split-view-active');
@@ -376,6 +397,20 @@ function closeNoteModal() {
 
 
 function setupNoteInteractions() {
+    // 設置分類展開/收合功能
+    const categoryHeaders = document.querySelectorAll('.category-header');
+    categoryHeaders.forEach(header => {
+        header.addEventListener('click', (e) => {
+            // 如果點擊的是筆記項目，不要觸發分類折疊
+            if (e.target.closest('.note-item')) {
+                return;
+            }
+
+            const category = header.closest('.note-category');
+            category.classList.toggle('expanded');
+        });
+    });
+
     // 設置關閉按鈕
     const closeBtn = document.querySelector('.note-viewer-close');
     if (closeBtn) {
