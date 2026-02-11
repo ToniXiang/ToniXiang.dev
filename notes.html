@@ -13,50 +13,50 @@
 </head>
 
 <body>
-    <!-- 載入動畫 -->
-    <div class="loading-screen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>
+<!-- 載入動畫 -->
+<div class="loading-screen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+</div>
 
-    <div id="background"></div>
-    <header class="blogTitle"></header>
-    <div class="menu" onclick="toggleMenu()" aria-label="切換選單" title="快捷鍵 M">
-        <img src="assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
-    </div>
-    <main>
-        <div class="notes-layout">
-            <article class="notes-container">
-                <div class="breadcrumb-nav">
-                    <a href="index.html" class="breadcrumb-link">首頁</a>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-current breadcrumb-notes">學習筆記</span>
-                    <span class="breadcrumb-separator breadcrumb-note-separator" style="display: none;">›</span>
-                    <span class="breadcrumb-current breadcrumb-note-title" style="display: none;"></span>
-                </div>
-                <h2>學習筆記</h2>
-                <div class="notes-grid">
-                    <!-- 筆記分類將由 JavaScript 動態生成 -->
-                </div>
-            </article>
-            <div class="note-viewer">
-                <div class="note-viewer-header">
-                    <p class="note-viewer-title"></p>
-                    <button class="note-viewer-close">&times;</button>
-                </div>
-                <div class="note-viewer-body">
-                    <div class="loading">選擇一個筆記以查看內容</div>
-                </div>
+<div id="background"></div>
+<header class="blogTitle"></header>
+<div class="menu" onclick="toggleMenu()" aria-label="切換選單" title="快捷鍵 M">
+    <img src="assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
+</div>
+<main>
+    <div class="notes-layout">
+        <article class="notes-container">
+            <div class="breadcrumb-nav">
+                <a href="index.html" class="breadcrumb-link">首頁</a>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-current breadcrumb-notes">學習筆記</span>
+                <span class="breadcrumb-separator breadcrumb-note-separator" style="display: none;">›</span>
+                <span class="breadcrumb-current breadcrumb-note-title" style="display: none;"></span>
+            </div>
+            <h2>學習筆記</h2>
+            <div class="notes-grid">
+                <!-- 筆記分類將由 JavaScript 動態生成 -->
+            </div>
+        </article>
+        <div class="note-viewer">
+            <div class="note-viewer-header">
+                <p class="note-viewer-title"></p>
+                <button class="note-viewer-close">&times;</button>
+            </div>
+            <div class="note-viewer-body">
+                <div class="loading">選擇一個筆記以查看內容</div>
             </div>
         </div>
-    </main>
-    <footer></footer>
-    <script src="assets/js/script.js" defer></script>
-    <script src="assets/js/notes.js" defer></script>
-    <script src="assets/js/prism-core.min.js" defer></script>
-    <script src="assets/js/prism-clike.min.js" defer></script>
-    <script src="assets/js/prism-c.min.js" defer></script>
-    <script src="assets/js/prism-cpp.min.js" defer></script>
+    </div>
+</main>
+<footer></footer>
+<script src="assets/js/script.js" defer></script>
+<script src="assets/js/notes.js" defer></script>
+<script src="assets/js/prism-core.min.js" defer></script>
+<script src="assets/js/prism-clike.min.js" defer></script>
+<script src="assets/js/prism-c.min.js" defer></script>
+<script src="assets/js/prism-cpp.min.js" defer></script>
 </body>
 
 </html>

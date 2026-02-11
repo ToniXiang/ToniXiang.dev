@@ -1,13 +1,3 @@
-body > main {
-    max-width: 1100px;
-    transition: max-width 0.3s ease;
-    margin: 0 auto;
-}
-
-body.split-view-active > main {
-    max-width: 100%;
-}
-
 .notes-layout {
     display: flex;
     gap: 0;
@@ -22,21 +12,27 @@ body.split-view-active > main {
     justify-content: flex-start;
     max-width: none;
     width: 100%;
-    padding: 0 24px;
+    padding: 0 12px;
     box-sizing: border-box;
     flex-direction: row;
     gap: 24px;
 }
 
 .notes-container {
-    padding: 40px 24px 80px 24px;
-    max-width: 1000px;
-    min-width: 80%;
+    max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
-    position: relative;
+    padding: 40px 24px 80px 24px;
     transition: all 0.3s ease;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
-
+@media (max-width: 480px) {
+    .notes-container {
+        padding: 0 10px;
+        width: calc(100% - 20px);
+    }
+}
 .split-view .notes-container {
     max-width: 320px;
     min-width: 280px;
@@ -365,16 +361,6 @@ body:not(.dark-theme) {
 
     .note-item {
         padding: 6px 8px 6px 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .notes-container {
-        padding: 16px 12px 50px 12px;
-    }
-
-    .note-item {
-        padding: 10px 0;
     }
 }
 

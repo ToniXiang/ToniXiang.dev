@@ -148,7 +148,7 @@ function loadNavigationAndFooter() {
                             <span class="specialty-text">系統導向全端架構</span>
                         </div>
                         <div class="specialty-item">
-                            <span class="specialty-icon">#聯絡</span>
+                            <span class="specialty-icon">#聯絡我</span>
                             <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>

@@ -1344,8 +1344,8 @@ footer .specialty-text {
 
 .close-card {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 2rem;
+    right: 2rem;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -1550,14 +1550,6 @@ footer .specialty-text {
         max-height: 90vh;
     }
 
-    .close-card {
-        top: 0.75rem;
-        right: 0.75rem;
-        width: 36px;
-        height: 36px;
-        padding: 0.4rem;
-    }
-
     .more-info-content h2 {
         font-size: 1.2rem;
         padding-right: 0.3rem;
@@ -1571,11 +1563,6 @@ footer .specialty-text {
 @media (max-width: 480px) {
     .more-info-content {
         padding: 1.25rem;
-    }
-
-    .close-card {
-        width: 32px;
-        height: 32px;
     }
 }
 
@@ -1696,7 +1683,11 @@ footer .specialty-text {
         width: 18px;
         height: 18px;
     }
+    body:not(.home-page)>main {
+        padding-top: 15%;
+    }
 }
+
 
 /* ========== 載入動畫 ========== */
 /* 載入動畫容器 - 初始可見 */
@@ -1790,4 +1781,19 @@ body.loaded .menu {
 [data-theme="light"] .loading-spinner {
     border-color: var(--border-light);
     border-top-color: var(--primary-color-light);
+}
+
+.site-info-section {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px 80px 24px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+@media (max-width: 480px) {
+    .site-info-section {
+        padding: 0 10px;
+        width: calc(100% - 20px);
+    }
 }

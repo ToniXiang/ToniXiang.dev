@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-12 00:20:37 +0800",
+                        "message":  "feat: enhance breadcrumb navigation and update styles",
+                        "sha":  "2de1d826d3b3e64927ed3437edc88b5274fd751c"
+                    },
+                    {
                         "date":  "2026-02-11 20:03:28 +0800",
                         "message":  "feat: enhance note category structure",
                         "sha":  "7eb5f96a7895ad403619cb2a713b458c0314ee3b"
