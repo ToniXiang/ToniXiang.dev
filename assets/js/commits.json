@@ -1,6 +1,26 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-11 18:49:22 +0800",
+                        "message":  "feat: enhance note viewer layout and add breadcrumb navigation",
+                        "sha":  "ba507cb7cdfb3df2ece1bb3f2a8291e4b7cfddc5"
+                    },
+                    {
+                        "date":  "2026-02-11 18:06:44 +0800",
+                        "message":  "feat: enhance note category interactions and improve styling",
+                        "sha":  "c001fe5b4367a0e5234668b1e11ccc58284138c0"
+                    },
+                    {
+                        "date":  "2026-02-08 13:12:53 +0800",
+                        "message":  "feat: refactor notes management and remove search functionality",
+                        "sha":  "48f7d5ea9538e19c85745f8c6d48574fc537dacb"
+                    },
+                    {
+                        "date":  "2026-02-07 20:41:33 +0800",
+                        "message":  "feat: update commits.json with new commit entries and modify README for clarity",
+                        "sha":  "f920abb49dccf9498ec1818872c429cc4ca57f46"
+                    },
+                    {
                         "date":  "2026-02-07 18:23:41 +0800",
                         "message":  "feat: update theme styles and remove version check functionality",
                         "sha":  "d307def1bd567094f37132312789d29d6b386661"

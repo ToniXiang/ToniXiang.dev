@@ -1,22 +1,23 @@
+/* global Prism */
 // 筆記分類配置 - 使用分類結構管理
 const noteCategories = [
     {
         id: 'algorithm',
         title: '演算法',
         notes: [
-            { filename: 'Algorithm.md', title: '演算法解題', id: 'Algorithm' },
-            { filename: 'Unordered.md', title: '雜湊表應用', id: 'Unordered' },
-            { filename: 'Queue.md', title: '佇列與雙端佇列', id: 'Queue' },
-            { filename: 'Binary_Search.md', title: '二分搜尋演算法', id: 'Binary_Search' },
-            { filename: 'Priority.md', title: '堆積與優先佇列', id: 'Priority' },
-            { filename: 'Tree.md', title: '樹與圖論演算法', id: 'Tree' }
+            {filename: 'Algorithm.md', title: '演算法解題', id: 'Algorithm'},
+            {filename: 'Unordered.md', title: '雜湊表應用', id: 'Unordered'},
+            {filename: 'Queue.md', title: '佇列與雙端佇列', id: 'Queue'},
+            {filename: 'Binary_Search.md', title: '二分搜尋演算法', id: 'Binary_Search'},
+            {filename: 'Priority.md', title: '堆積與優先佇列', id: 'Priority'},
+            {filename: 'Tree.md', title: '樹與圖論演算法', id: 'Tree'}
         ]
     },
     {
         id: 'system',
         title: '系統開發',
         notes: [
-            { filename: '後端整合.md', title: '後端服務整合', id: '後端整合' }
+            {filename: '後端整合.md', title: '後端服務整合', id: '後端整合'}
         ]
     }
 ];
@@ -73,11 +74,11 @@ function generateNotesHTML() {
                 <img src="assets/images/chevron_right.svg" alt="展開" class="category-chevron" width="16" height="16">
             </div>
         `;
-        
+
         // 筆記列表
         const listElement = document.createElement('ul');
         listElement.className = 'note-list';
-        
+
         category.notes.forEach(note => {
             const listItem = document.createElement('li');
             listItem.className = 'note-item';
@@ -86,7 +87,7 @@ function generateNotesHTML() {
             `;
             listElement.appendChild(listItem);
         });
-        
+
         categoryElement.appendChild(headerElement);
         categoryElement.appendChild(listElement);
         notesGrid.appendChild(categoryElement);
@@ -182,7 +183,6 @@ async function loadNoteContent(filename) {
                 type: fileType
             };
         }
-        throw new Error(`檔案不存在: ${filename} 或 ${alternateFilename}`);
     } catch (error) {
         console.error('讀取筆記內容失敗:', error);
         return {
@@ -230,7 +230,10 @@ function parseMarkdown(text) {
         .replace(/\*(.*?)\*/g, '<em>$1</em>');
 
     // 連結
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    text = text.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^)\s]+)(?:\s+"[^"]*")?\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
 
     // 列表項 (先標記為 <li>)
     text = text
@@ -399,7 +402,6 @@ function closeNoteModal() {
     // 清除 URL hash
     history.replaceState(null, null, window.location.pathname);
 }
-
 
 
 function setupNoteInteractions() {

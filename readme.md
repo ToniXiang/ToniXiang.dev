@@ -6,16 +6,11 @@
 
 > Engineering-oriented notes and long-term learning documentation.
 
-## 更新資源
-
-當網站更新後，瀏覽器可能會使用舊的快取內容
-
 ## 維護與更新
 
 ### 版本更新流程
-> 但最後一次 commit 不會提交到 `commits.json`，如果需要則完成步驟 2 後用 Actions `Update Commits Data` 更新
-1. 在專案根目錄執行 `& "scripts\generate-commits.ps1" -MaxCommits 10000 -ShowAll`
-2. 提交到 GitHub
+1. 提交 commit 訊息到 GitHub，確保 commit 訊息清晰且具描述性
+2. 在專案根目錄執行 `& "scripts\generate-commits.ps1" -MaxCommits 10000 -ShowAll`
 3. 用戶可以在網站上看到最新的 commit 訊息
 
 ### 未來擴充

@@ -14,7 +14,7 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body>main {
+body > main {
     min-height: 80vh;
     width: 100%;
     margin: 0 auto;
@@ -158,7 +158,6 @@ body>main {
 }
 
 .nav-label {
-    color: var(--sidebar-text-tertiary);
     font-size: 10px;
     font-weight: 500;
     text-transform: uppercase;
@@ -246,7 +245,7 @@ body>main {
     filter: var(--icon-filter);
 }
 
-.nav-item>img.nav-icon-img {
+.nav-item > img.nav-icon-img {
     width: 20px !important;
     height: 20px !important;
     flex-shrink: 0;
@@ -270,7 +269,6 @@ body>main {
 
 .nav-description {
     font-size: 11px;
-    color: var(--sidebar-text-tertiary);
     font-weight: 400;
     line-height: 1.2;
 }
@@ -395,7 +393,7 @@ p {
     color: var(--text-color);
 }
 
-span>a {
+span > a {
     color: var(--accent-color);
 }
 
@@ -435,7 +433,7 @@ span>a {
     --blue-400: #218BFF;
     --blue-500: #0969DA;
     --blue-600: #1990b8;
-    
+
     /* Light Theme Variables */
     --background-color-light: var(--white);
     --text-color-light: var(--gray-900);
@@ -445,13 +443,13 @@ span>a {
     --border-light: var(--gray-200);
     --accent-color-light: var(--blue-400);
     --img-color-light: var(--blue-600);
-    
+
     --sidebar-bg-light: rgba(246, 248, 250, 0.98);
     --sidebar-text-light: var(--gray-900);
     --sidebar-text-secondary-light: var(--gray-500);
     --sidebar-shadow-light: rgba(0, 0, 0, 0.1);
     --sidebar-accent-rgb-light: 9, 105, 218;
-    
+
     --code-bg-light: var(--gray-50);
     --status-bg-light: rgba(246, 248, 250, 0.8);
     --sidebar-select-bg-light: rgba(0, 0, 0, 0.03);
@@ -470,7 +468,7 @@ span>a {
     --dark-gray-900: #C9D1D9;
     --dark-blue-400: #1F6FEB;
     --dark-blue-500: #58A6FF;
-    
+
     /* Dark Theme Variables */
     --background-color-dark: var(--black);
     --text-color-dark: var(--dark-gray-900);
@@ -480,13 +478,13 @@ span>a {
     --border-dark: var(--dark-gray-500);
     --accent-color-dark: var(--dark-blue-400);
     --img-color-dark: var(--dark-gray-300);
-    
+
     --sidebar-bg-dark: rgba(22, 27, 34, 0.98);
     --sidebar-text-dark: var(--dark-gray-900);
     --sidebar-text-secondary-dark: var(--dark-gray-600);
     --sidebar-shadow-dark: rgba(0, 0, 0, 0.3);
     --sidebar-accent-rgb-dark: 88, 166, 255;
-    
+
     --code-bg-dark: var(--dark-gray-100);
     --sidebar-select-bg-dark: rgba(255, 255, 255, 0.05);
     --sidebar-select-hover-bg-dark: rgba(255, 255, 255, 0.08);
@@ -504,11 +502,11 @@ span>a {
     --accent-color: var(--accent-color-dark);
     --border: var(--border-dark);
     --img-color: var(--img-color-dark);
-    
+
     --card-bg: rgba(102, 126, 234, 0.12);
     --card-border: var(--border);
     --icon-filter: invert(0) brightness(1) contrast(1);
-    
+
     --sidebar-bg: var(--sidebar-bg-dark);
     --sidebar-border: var(--border);
     --sidebar-text: var(--sidebar-text-dark);
@@ -517,11 +515,11 @@ span>a {
     --sidebar-accent: var(--primary-color);
     --sidebar-shadow: var(--sidebar-shadow-dark);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-dark);
-    
+
     --code-bg: var(--code-bg-dark);
     --code-border: var(--border);
     --code-text: var(--text-color);
-    
+
     --a-color: var(--primary-color);
     --prompt-color: var(--primary-color);
     --status-bg: var(--sidebar-bg);
@@ -529,7 +527,7 @@ span>a {
     --status-text: var(--sidebar-text-secondary);
     --dropdown-bg: var(--dropdown-bg-dark);
     --dropdown-text: var(--text-color);
-    
+
     --sidebar-select-bg: var(--sidebar-select-bg-dark);
     --sidebar-select-hover-bg: var(--sidebar-select-hover-bg-dark);
     --sidebar-select-hover-border: var(--sidebar-select-hover-border-dark);
@@ -547,13 +545,13 @@ span>a {
     --border: var(--border-dark);
     --img-color: var(--img-color-dark);
     --icon-filter: invert(0) brightness(1) contrast(1);
-    
+
     --sidebar-bg: var(--sidebar-bg-dark);
     --sidebar-text: var(--sidebar-text-dark);
     --sidebar-text-secondary: var(--sidebar-text-secondary-dark);
     --sidebar-shadow: var(--sidebar-shadow-dark);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-dark);
-    
+
     --code-bg: var(--code-bg-dark);
     --dropdown-bg: var(--dropdown-bg-dark);
     --sidebar-select-bg: var(--sidebar-select-bg-dark);
@@ -573,7 +571,7 @@ span>a {
     --border: var(--border-light);
     --img-color: var(--img-color-light);
     --icon-filter: invert(0) brightness(0) contrast(1);
-    
+
     --sidebar-bg: var(--sidebar-bg-light);
     --sidebar-border: var(--border);
     --sidebar-text: var(--sidebar-text-light);
@@ -582,7 +580,7 @@ span>a {
     --sidebar-accent: var(--primary-color);
     --sidebar-shadow: var(--sidebar-shadow-light);
     --sidebar-accent-rgb: var(--sidebar-accent-rgb-light);
-    
+
     --code-bg: var(--code-bg-light);
     --dropdown-bg: var(--white);
     --dropdown-text: var(--text-color-light);
@@ -956,11 +954,12 @@ footer {
     position: relative;
 }
 
-footer .footer-nav h3{
+footer .footer-nav h3 {
     color: var(--primary-color) !important;
     transition: all 0.3s ease;
 }
-footer .footer-nav a:hover,footer .footer-nav h3:hover,.more-info-trigger:hover {
+
+footer .footer-nav a:hover, footer .footer-nav h3:hover, .more-info-trigger:hover {
     color: var(--primary-color) !important;
     transform: translateX(2px);
 }
@@ -1381,9 +1380,11 @@ footer .specialty-text {
     gap: 0.5rem;
     flex-wrap: wrap;
 }
-.name{
+
+.name {
     font-weight: 400;
 }
+
 .name-en {
     font-size: 1rem;
     font-weight: 400;
@@ -1419,6 +1420,18 @@ footer .specialty-text {
 
 .about-section {
     margin-bottom: 0;
+    position: relative;
+    padding-left: 24px;
+}
+
+.about-section::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #333;
 }
 
 .about-section p {
@@ -1427,17 +1440,6 @@ footer .specialty-text {
     font-size: 0.9rem;
     opacity: 0.85;
     margin: 0;
-}
-
-.crying-blue-gif {
-    max-width: 150px;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-}
-
-.crying-blue-gif:hover {
-    transform: scale(1.05);
-    transition: all 0.3s ease;
 }
 
 .education-list {

@@ -148,12 +148,12 @@ function loadNavigationAndFooter() {
                             <span class="specialty-text">系統導向全端架構</span>
                         </div>
                         <div class="specialty-item">
-                            <span class="specialty-icon">#核心能力</span>
-                            <span class="specialty-text">前後端整合、狀態流設計、效能與穩定性考量</span>
-                        </div>
-                        <div class="specialty-item">
                             <span class="specialty-icon">#技術實作</span>
                             <span class="specialty-text">Flutter（App 架構）、Django（API / 資料流）、C/C++（底層理解）</span>
+                        </div>
+                        <div class="specialty-item">
+                            <span class="specialty-icon">#我的郵件</span>
+                            <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>
                     <span class="more-info-trigger" onclick="toggleMoreInfo()">關於我<span class="chevron">›</span>
@@ -189,7 +189,6 @@ function loadNavigationAndFooter() {
                 
                 <div class="postcard-layout">
                     <div class="postcard-left">
-                        <img src="assets/gif/CryingBlueArchive.gif" alt="https://tenor.com/zh-TW/view/blue-archive-gif-11558330212366339285" class="crying-blue-gif" title="Why is it so hard to implement code?">
                         <p class="name">陳國翔<span class="name-en">CHEN, GUO-XIANG</span></p>
                         <div class="about-section">
                             <p>最初以硬體與 C# 桌面應用程式作為主要學習方向，透過實際電路實作與軟體設計，培養基本的數位邏輯。

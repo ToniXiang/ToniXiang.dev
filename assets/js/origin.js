@@ -16,10 +16,6 @@ function setupEventListeners() {
 }
 
 async function loadChangelog() {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    const changelogContent = document.getElementById('changelogContent');
-    const errorMessage = document.getElementById('errorMessage');
-
     showLoading(true);
     hideError();
 
@@ -147,25 +143,7 @@ function normalizeCommits(rawCommits) {
             };
         }
 
-        // GitHub API 原始格式或舊版 commits.json
-        if (commit.commit && commit.commit.message) {
-            const inner = commit.commit;
-            let date = null;
-
-            if (inner.author && inner.author.date) {
-                date = inner.author.date;
-            } else if (commit.date) {
-                date = commit.date;
-            }
-
-            return {
-                sha: commit.sha,
-                message: inner.message,
-                date: date
-            };
-        }
-
-        // 後備處理：至少保留 sha / message
+        // 保留 sha / message
         if (commit.sha && commit.message) {
             return {
                 sha: commit.sha,
@@ -247,7 +225,7 @@ function renderCommits() {
         return;
     }
 
-    const commitsHtml = filteredCommits.map(commit => {
+    changelogContent.innerHTML = filteredCommits.map(commit => {
         const message = commit.message;
         const type = extractCommitType(message);
         const shortSha = commit.sha.substring(0, 7);
@@ -266,8 +244,6 @@ function renderCommits() {
             </div>
         `;
     }).join('');
-
-    changelogContent.innerHTML = commitsHtml;
 }
 
 function extractCommitType(message) {
@@ -387,14 +363,13 @@ function fallbackCopyTextToClipboard(text) {
     textArea.focus();
     textArea.select();
 
-    try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            showToast('SHA 已複製到剪貼板');
-        }
-    } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err);
-    }
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            showToast('SHA 已複製到剪貼簿');
+        })
+        .catch(err => {
+            console.error('無法複製到剪貼簿', err);
+        });
 
     document.body.removeChild(textArea);
 }
@@ -452,7 +427,9 @@ function escapeHtml(text) {
         '"': '&quot;',
         "'": '&#039;'
     };
-    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+    return text.replace(/[&<>"']/g, function (m) {
+        return map[m];
+    });
 }
 
 // 移除自動刷新功能，改為只在用戶手動操作時才刷新
