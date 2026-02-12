@@ -177,13 +177,12 @@ body:not(.dark-theme) {
 }
 
 .site-info-details p {
-    line-height: 1.8;
     margin-bottom: 1.2rem;
     color: var(--text-color);
 }
 
 .info-item p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-top: 0.8rem;
     margin-bottom: 0;
     padding-left: 0.3rem;
@@ -662,20 +661,6 @@ body:not(.dark-theme) {
     word-wrap: break-word;
     hyphens: auto;
     max-width: 100%;
-}
-
-.commit-author {
-    font-size: 0.8rem;
-    color: var(--text-color);
-    opacity: 0.65;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.commit-author::before {
-    content: '👤';
-    font-size: 0.75rem;
 }
 
 .error-message {

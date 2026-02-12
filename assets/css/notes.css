@@ -820,6 +820,7 @@ body:not(.dark-theme) {
 }
 
 .markdown-content a {
+    color: var(--primary-color);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: all 0.2s ease;

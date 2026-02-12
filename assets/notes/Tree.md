@@ -267,4 +267,4 @@ void dfs2(int u, int p) {
 - 邊分治
 - 長鏈剖分
 ---
-TreeNode + DFS 是 LeetCode 入門級的用法，但演算法競賽中的「樹」是一整個思維領域，又稱「圖論」，而不是一個 class 或結構而已。
+TreeNode + DFS 是 LeetCode 入門級的用法，但演算法競賽中的「樹」是一整個思維領域，又稱「圖論」，而不是一個 class 或結構而已

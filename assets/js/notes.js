@@ -9,13 +9,14 @@ const noteCategories = [
             {filename: 'Queue.md', title: '佇列與雙端佇列'},
             {filename: 'Binary_Search.md', title: '二分搜尋演算法'},
             {filename: 'Priority.md', title: '堆積與優先佇列'},
-            {filename: 'Tree.md', title: '樹與圖論演算法'}
         ]
     },
     {
         title: '系統開發',
         notes: [
-            {filename: '後端整合.md', title: '後端服務整合'}
+            {filename: '後端整合.md', title: '後端服務整合'},
+            {filename: 'Authentication.md', title: 'Authentication Service 設計指南'},
+            {filename: 'Email.md', title: 'Email Service 設計指南'},
         ]
     }
 ];
