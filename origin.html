@@ -13,91 +13,93 @@
 </head>
 
 <body>
-    <!-- 載入動畫 -->
-    <div class="loading-screen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>
+<!-- 載入動畫 -->
+<div class="loading-screen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+</div>
 
-    <div id="background"></div>
-    <header class="blogTitle"></header>
-    <div class="menu" onclick="toggleMenu()" aria-label="切換選單" title="快捷鍵 M">
-        <img src="assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
-    </div>
-    <main>
-        <div class="site-info-section">
-            <div class="breadcrumb-nav">
-                <a href="index.html" class="breadcrumb-link">首頁</a>
-                <span class="breadcrumb-separator">›</span>
-                <span class="breadcrumb-current">關於本站</span>
-            </div>
-            <h2>關於本站</h2>
-            <div class="site-info-content">
-                <div class="site-info-details">
-                    <div class="info-item">
-                        <span class="info-badge">網站目的</span>
-                        <ul>
-                            <li>ToniXiang.me 的建立，是為了整理軟體開發與工程實作上的累積，並將學習過程、專案經驗與設計思考轉化為可公開的筆記內容。
-                                這裡不只是個人專業能力的對外呈現，而是一個持續維護的工程筆記，涵蓋從問題定義、技術選型，到實作細節與設計取捨的完整脈絡。內容著重於「為何這樣設計」以及「系統如何運作」，而不僅僅是結果本身。
-                                <span class="highlight">部分內容使用 AI 輔助生成，並經人工整理與審校</span>。
-                                這種以工程實作為核心的呈現方式，有助於技術交流、合作與長期職涯發展。
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-badge">使用技術</span>
-                        <ul>
-                            <li>HTML / CSS / JavaScript / Markdown</li>
-                            <li>原生前端實作，除了程式碼高亮以外無框架依賴</li>
-                            <li>導入 Git 版本控制</li>
-                            <li>使用 Cloudflare Pages 建構前端部署與交付架構，處理 HTTPS、安全標頭、快取策略與跨域存取問題</li>
-                        </ul>
-                    </div>
+<div id="background"></div>
+<header class="blogTitle"></header>
+<div class="menu" onclick="toggleMenu()" aria-label="切換選單" title="快捷鍵 M">
+    <img src="assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
+</div>
+<main>
+    <div class="site-info-section">
+        <div class="breadcrumb-nav">
+            <a href="index.html" class="breadcrumb-link">首頁</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">關於本站</span>
+        </div>
+        <h2>關於本站</h2>
+        <div class="site-info-content">
+            <div class="site-info-details">
+                <div class="info-item">
+                    <span class="info-badge">網站概述</span>
+                    <ul>
+                        <li>ToniXiang.me 這裡不只是專業能力的對外呈現，而是一個持續維護的項目，涵蓋從問題定義、技術選型，到實作細節與設計取捨的完整脈絡。
+                            內容著重於「為何這樣設計」以及「系統如何運作」，而不僅僅是結論本身。
+                            <span class="highlight">內容使用 AI 輔助生成，並經人工整理與審校。</span>
+                            這種以工程實作為核心的呈現方式，有助於技術交流、合作與長期職涯發展。
+                        </li>
+                    </ul>
+                </div>
+                <div class="info-item">
+                    <span class="info-badge">使用技術</span>
+                    <ul>
+                        <li><strong>核心技術：</strong>HTML、CSS、JavaScript、Markdown</li>
+                        <li><strong>前端架構：</strong>原生前端實作，除程式碼高亮外無框架依賴</li>
+                        <li><strong>版本控制：</strong>Git（專案版本管理）</li>
+                        <li><strong>部署與交付：</strong>
+                            使用 Cloudflare Pages，處理 HTTPS、安全標頭、快取策略與跨域存取（CORS）
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-            <div class="site-info-section">
-                <h2 class="changelog-title">更新記錄</h2>
-                <div class="changelog-controls">
-                    <div class="filter-controls">
-                        <label for="typeFilter" class="sr-only">篩選類型：</label>
-                        <select id="typeFilter" class="filter-select">
-                            <option value="">所有類型</option>
-                            <option value="feat">新功能 (feat)</option>
-                            <option value="fix">修復 (fix)</option>
-                            <option value="docs">文檔 (docs)</option>
-                            <option value="style">樣式 (style)</option>
-                            <option value="refactor">重構 (refactor)</option>
-                            <option value="perf">性能 (perf)</option>
-                            <option value="test">測試 (test)</option>
-                            <option value="build">構建 (build)</option>
-                            <option value="ci">CI/CD (ci)</option>
-                            <option value="chore">雜項 (chore)</option>
-                        </select>
-                    </div>
-                    <div role="button" id="sortToggle" class="sort-toggle" onclick="toggleSortOrder()" tabindex="0">
-                        按時間排序：新 → 舊
-                    </div>
-                    <div class="loading-indicator" id="loadingIndicator">
-                        <div class="loading-text-spinner"></div>
-                        <span>載入中...</span>
-                    </div>
-                </div>
-                <div class="changelog-container">
-                    <div id="changelogContent" class="changelog-list">
-                        <!-- 動態載入的commit內容 -->
-                    </div>
-                    <div id="errorMessage" class="error-message" style="display: none;">
-                        <h3>載入失敗</h3>
-                        <p>無法載入更新記錄，請稍後再試或檢查網路連接。</p>
-                        <button type="button" onclick="loadChangelog()" class="retry-btn">重試</button>
-                    </div>
-                </div>
+    </div>
+    <div class="site-info-section">
+        <h2 class="changelog-title">更新記錄</h2>
+        <div class="changelog-controls">
+            <div class="filter-controls">
+                <label for="typeFilter" class="sr-only">篩選類型：</label>
+                <select id="typeFilter" class="filter-select">
+                    <option value="">所有類型</option>
+                    <option value="feat">新功能 (feat)</option>
+                    <option value="fix">修復 (fix)</option>
+                    <option value="docs">文檔 (docs)</option>
+                    <option value="style">樣式 (style)</option>
+                    <option value="refactor">重構 (refactor)</option>
+                    <option value="perf">性能 (perf)</option>
+                    <option value="test">測試 (test)</option>
+                    <option value="build">構建 (build)</option>
+                    <option value="ci">CI/CD (ci)</option>
+                    <option value="chore">雜項 (chore)</option>
+                </select>
             </div>
-    </main>
-    <footer></footer>
-    <script src="assets/js/script.js" defer></script>
-    <script src="assets/js/origin.js" defer></script>
+            <div role="button" id="sortToggle" class="sort-toggle" onclick="toggleSortOrder()" tabindex="0">
+                按時間排序：新 → 舊
+            </div>
+            <div class="loading-indicator" id="loadingIndicator">
+                <div class="loading-text-spinner"></div>
+                <span>載入中...</span>
+            </div>
+        </div>
+        <div class="changelog-container">
+            <div id="changelogContent" class="changelog-list">
+                <!-- 動態載入的commit內容 -->
+            </div>
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <h3>載入失敗</h3>
+                <p>無法載入更新記錄，請稍後再試或檢查網路連接。</p>
+                <button type="button" onclick="loadChangelog()" class="retry-btn">重試</button>
+            </div>
+        </div>
+    </div>
+</main>
+<footer></footer>
+<script src="assets/js/script.js" defer></script>
+<script src="assets/js/origin.js" defer></script>
 </body>
 
 </html>

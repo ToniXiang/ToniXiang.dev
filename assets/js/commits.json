@@ -1,6 +1,21 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-12 16:03:16 +0800",
+                        "message":  "feat: add design guidelines for Authentication and Email services",
+                        "sha":  "bd2a886c3abd045aab9abe43652cf309a4261d10"
+                    },
+                    {
+                        "date":  "2026-02-12 13:05:43 +0800",
+                        "message":  "refactor: simplify note category structure and improve file info retrieval",
+                        "sha":  "38cad4f97d5db19d6eda2393667428a9055d45ae"
+                    },
+                    {
+                        "date":  "2026-02-12 01:20:22 +0800",
+                        "message":  "feat: improve layout and styling of notes section and breadcrumb navigation",
+                        "sha":  "5b358be735bb1220930f5c8dc389a0205af2dbc5"
+                    },
+                    {
                         "date":  "2026-02-12 00:20:37 +0800",
                         "message":  "feat: enhance breadcrumb navigation and update styles",
                         "sha":  "2de1d826d3b3e64927ed3437edc88b5274fd751c"

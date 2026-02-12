@@ -15,6 +15,7 @@ const noteCategories = [
         title: '系統開發',
         notes: [
             {filename: '後端整合.md', title: '後端服務整合'},
+            {filename: 'Pagination.md', title: '分頁設計指南'},
             {filename: 'Authentication.md', title: 'Authentication Service 設計指南'},
             {filename: 'Email.md', title: 'Email Service 設計指南'},
         ]
@@ -175,7 +176,12 @@ function parseMarkdown(text) {
     const codeBlocks = [];
     text = text.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
         const language = lang ? `language-${lang.toLowerCase()}` : 'language-text';
-        const cleanCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\r\n?/g, '\n');
+        // 移除開頭和結尾的多餘換行
+        const trimmedCode = code.replace(/^\n+/, '').replace(/\n+$/, '\n');
+        const cleanCode = trimmedCode
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
         const html = `<pre><code class="${language}">${cleanCode}</code></pre>`;
         const placeholder = `@@CODEBLOCK_${codeBlocks.length}@@`;
         codeBlocks.push(html);
@@ -188,48 +194,85 @@ function parseMarkdown(text) {
         return `<code class="language-text">${cleanCode}</code>`;
     });
 
-    // 標題
+    // 粗體和斜體 (在標題之前處理，避免影響標題)
+    // 粗體： **text** 或 __text__
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    // 斜體： *text* 或 _text_ (使用非貪婪匹配)
+    text = text.replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+    text = text.replace(/\b_([^_\n]+?)_\b/g, '<em>$1</em>');
+
+    // 標題 (需要處理標題中可能包含的行內格式)
     text = text
-        .replace(/^### (.*)$/gm, '<h3>$1</h3>')
-        .replace(/^## (.*)$/gm, '<h2>$1</h2>')
-        .replace(/^# (.*)$/gm, '<h1>$1</h1>');
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>');
 
     // 分隔線 (--- 或 *** 或 ___)
     text = text.replace(/^(-{3,}|\*{3,}|_{3,})$/gm, '<hr>');
 
+    // 引用區塊 (blockquote)
+    text = text.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+    // 合併連續的 blockquote
+    text = text.replace(/(<\/blockquote>\n<blockquote>)+/g, '\n');
+
     // 連結
     text = text.replace(
-        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)(?:\s+"[^"]*")?\)/g,
+        /\[([^\]]+)]\((https?:\/\/[^\s)]+)(?:\s+"[^"]*")?\)/g,
         (match, linkText, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`
     );
-    text = text
-        .replace(/^(?:\* |- )(.*)$/gm, '<li>$1</li>')
-        .replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
 
-    // 合併連續的 <li> 為一個 <ul>
-    text = text.replace(/(?:<li>[^<]*<\/li>\n?)+/g, (match) => {
-        const items = match.trim().replace(/\n/g, '');
-        return `<ul>${items}</ul>`;
+    // 處理列表項目（支援多行內容）
+    // 先標記無序列表項目
+    text = text.replace(/^(?:\* |- )(.+)$/gm, '@@ULITEM@@$1@@ENDITEM@@');
+    // 標記有序列表項目
+    text = text.replace(/^\d+\. (.+)$/gm, '@@OLITEM@@$1@@ENDITEM@@');
+
+    // 將連續的無序列表項目合併成 <ul>
+    text = text.replace(/(@@ULITEM@@[\s\S]+?@@ENDITEM@@(?:\n@@ULITEM@@[\s\S]+?@@ENDITEM@@)*)/g, (match) => {
+        const items = match.split('@@ENDITEM@@\n').filter(item => item.trim());
+        const listItems = items.map(item => {
+            const content = item.replace(/@@ULITEM@@/, '').replace(/@@ENDITEM@@/, '').trim();
+            return `<li>${content}</li>`;
+        }).join('');
+        return `<ul>${listItems}</ul>`;
     });
+
+    // 將連續的有序列表項目合併成 <ol>
+    text = text.replace(/(@@OLITEM@@[\s\S]+?@@ENDITEM@@(?:\n@@OLITEM@@[\s\S]+?@@ENDITEM@@)*)/g, (match) => {
+        const items = match.split('@@ENDITEM@@\n').filter(item => item.trim());
+        const listItems = items.map(item => {
+            const content = item.replace(/@@OLITEM@@/, '').replace(/@@ENDITEM@@/, '').trim();
+            return `<li>${content}</li>`;
+        }).join('');
+        return `<ol>${listItems}</ol>`;
+    });
+
+    // 清理可能殘留的標記
+    text = text.replace(/@@(UL|OL)ITEM@@/g, '').replace(/@@ENDITEM@@/g, '');
 
     // 分段：以 2+ 連續換行分隔段落（避免產生多個 <br>）
     const blocks = text.split(/\n{2,}/).map(block => block.trim()).filter(b => b.length > 0);
 
     const htmlBlocks = blocks.map(block => {
         // 如果已是獨立區塊型標籤則直接返回
-        if (/^(<h[1-6]>|<ul>|<pre>|<blockquote>|<hr>)/.test(block)) {
+        if (/^(<h[1-6]>|<ul>|<ol>|<pre>|<blockquote>|<hr>|@@CODEBLOCK_)/.test(block)) {
             return block;
         }
-        // 檢查是否只是單行內容，避免不必要的 <br>
+        // 如果包含區塊標籤，直接返回
+        if (/<\/(h[1-6]|ul|ol|li|pre|blockquote)>/.test(block)) {
+            return block;
+        }
+        // 檢查是否只是單行內容
         if (!block.includes('\n')) {
             return `<p>${block}</p>`;
         }
-        // 其餘行內換行轉 <br>，但避免連續的 <br>
-        const withBr = block.replace(/\n+/g, '<br>');
+        // 其餘行內換行轉 <br>
+        const withBr = block.replace(/\n/g, '<br>');
         return `<p>${withBr}</p>`;
     });
 
-    let html = htmlBlocks.join('');
+    let html = htmlBlocks.join('\n');
 
     // 還原程式碼區塊（保持原始換行，不插入 <br>）
     html = html.replace(/@@CODEBLOCK_(\d+)@@/g, (m, i) => codeBlocks[i]);
