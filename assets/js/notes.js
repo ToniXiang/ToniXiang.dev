@@ -2,22 +2,20 @@
 // 筆記分類配置 - 使用分類結構管理
 const noteCategories = [
     {
-        id: 'algorithm',
         title: '演算法',
         notes: [
-            {filename: 'Algorithm.md', title: '演算法解題', id: 'Algorithm'},
-            {filename: 'Unordered.md', title: '雜湊表應用', id: 'Unordered'},
-            {filename: 'Queue.md', title: '佇列與雙端佇列', id: 'Queue'},
-            {filename: 'Binary_Search.md', title: '二分搜尋演算法', id: 'Binary_Search'},
-            {filename: 'Priority.md', title: '堆積與優先佇列', id: 'Priority'},
-            {filename: 'Tree.md', title: '樹與圖論演算法', id: 'Tree'}
+            {filename: 'Algorithm.md', title: '演算法解題'},
+            {filename: 'Unordered.md', title: '雜湊表應用'},
+            {filename: 'Queue.md', title: '佇列與雙端佇列'},
+            {filename: 'Binary_Search.md', title: '二分搜尋演算法'},
+            {filename: 'Priority.md', title: '堆積與優先佇列'},
+            {filename: 'Tree.md', title: '樹與圖論演算法'}
         ]
     },
     {
-        id: 'system',
         title: '系統開發',
         notes: [
-            {filename: '後端整合.md', title: '後端服務整合', id: '後端整合'}
+            {filename: '後端整合.md', title: '後端服務整合'}
         ]
     }
 ];
@@ -33,23 +31,19 @@ noteCategories.forEach(category => {
     });
 });
 
-// 根據 note 屬性查找對應的檔案資訊
-function getNoteFileInfo(noteAttr) {
-    // 先嘗試精確匹配檔案名（不含副檔名）
-    const fileInfo = noteFiles.find(nf => {
-        const filenameWithoutExt = nf.filename.replace(/\.(md|txt)$/, '');
-        return filenameWithoutExt === noteAttr;
-    });
+// 根據標識符取得檔案資訊（支援檔名、slug、標題）
+function getNoteFileInfo(identifier) {
+    if (!identifier) return noteFiles[0] || { filename: 'Algorithm.md', title: '演算法解題' };
 
-    if (fileInfo) {
-        return fileInfo;
-    }
+    const id = identifier.trim().toLowerCase();
 
-    // 如果找不到，返回預設值（使用 noteAttr 作為檔案名）
-    return {
-        filename: noteAttr + '.md',
-        title: noteAttr
-    };
+    // 依序比對：完整檔名 > 無副檔名 > 標題
+    return noteFiles.find(n => {
+        const filename = n.filename.toLowerCase();
+        const slug = filename.replace(/\.(md|txt)$/i, '');
+        const title = n.title.toLowerCase();
+        return filename === id || slug === id || title === id;
+    }) || noteFiles[0] || { filename: 'Algorithm.md', title: '演算法解題' };
 }
 
 // 動態產生筆記列表 HTML
@@ -83,7 +77,7 @@ function generateNotesHTML() {
             const listItem = document.createElement('li');
             listItem.className = 'note-item';
             listItem.innerHTML = `
-                <span class="note-title" note="${note.id}">${note.title}</span>
+                <span class="note-title" note="${note.filename}">${note.title}</span>
             `;
             listElement.appendChild(listItem);
         });
@@ -141,17 +135,15 @@ function handleInternalNoteClick(event) {
     // 根據 note 屬性獲取檔案資訊
     const fileInfo = getNoteFileInfo(noteAttr);
 
-    console.log('點擊筆記:', noteAttr, '-> 檔案:', fileInfo.filename, '標題:', fileInfo.title);
+    console.log('點擊筆記 -','檔案:', fileInfo.filename, '標題:', fileInfo.title);
 
     // 使用檔案名和標題顯示筆記
     showNoteModal(fileInfo.filename, fileInfo.title);
 }
 
 // 從檔案讀取筆記內容，支持 .md 和 .txt
+// return { success: boolean, path?: string, type?: 'markdown' | 'text', error?: string }
 async function loadNoteContent(filename) {
-    // filename 已經包含副檔名（例如 'Binary_Search.md'）
-    const filenameWithoutExt = filename.replace(/\.(md|txt)$/, '');
-
     // 先嘗試讀取指定的檔案
     try {
         const response = await fetch(`assets/notes/${filename}`);
@@ -167,29 +159,10 @@ async function loadNoteContent(filename) {
     } catch (error) {
         console.log(`指定檔案不存在: ${filename}`);
     }
-
-    // 如果指定檔案不存在，嘗試替代副檔名
-    const alternateExt = filename.endsWith('.md') ? '.txt' : '.md';
-    const alternateFilename = filenameWithoutExt + alternateExt;
-
-    try {
-        const response = await fetch(`assets/notes/${alternateFilename}`);
-        if (response.ok) {
-            const content = await response.text();
-            const fileType = alternateFilename.endsWith('.md') ? 'markdown' : 'text';
-            return {
-                success: true,
-                content: content,
-                type: fileType
-            };
-        }
-    } catch (error) {
-        console.error('讀取筆記內容失敗:', error);
-        return {
-            success: false,
-            error: `無法找到檔案: ${filename} 或 ${alternateFilename}`
-        };
-    }
+    return {
+        success: false,
+        error: `無法找到檔案: ${filename}`
+    };
 }
 
 // 簡單的 Markdown 解析器
@@ -223,19 +196,11 @@ function parseMarkdown(text) {
     // 分隔線 (--- 或 *** 或 ___)
     text = text.replace(/^(-{3,}|\*{3,}|_{3,})$/gm, '<hr>');
 
-    // 粗體與斜體
-    text = text
-        .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>');
-
     // 連結
     text = text.replace(
-        /\[([^\]]+)\]\((https?:\/\/[^)\s]+)(?:\s+"[^"]*")?\)/g,
-        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)(?:\s+"[^"]*")?\)/g,
+        (match, linkText, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`
     );
-
-    // 列表項 (先標記為 <li>)
     text = text
         .replace(/^(?:\* |- )(.*)$/gm, '<li>$1</li>')
         .replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
@@ -357,24 +322,15 @@ function showNoteModal(filename, title) {
                 // Markdown 內容解析並渲染為 HTML
                 const htmlContent = parseMarkdown(result.content);
                 noteViewerBody.innerHTML = `<div class="note-content markdown-content">${htmlContent}</div>`;
-
-                // 觸發 Prism.js 語法高亮
-                if (typeof Prism !== 'undefined') {
-                    Prism.highlightAllUnder(noteViewerBody);
-                }
+                Prism.highlightAllUnder(noteViewerBody);
             } else {
                 // 純文字內容保持原格式
                 noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>`;
-
-                // 觸發 Prism.js 語法高亮
-                if (typeof Prism !== 'undefined') {
-                    Prism.highlightAllUnder(noteViewerBody);
-                }
+                Prism.highlightAllUnder(noteViewerBody);
             }
         } else {
             noteViewerBody.innerHTML = `
                 <div class="error-message">
-                    <p>無法載入筆記內容</p>
                     <p class="error-detail">${result.error}</p>
                     <p class="note-placeholder">這是 <strong>${title}</strong> 的佔位內容，實際內容將從對應的 .md 或 .txt 檔案載入。</p>
                 </div>
