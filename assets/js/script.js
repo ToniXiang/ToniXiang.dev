@@ -91,7 +91,7 @@ function loadNavigationAndFooter() {
             <div class="nav-label">導覽</div>
             <nav class="nav-item${currentPage === 'index'||currentPage==='' ? ' active' : ''}" onclick="redirectToPage('index.html')">
                 <div class="nav-icon">
-                    <img src="assets/images/home.svg" alt="home" width="20" height="20" class="nav-icon-img" aria-hidden="true">
+                    <img src="assets/images/home.svg" alt="home" class="nav-icon-img" aria-hidden="true">
                 </div>
                 <div class="nav-text">
                     <p>主要頁面</p>
@@ -100,7 +100,7 @@ function loadNavigationAndFooter() {
                 <div class="nav-indicator"></div>
             </nav>
             <nav class="nav-item${currentPage === 'notes' ? ' active' : ''}" onclick="redirectToPage('notes.html')">
-                <img src="assets/images/description.svg" alt="notes" width="20" height="20" class="nav-icon-img" aria-hidden="true">
+                <img src="assets/images/description.svg" alt="notes" class="nav-icon-img" aria-hidden="true">
                 <div class="nav-text">
                     <p>學習筆記</p>
                     <span class="nav-description">技術筆記整理</span>
@@ -108,7 +108,7 @@ function loadNavigationAndFooter() {
                 <div class="nav-indicator"></div>
             </nav>
             <nav class="nav-item${currentPage === 'origin' ? ' active' : ''}" onclick="redirectToPage('origin.html')">
-                <img src="assets/images/changelog.svg" alt="origin" width="20" height="20" class="nav-icon-img" aria-hidden="true">
+                <img src="assets/images/changelog.svg" alt="origin" class="nav-icon-img" aria-hidden="true">
                 <div class="nav-text">
                     <p>關於本站</p>
                     <span class="nav-description">版本變更紀錄</span>
@@ -139,16 +139,15 @@ function loadNavigationAndFooter() {
         <div class="footer-content">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="footer-brand-header">
-                        <p>ToniXiang</p>
+                    <div class="footer-specialties">
+                        <div class="specialty-item">
+                            <img src="assets/images/copyright.svg" alt="copyright" class="specialty-icon" aria-hidden="true">   
+                            <span class="specialty-text">2026 陳國翔</span>
+                        </div>
                     </div>
                     <div class="footer-specialties">
                         <div class="specialty-item">
-                            <span class="specialty-icon">#專精方向</span>
-                            <span class="specialty-text">系統導向全端架構</span>
-                        </div>
-                        <div class="specialty-item">
-                            <span class="specialty-icon">#聯絡我</span>
+                            <img src="assets/images/mail.svg" alt="email" class="specialty-icon" aria-hidden="true">
                             <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>

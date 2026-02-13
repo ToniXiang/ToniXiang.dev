@@ -700,39 +700,23 @@ span > a {
     gap: 0.75rem;
 }
 
-.footer-brand-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.footer-brand-header img {
-    filter: var(--icon-filter);
-    transition: filter 0.3s ease;
-}
-
-.footer-brand-header p {
-    margin: 0;
-}
-
-.footer-name-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    opacity: 0.8;
-}
-
 .footer-specialties {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-top: 0.25rem;
 }
 
 .specialty-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+}
+
+.specialty-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+    flex-shrink: 0;
+    filter: var(--icon-filter);
 }
 
 .specialty-text {
@@ -1365,10 +1349,8 @@ footer .specialty-text {
     filter: var(--icon-filter);
     transition: filter 0.3s ease;
 }
-
 .close-card:hover {
-    background: var(--hover-bg, rgba(0, 0, 0, 0.05));
-    transform: rotate(90deg);
+    background: var(--hover-bg);
 }
 
 .more-info-content h2 {
@@ -1493,7 +1475,6 @@ footer .specialty-text {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
     background: var(--card-bg);
     color: var(--text-color);
     padding: 6px 10px;
@@ -1672,7 +1653,8 @@ footer .specialty-text {
         width: 18px;
         height: 18px;
     }
-    body:not(.home-page)>main {
+
+    body:not(.home-page) > main {
         padding-top: 15%;
     }
 }
@@ -1780,6 +1762,7 @@ body.loaded .menu {
     box-sizing: border-box;
     overflow-x: hidden;
 }
+
 @media (max-width: 480px) {
     .site-info-section {
         padding: 0 10px;

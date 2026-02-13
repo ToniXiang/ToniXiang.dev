@@ -144,7 +144,7 @@ function handleInternalNoteClick(event) {
 }
 
 // 從檔案讀取筆記內容，支持 .md 和 .txt
-// return { success: boolean, path?: string, type?: 'markdown' | 'text', error?: string }
+// return { success: boolean, path?: string, type?: 'markdown' | 'text', lastModified?: string, error?: string }
 async function loadNoteContent(filename) {
     // 先嘗試讀取指定的檔案
     try {
@@ -152,10 +152,20 @@ async function loadNoteContent(filename) {
         if (response.ok) {
             const content = await response.text();
             const fileType = filename.endsWith('.md') ? 'markdown' : 'text';
+
+            // 取得最後修改時間
+            let lastModified = null;
+            const lastModifiedHeader = response.headers.get('Last-Modified');
+            if (lastModifiedHeader) {
+                const date = new Date(lastModifiedHeader);
+                lastModified = formatDate(date);
+            }
+
             return {
                 success: true,
                 content: content,
-                type: fileType
+                type: fileType,
+                lastModified: lastModified
             };
         }
     } catch (error) {
@@ -165,6 +175,14 @@ async function loadNoteContent(filename) {
         success: false,
         error: `無法找到檔案: ${filename}`
     };
+}
+
+// 格式化日期為 YYYY/MM/DD 格式
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
 }
 
 // 簡單的 Markdown 解析器
@@ -362,17 +380,26 @@ function showNoteModal(filename, title) {
     // 載入並顯示筆記內容
     loadNoteContent(filename).then(result => {
         if (result.success) {
+            // 更新標題
+            noteViewerTitle.textContent = title;
+
+            // 生成頁尾的最後更新時間 HTML
+            const footerHTML = result.lastModified
+                ? `<div class="note-footer"><span class="last-updated-badge">最後更新 ${result.lastModified}</span></div>`
+                : '';
+
             if (result.type === 'markdown') {
-                // Markdown 內容解析並渲染為 HTML
+                // Markdown 內容解析並渲染為 HTML，並在底部添加更新時間
                 const htmlContent = parseMarkdown(result.content);
-                noteViewerBody.innerHTML = `<div class="note-content markdown-content">${htmlContent}</div>`;
+                noteViewerBody.innerHTML = `<div class="note-content markdown-content">${htmlContent}</div>${footerHTML}`;
                 Prism.highlightAllUnder(noteViewerBody);
             } else {
-                // 純文字內容保持原格式
-                noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>`;
+                // 純文字內容保持原格式，並在底部添加更新時間
+                noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>${footerHTML}`;
                 Prism.highlightAllUnder(noteViewerBody);
             }
         } else {
+            noteViewerTitle.textContent = title;
             noteViewerBody.innerHTML = `
                 <div class="error-message">
                     <p class="error-detail">${result.error}</p>
@@ -384,6 +411,7 @@ function showNoteModal(filename, title) {
         noteViewerBody.scrollTop = 0;
     }).catch(error => {
         console.error('載入筆記內容時發生錯誤:', error);
+        noteViewerTitle.textContent = title;
         noteViewerBody.innerHTML = `
             <div class="error-message">
                 <p>載入筆記時發生錯誤</p>
