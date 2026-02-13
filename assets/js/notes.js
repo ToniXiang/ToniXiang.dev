@@ -1,4 +1,7 @@
 /* global Prism */
+// 筆記元資料（最後更新時間）
+let notesMetadata = {};
+
 // 筆記分類配置 - 使用分類結構管理
 const noteCategories = [
     {
@@ -48,6 +51,21 @@ function getNoteFileInfo(identifier) {
     }) || noteFiles[0] || { filename: 'Algorithm.md', title: '演算法解題' };
 }
 
+// 載入筆記元資料（從 notes-metadata.json）
+async function loadNotesMetadata() {
+    try {
+        const response = await fetch('assets/js/notes-metadata.json');
+        if (response.ok) {
+            notesMetadata = await response.json();
+            console.log('已載入筆記元資料:', Object.keys(notesMetadata).length, '個檔案');
+        } else {
+            console.warn('無法載入筆記元資料');
+        }
+    } catch (error) {
+        console.warn('載入筆記元資料時發生錯誤:', error);
+    }
+}
+
 // 動態產生筆記列表 HTML
 function generateNotesHTML() {
     const notesGrid = document.querySelector('.notes-grid');
@@ -92,14 +110,17 @@ function generateNotesHTML() {
 
 // 筆記頁面功能
 document.addEventListener('DOMContentLoaded', () => {
-    generateNotesHTML();
-    initializeNotes();
-    setupNoteInteractions();
-    handleUrlHash();
-    // 頁面載入完成，隱藏載入動畫
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 300);
+    // 先載入筆記元資料
+    loadNotesMetadata().then(() => {
+        generateNotesHTML();
+        initializeNotes();
+        setupNoteInteractions();
+        handleUrlHash();
+        // 頁面載入完成，隱藏載入動畫
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 300);
+    });
 });
 
 // 處理 URL hash 參數，自動打開指定的筆記
@@ -153,12 +174,10 @@ async function loadNoteContent(filename) {
             const content = await response.text();
             const fileType = filename.endsWith('.md') ? 'markdown' : 'text';
 
-            // 取得最後修改時間
+            // 從 notesMetadata 取得最後修改時間
             let lastModified = null;
-            const lastModifiedHeader = response.headers.get('Last-Modified');
-            if (lastModifiedHeader) {
-                const date = new Date(lastModifiedHeader);
-                lastModified = formatDate(date);
+            if (notesMetadata[filename] && notesMetadata[filename].lastModified) {
+                lastModified = notesMetadata[filename].lastModified;
             }
 
             return {
@@ -177,13 +196,6 @@ async function loadNoteContent(filename) {
     };
 }
 
-// 格式化日期為 YYYY/MM/DD 格式
-function formatDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
-}
 
 // 簡單的 Markdown 解析器
 function parseMarkdown(text) {

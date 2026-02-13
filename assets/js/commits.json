@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-13 18:39:51 +0800",
+                        "message":  "feat: improve documentation clarity and update styles for better consistency",
+                        "sha":  "e0dffad7ed50730958c89ad9f7ca07aec1fba4d2"
+                    },
+                    {
                         "date":  "2026-02-13 18:10:57 +0800",
                         "message":  "feat: update styles and add last modified date to notes footer",
                         "sha":  "bf8248b0c7b982a69c7167344dea9371edf0bc87"
