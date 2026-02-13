@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-12 20:54:42 +0800",
+                        "message":  "feat: update Authentication and Email service documentation with design guidelines and improvements",
+                        "sha":  "013fb32bbd41a408ebf6ef1feb2a32ee9ee8c7bd"
+                    },
+                    {
                         "date":  "2026-02-12 16:03:16 +0800",
                         "message":  "feat: add design guidelines for Authentication and Email services",
                         "sha":  "bd2a886c3abd045aab9abe43652cf309a4261d10"

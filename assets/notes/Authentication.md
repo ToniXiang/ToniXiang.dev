@@ -21,18 +21,27 @@
 ## Token 生命週期設計
 
 - 每次使用 Refresh Token 重新簽發新 Access Token 與 Refresh Token
-- 舊的 Refresh Token 立即失效，防止重放攻擊
-- 如果 Refresh Token 過期(表示用戶久未登入)，使用者需重新登入以獲得新 Token
+- 重新簽發後，舊的 Refresh Token 立即失效，防止重放攻擊
+- 如果 Refresh Token 過期，表示用戶久未登入，使用者需重新登入以獲得新的 Token
 
 ## 未來支援 OAuth / SSO
 
-- Auth 2.0：支援第三方登入（Google、GitHub）
-- OpenID Connect：標準化身份驗證流程
-- SSO：企業環境下整合 AD / LDAP
+- OAuth 2.0：支援第三方登入（Google、GitHub）
+- OpenID Connect（OIDC）：在 OAuth 2.0 的基礎上提供標準化身份驗證流程
+- SSO（Single Sign-On）：使用者只需登入一次即可存取多個系統，例如學校 ePortal
+
+## 多因素驗證（MFA）
+
+- 增加安全層級：除了密碼外，還需提供第二種驗證方式（如 OTP、Email 驗證碼）
+- 可選擇性：根據用戶需求啟用 MFA，提供更高安全性的選項
+- 網站上的圖形驗證碼(Captcha)：不算在多因子認證之中
 
 ## 結論
-Token 設計方便管理安全性與使用者體驗，使用者每次進入網站不必頻繁輸入帳號及密碼，
+
+透過 Token 作為身分驗證機制，使用者每次進入網站不必頻繁輸入帳號及密碼，
 同時能在多種設備上保持登入狀態，過期會自動登出。唯一的缺點是需要額外的 Cache 來存，但這是為了安全性與性能的必要權衡。
-Access Token 可以解析出唯一識別用戶的資訊（如 user_id），後端不需查資料庫即可驗證授權，提升效能
+Access Token 可以解析出唯一識別用戶的資訊，如 user_id，後端不需查資料庫即可驗證授權，提升效能。
+
 ## 外部專案
+
 [simplejwt-backend 儲存庫](https://github.com/LingoNext/simplejwt-backend)
