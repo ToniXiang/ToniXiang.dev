@@ -1,5 +1,5 @@
 ## 標籤
-不是任一標籤都適合用在某種題目上，請看情況斟酌使用
+不是任一標籤都適合用在某些特定情況，請斟酌使用
 - BFS / DFS
 - Shortest Path(Dijkstra)：權重非負
 - Minimum Spanning Tree：Kruskal 按邊排序；Prim 相鄰矩陣圖
@@ -56,5 +56,3 @@ assign(n,val) 不管原來的元素是什麼，全部清掉，類於 vector.clea
 stringstream ss(",a,b"); getline(ss,data,',') 會讀到 空字串、"a"、"b"，要預防
 以上改成 ss("a,b,,"); 一個EOF前的空字串不會被讀取，但還剩一個，可知順序 "a"、"b"、空字串
 ```
----
-你以為 STL 在幫你，其實它在背刺你

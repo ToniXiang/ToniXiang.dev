@@ -1,6 +1,16 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-13 10:05:01 +0800",
+                        "message":  "feat: enhance Authentication documentation with detailed JWT structure and caching rationale",
+                        "sha":  "f4b892b74c4c56889e581424e0031121b1dd8259"
+                    },
+                    {
+                        "date":  "2026-02-13 09:50:25 +0800",
+                        "message":  "feat: enhance documentation for Authentication and Email services with design principles and best practices",
+                        "sha":  "5fb739cfd5131cdc7bcd72014490fe0786c7fb52"
+                    },
+                    {
                         "date":  "2026-02-12 20:54:42 +0800",
                         "message":  "feat: update Authentication and Email service documentation with design guidelines and improvements",
                         "sha":  "013fb32bbd41a408ebf6ef1feb2a32ee9ee8c7bd"
