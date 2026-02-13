@@ -276,16 +276,6 @@ body:not(.dark-theme) {
         font-size: 1.5rem !important;
     }
 
-    .note-footer {
-        padding: 24px 0 12px 0;
-        margin-top: 32px;
-    }
-
-    .note-footer .last-updated-badge {
-        font-size: 0.75rem;
-        padding: 5px 14px;
-    }
-
     .split-view .note-viewer-body {
         flex: 1;
         overflow-y: auto;
@@ -630,7 +620,7 @@ body:not(.dark-theme) {
 .note-footer {
     display: flex;
     padding: 32px 0 16px 0;
-    margin-top: 40px;
+    margin-top: 20px;
     border-top: 1px solid var(--card-border);
 }
 
@@ -819,7 +809,7 @@ body:not(.dark-theme) {
 }
 
 .markdown-content code {
-    background: var(--note-list-bg);
+    background: #f6f8fa;
     padding: 3px 6px;
     border-radius: 3px;
     font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Liberation Mono', monospace;
@@ -829,7 +819,7 @@ body:not(.dark-theme) {
 }
 
 .markdown-content pre {
-    background: var(--note-list-bg);
+    background: #f6f8fa;
     padding: 20px;
     border-radius: 6px;
     overflow-x: auto;
@@ -891,7 +881,7 @@ body:not(.dark-theme) {
 }
 
 .markdown-content th {
-    background: var(--note-list-bg);
+    background: #f6f8fa;
     font-weight: 600;
     color: var(--text-primary);
     border-bottom: 2px solid var(--card-border);
@@ -904,7 +894,7 @@ body:not(.dark-theme) {
 .markdown-content blockquote {
     margin: 20px 0;
     padding: 16px 20px;
-    background: var(--note-list-bg);
+    background: #f6f8fa;
     border-left: 4px solid var(--accent-color);
     border-radius: 0 4px 4px 0;
     font-style: normal;
@@ -936,7 +926,7 @@ body:not(.dark-theme) {
     font-size: 0.85rem;
     line-height: 1.5;
     color: var(--text-primary);
-    background: var(--note-list-bg);
+    background: #f6f8fa;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 6px;
 }
@@ -1075,11 +1065,11 @@ body:not(.dark-theme) .token.keyword {
 }
 
 pre[class*="language-"] {
-    background: var(--note-list-bg) !important;
+    background: #f6f8fa !important;
 }
 
 code[class*="language-"] {
-    background: var(--note-list-bg) !important;
+    background: #f6f8fa !important;
 }
 
 .dark-theme pre[class*="language-"],

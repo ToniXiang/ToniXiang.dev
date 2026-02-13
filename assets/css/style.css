@@ -1132,9 +1132,9 @@ footer .specialty-text {
     position: fixed;
     bottom: 30px;
     left: 30px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     cursor: pointer;
@@ -1156,7 +1156,6 @@ footer .specialty-text {
 }
 
 .back-to-top:hover {
-    background: var(--secondary-color);
     transform: translateY(-3px);
 }
 
@@ -1349,6 +1348,7 @@ footer .specialty-text {
     filter: var(--icon-filter);
     transition: filter 0.3s ease;
 }
+
 .close-card:hover {
     background: var(--hover-bg);
 }

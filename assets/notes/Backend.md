@@ -26,7 +26,7 @@ DELETE  // 刪除資源
 - 200 OK
 - 201 Created
   重定向
-- 301 Moved Permanently(永久重定向)
+- 301 Moved Permanently
 - 303 See Other
 - 304 Not Modified
   客戶端錯誤
@@ -37,14 +37,14 @@ DELETE  // 刪除資源
   伺服器錯誤
 - 500 Internal Server Error
 
-### 路徑參數(Path Parameters)
+### 路徑參數 - Path Parameters
 
 出現在 URL 路徑中，例如：`/api/users/{id}`
 
 - 用於標識特定資源，從網站就可以看到所以用於資源定位，不可用於密碼等敏感信息
 - 雖然 Path Parameter 不會直接注入 SQL，但不能完全依賴前端，後端須做型別驗證
 
-### 查詢參數(Query Parameters)
+### 查詢參數 - Query Parameters
 
 出現在 URL 的`?`後面，例如：`/items?category=books&page=2`
 
@@ -52,7 +52,7 @@ DELETE  // 刪除資源
 - 用於過濾、排序和分頁等操作
 - 需要對參數進行驗證和轉義，防止 XSS、注入攻擊
 
-### 請求文本(Request Body)
+### 請求文本 - Request Body
 
 出現在請求體中，通常用於 POST、PUT、PATCH 請求。不直接在 URL 中顯示。
 用於傳遞數據，如 JSON 格式：
@@ -66,18 +66,18 @@ DELETE  // 刪除資源
 
 - 可以包含多個字段，支持嵌套結構
 
-### 標頭(Header)
+### 標頭 - Header
 
-出現在 HTTP 請求或響應的頭部 `"Content-Type": "application/json"`
+出現在 HTTP 請求或響應的頭部 `Content-Type: application/json`
 
 - 若 Content-Type 缺失可能造成 415 錯誤
 - 內容通常是 JSON
 
-### 驗證(Authorization)
+### 驗證 - Authorization
 
 在 Header 中傳遞授權資訊。例如：`Authorization: Bearer <token>`
 
-### 令牌(Token)
+### 令牌 - Token
 
 - 常用於無狀態認證機制
 - Token 通常包含用戶信息和過期時間，並經過簽名以防篡改
