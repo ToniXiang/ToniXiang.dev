@@ -7,9 +7,16 @@
 
 ## JWT 架構
 
+- Header：包含 Token 類型（JWT）和簽名算法（如 HS256）
+- Payload：包含用戶資訊（如 user_id）和過期時間（exp）
+- Signature：使用 Header 和 Payload 以及密鑰生成的簽名，用於驗證 Token 的完整性和來源
+
+## 為什麼 Token 存後端 Cache 而不是資料庫
+
+存取頻率高
+
 - Access Token（數分鐘至數十分鐘）：用於 API 請求的即時授權
 - Refresh Token（數天至數週）：用於重新取得新的 Access Token
-- 為什麼 Token 存後端 Cache 而不是資料庫：存取頻率高
 
 ## Refresh Token 為什麼放 HttpOnly Cookie
 
@@ -34,13 +41,13 @@
 
 - 增加安全層級：除了密碼外，還需提供第二種驗證方式（如 OTP、Email 驗證碼）
 - 可選擇性：根據用戶需求啟用 MFA，提供更高安全性的選項
-- 網站上的圖形驗證碼(Captcha)：不算在多因子認證之中
+- 網站上的圖形驗證碼(Captcha)：不算在多因素認證之中
 
 ## 結論
 
 透過 Token 作為身分驗證機制，使用者每次進入網站不必頻繁輸入帳號及密碼，
 同時能在多種設備上保持登入狀態，過期會自動登出。唯一的缺點是需要額外的 Cache 來存，但這是為了安全性與性能的必要權衡。
-Access Token 可以解析出唯一識別用戶的資訊，如 user_id，後端不需查資料庫即可驗證授權，提升效能。
+Access Token 可以解析出唯一識別用戶資訊，後端不需查資料庫即可驗證授權，提升效能。
 
 ## 外部專案
 
