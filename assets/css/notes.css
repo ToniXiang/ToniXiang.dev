@@ -29,12 +29,14 @@
     box-sizing: border-box;
     overflow-x: hidden;
 }
+
 @media (max-width: 480px) {
     .notes-container {
         padding: 0 10px;
         width: calc(100% - 20px);
     }
 }
+
 .split-view .notes-container {
     max-width: 320px;
     min-width: 280px;
@@ -662,7 +664,7 @@ body:not(.dark-theme) {
 }
 
 .note-viewer-close:hover {
-    color: var(--text-color);
+    color: aliceblue;
     background: var(--card-border);
 }
 
@@ -1412,10 +1414,11 @@ code[class*="language-"] {
 }
 
 .note-nav-button:hover {
-    .note-nav-label{
+    .note-nav-label {
         color: var(--accent-color);
     }
-    .note-nav-title{
+
+    .note-nav-title {
         font-weight: 500;
     }
 }
@@ -1426,6 +1429,23 @@ code[class*="language-"] {
 
 .note-nav-next {
     justify-content: flex-end;
+    margin-left: auto;
+}
+
+.note-complete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 20px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--category-bg);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    flex: 1;
+    max-width: 48%;
     margin-left: auto;
 }
 
@@ -1480,6 +1500,10 @@ code[class*="language-"] {
     }
 
     .note-nav-next {
+        margin-left: 0;
+    }
+    .note-complete{
+        max-width: 100%;
         margin-left: 0;
     }
 }

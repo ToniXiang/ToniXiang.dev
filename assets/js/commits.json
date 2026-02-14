@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-14 20:47:12 +0800",
+                        "message":  "feat: add navigation buttons for notes",
+                        "sha":  "518d45160b7efa652bff12be1717ff882820c9d0"
+                    },
+                    {
                         "date":  "2026-02-14 20:05:51 +0800",
                         "message":  "feat: implement responsive Table of Contents and enhance layout for better mobile experience",
                         "sha":  "29210cf9e5873ceb2bcea160225be23c81e3ac87"

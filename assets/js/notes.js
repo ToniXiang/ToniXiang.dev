@@ -653,7 +653,7 @@ function generateNoteNavigation(currentFilename) {
         navContainer.appendChild(prevButton);
     }
 
-    // 下一篇按鈕
+    // 下一篇按鈕或完成訊息
     if (nextNote) {
         const nextButton = document.createElement('button');
         nextButton.className = 'note-nav-button note-nav-next';
@@ -662,12 +662,20 @@ function generateNoteNavigation(currentFilename) {
                 <span class="note-nav-label">下一篇</span>
                 <span class="note-nav-title">${nextNote.title}</span>
             </div>
-            <img src="assets/images/arrow_square_right.svg" alt="上一篇" class="note-nav-arrow" width="16" height="16">
+            <img src="assets/images/arrow_square_right.svg" alt="下一篇" class="note-nav-arrow" width="16" height="16">
         `;
         nextButton.addEventListener('click', () => {
             showNoteModal(nextNote.filename, nextNote.title);
         });
         navContainer.appendChild(nextButton);
+    } else if (prevNote) {
+        // 如果有上一篇但沒有下一篇，顯示完成訊息
+        const completeMessage = document.createElement('div');
+        completeMessage.className = 'note-complete';
+        completeMessage.textContent = '本單元到此結束，日後可能會新增或更新相關章節。\n' +
+            '若你對內容有進一步想法，或發現需要補充、修正之處，\n' +
+            '歡迎透過 Email 與我聯絡。';
+        navContainer.appendChild(completeMessage);
     }
 
     // 將導航添加到內容底部
