@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-14 21:41:39 +0800",
+                        "message":  "feat: enhance navigation with completion message and update TOC header",
+                        "sha":  "ff6f2f87f196a37b1e762bcd6a00281935218dab"
+                    },
+                    {
                         "date":  "2026-02-14 20:47:12 +0800",
                         "message":  "feat: add navigation buttons for notes",
                         "sha":  "518d45160b7efa652bff12be1717ff882820c9d0"

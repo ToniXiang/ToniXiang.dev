@@ -290,12 +290,17 @@ body:not(.dark-theme) {
     }
 
     .note-viewer-title {
-        font-size: 1.5rem !important;
+        font-size: 1rem !important;
+        /* 手機版也需要文字截斷 */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-width: 0 !important;
     }
 
     .split-view .note-viewer-body {
         flex: 1;
-        overflow-y: auto;
+        overflow-y: auto !important;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         padding: 0;
@@ -304,6 +309,9 @@ body:not(.dark-theme) {
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
+        scroll-behavior: auto; /* 強制即時滾動，不要平滑動畫 */
+        overscroll-behavior: none; /* 防止彈性滾動干擾 */
+        position: relative; /* 確保定位正確 */
     }
 
     body.split-view-active {
@@ -639,6 +647,11 @@ body:not(.dark-theme) {
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: -0.02em;
+    /* 文字截斷設置 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; /* 確保 flex 項目可以收縮 */
 }
 
 .note-footer {
@@ -1439,6 +1452,36 @@ code[class*="language-"] {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* Note Viewer Body 滾動條美化 */
+.note-viewer-body::-webkit-scrollbar {
+    width: 2px;
+}
+
+.note-viewer-body::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+}
+
+.note-viewer-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.note-viewer-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+}
+
+.dark-theme .note-viewer-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.dark-theme .note-viewer-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
 /* Note Navigation Buttons */
 .note-navigation {
     display: flex;
@@ -1555,6 +1598,33 @@ code[class*="language-"] {
     .note-complete{
         max-width: 100%;
         margin-left: 0;
+    }
+
+    /* 手機版 note-viewer-body 滾動條美化 */
+    .split-view .note-viewer-body::-webkit-scrollbar {
+        width: 4px; /* 手機版更細 */
+    }
+
+    .split-view .note-viewer-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .split-view .note-viewer-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        transition: all 0.2s ease;
+    }
+
+    .split-view .note-viewer-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .dark-theme .split-view .note-viewer-body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .dark-theme .split-view .note-viewer-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
     }
 }
 
