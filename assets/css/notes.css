@@ -272,6 +272,9 @@ body:not(.dark-theme) {
         flex-direction: column;
         height: 100vh;
         padding: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .breadcrumb-nav {
@@ -298,6 +301,9 @@ body:not(.dark-theme) {
         padding: 0;
         height: calc(100vh - 120px);
         max-height: calc(100vh - 120px);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     body.split-view-active {
@@ -325,12 +331,16 @@ body:not(.dark-theme) {
         box-sizing: border-box;
         overflow-wrap: break-word;
         word-wrap: break-word;
+        max-width: 100%;
+        width: 100%;
     }
 
     .split-view .note-viewer-body .markdown-content pre {
         overflow-x: auto;
         white-space: pre;
         word-wrap: normal;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .split-view .note-viewer-body {
@@ -687,14 +697,12 @@ body:not(.dark-theme) {
     align-items: flex-start; /* 讓子元素從頂部對齊 */
 }
 
-.note-viewer-body {
-    flex: 1;
-    overflow-y: visible; /* 不在這裡滾動，讓整個頁面滾動 */
-    overflow-x: hidden;
-    padding: 0;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    min-width: 0; /* 防止內容溢出 */
+/* 桌面版的 note-viewer-body 設置 */
+@media (min-width: 769px) {
+    .note-viewer-body {
+        overflow-y: visible; /* 桌面版不在這裡滾動，讓整個頁面滾動 */
+        min-width: 0; /* 防止內容溢出 */
+    }
 }
 
 /* Table of Contents Sidebar */
@@ -1260,6 +1268,11 @@ code[class*="language-"] {
         font-size: 0.9rem;
         line-height: 1.5;
         text-align: left;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     .markdown-content h1 {
@@ -1294,6 +1307,42 @@ code[class*="language-"] {
         padding: 8px;
         font-size: 0.8rem;
         margin: 8px 0;
+        overflow-x: auto;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: pre;
+        word-wrap: normal;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-content pre code {
+        white-space: pre;
+        word-wrap: normal;
+        overflow-wrap: normal;
+    }
+
+    .markdown-content code {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+
+    /* 確保代碼塊在手機版正確顯示 */
+    .markdown-content pre[class*="language-"] {
+        overflow-x: auto;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: pre;
+        word-wrap: normal;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-content code[class*="language-"] {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        max-width: 100%;
     }
 }
 
@@ -1492,6 +1541,7 @@ code[class*="language-"] {
 @media (max-width: 768px) {
     .note-navigation {
         flex-direction: column;
+        margin-bottom: 3rem;
         gap: 12px;
     }
 

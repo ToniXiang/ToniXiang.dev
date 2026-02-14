@@ -311,7 +311,7 @@ function parseMarkdown(text) {
 }
 
 
-function showNoteModal(filename, title) {
+function showNoteModal(filename, title, shouldScrollToTop = false) {
     console.log('正在顯示筆記 - 檔案:', filename, '標題:', title);
 
     // 更新 URL hash，使用檔案名（不含副檔名）作為識別符
@@ -411,10 +411,84 @@ function showNoteModal(filename, title) {
 
                 // Generate navigation buttons (prev/next)
                 generateNoteNavigation(filename);
+
+                // 在手機版且需要滾動到頂部時執行滾動
+                if (shouldScrollToTop && window.innerWidth <= 768) {
+                    console.log('手機版：準備滾動到頂部');
+                    // 使用更長的延遲確保內容完全渲染和高度計算完成
+                    setTimeout(() => {
+                        const noteViewerBody = document.querySelector('.note-viewer-body');
+                        if (noteViewerBody) {
+                            console.log('找到滾動容器，當前scrollTop:', noteViewerBody.scrollTop);
+                            console.log('容器高度:', noteViewerBody.scrollHeight);
+
+                            // 多重滾動嘗試
+                            noteViewerBody.scrollTop = 0;
+                            noteViewerBody.scrollTo(0, 0);
+                            noteViewerBody.scrollTo({top: 0, behavior: 'instant'});
+
+                            console.log('滾動後scrollTop:', noteViewerBody.scrollTop);
+
+                            // 額外確保滾動生效
+                            requestAnimationFrame(() => {
+                                noteViewerBody.scrollTop = 0;
+                                noteViewerBody.scrollTo(0, 0);
+                                console.log('requestAnimationFrame後scrollTop:', noteViewerBody.scrollTop);
+
+                                // 最終檢查，如果還是沒滾動到頂部，再嘗試一次
+                                if (noteViewerBody.scrollTop > 0) {
+                                    setTimeout(() => {
+                                        noteViewerBody.scrollTop = 0;
+                                        console.log('最終嘗試後scrollTop:', noteViewerBody.scrollTop);
+                                    }, 50);
+                                }
+                            });
+                        } else {
+                            console.warn('未找到 .note-viewer-body 元素');
+                        }
+                    }, 300); // 增加延遲時間
+                }
             } else {
                 // 純文字內容保持原格式，並在底部添加更新時間
                 noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>${footerHTML}`;
                 Prism.highlightAllUnder(noteViewerBody);
+
+                // 在手機版且需要滾動到頂部時執行滾動
+                if (shouldScrollToTop && window.innerWidth <= 768) {
+                    console.log('手機版（純文字）：準備滾動到頂部');
+                    // 使用更長的延遲確保內容完全渲染和高度計算完成
+                    setTimeout(() => {
+                        const noteViewerBody = document.querySelector('.note-viewer-body');
+                        if (noteViewerBody) {
+                            console.log('找到滾動容器，當前scrollTop:', noteViewerBody.scrollTop);
+                            console.log('容器高度:', noteViewerBody.scrollHeight);
+
+                            // 多重滾動嘗試
+                            noteViewerBody.scrollTop = 0;
+                            noteViewerBody.scrollTo(0, 0);
+                            noteViewerBody.scrollTo({top: 0, behavior: 'instant'});
+
+                            console.log('滾動後scrollTop:', noteViewerBody.scrollTop);
+
+                            // 額外確保滾動生效
+                            requestAnimationFrame(() => {
+                                noteViewerBody.scrollTop = 0;
+                                noteViewerBody.scrollTo(0, 0);
+                                console.log('requestAnimationFrame後scrollTop:', noteViewerBody.scrollTop);
+
+                                // 最終檢查，如果還是沒滾動到頂部，再嘗試一次
+                                if (noteViewerBody.scrollTop > 0) {
+                                    setTimeout(() => {
+                                        noteViewerBody.scrollTop = 0;
+                                        console.log('最終嘗試後scrollTop:', noteViewerBody.scrollTop);
+                                    }, 50);
+                                }
+                            });
+                        } else {
+                            console.warn('未找到 .note-viewer-body 元素');
+                        }
+                    }, 300); // 增加延遲時間
+                }
             }
         } else {
             noteViewerTitle.textContent = title;
@@ -648,7 +722,7 @@ function generateNoteNavigation(currentFilename) {
             </div>
         `;
         prevButton.addEventListener('click', () => {
-            showNoteModal(prevNote.filename, prevNote.title);
+            showNoteModal(prevNote.filename, prevNote.title, true); // 第三個參數表示需要滾動到頂部
         });
         navContainer.appendChild(prevButton);
     }
@@ -665,7 +739,7 @@ function generateNoteNavigation(currentFilename) {
             <img src="assets/images/arrow_square_right.svg" alt="下一篇" class="note-nav-arrow" width="16" height="16">
         `;
         nextButton.addEventListener('click', () => {
-            showNoteModal(nextNote.filename, nextNote.title);
+            showNoteModal(nextNote.filename, nextNote.title, true); // 第三個參數表示需要滾動到頂部
         });
         navContainer.appendChild(nextButton);
     } else if (prevNote) {
