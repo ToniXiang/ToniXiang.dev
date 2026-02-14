@@ -16,6 +16,8 @@
     box-sizing: border-box;
     flex-direction: row;
     gap: 24px;
+    align-items: flex-start; /* 確保子元素從頂部對齊 */
+    min-height: 100vh; /* 確保有足夠高度讓 sticky 工作 */
 }
 
 .notes-container {
@@ -242,6 +244,16 @@ body:not(.dark-theme) {
         max-width: 100%;
         display: none;
         padding: 16px 0 50px 0;
+    }
+
+    /* Hide TOC on mobile */
+    .note-toc {
+        display: none !important;
+    }
+
+    /* Make note-viewer-body take full width on mobile */
+    .note-viewer-content-wrapper {
+        flex-direction: column;
     }
 
     .split-view .note-viewer {
@@ -552,7 +564,7 @@ body:not(.dark-theme) {
     border: none;
     border-radius: 0;
     margin: 40px 24px 80px 0;
-    overflow: hidden;
+    overflow: visible; /* 改為 visible 讓 sticky 可以工作 */
     flex-direction: column;
     box-sizing: border-box;
     transform: translateX(20px);
@@ -663,6 +675,108 @@ body:not(.dark-theme) {
     scroll-behavior: smooth;
 }
 
+/* Table of Contents Container */
+.note-viewer-content-wrapper {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+    overflow: visible;
+    position: relative;
+    align-items: flex-start; /* 讓子元素從頂部對齊 */
+}
+
+.note-viewer-body {
+    flex: 1;
+    overflow-y: visible; /* 不在這裡滾動，讓整個頁面滾動 */
+    overflow-x: hidden;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    min-width: 0; /* 防止內容溢出 */
+}
+
+/* Table of Contents Sidebar */
+.note-toc {
+    display: none; /* Hidden by default, shown only on desktop */
+    flex-direction: column;
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky; /* 使用 sticky 定位 */
+    top: 20px; /* 距離頂部的固定距離 */
+    align-self: flex-start; /* 從頂部開始定位 */
+    height: fit-content;
+    max-height: calc(100vh - 40px); /* 調整最大高度，留出上下邊距 */
+    overflow-y: auto;
+    padding: 20px 0 20px 32px;
+    border-left: 1px solid var(--card-border);
+}
+
+/* Show TOC only on desktop screens (split view) */
+@media (min-width: 1200px) {
+    .split-view .note-toc {
+        display: flex;
+    }
+}
+
+
+.note-toc-header {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
+    padding-left: 8px;
+}
+
+.note-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.note-toc-list li {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.note-toc-list li:last-child {
+    border-bottom: none;
+}
+
+.note-toc-item {
+    display: block;
+    padding: 10px 8px;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.5;
+    transition: color 0.15s ease;
+}
+
+.note-toc-item:hover {
+    color: var(--text-primary);
+}
+
+/* Custom scrollbar for TOC */
+.note-toc::-webkit-scrollbar {
+    width: 4px;
+}
+
+.note-toc::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.note-toc::-webkit-scrollbar-thumb {
+    background: var(--card-border);
+    border-radius: 2px;
+}
+
+.note-toc::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
 .note-viewer-body .loading {
     text-align: center;
     color: var(--text-secondary);
@@ -737,6 +851,7 @@ body:not(.dark-theme) {
     padding-bottom: 8px;
     margin-top: 40px;
     margin-bottom: 16px;
+    scroll-margin-top: 20px; /* Offset for smooth scroll navigation */
 }
 
 .markdown-content h3 {

@@ -405,6 +405,9 @@ function showNoteModal(filename, title) {
                 const htmlContent = parseMarkdown(result.content);
                 noteViewerBody.innerHTML = `<div class="note-content markdown-content">${htmlContent}</div>${footerHTML}`;
                 Prism.highlightAllUnder(noteViewerBody);
+
+                // Generate table of contents from h2 headers
+                generateTableOfContents();
             } else {
                 // 純文字內容保持原格式，並在底部添加更新時間
                 noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>${footerHTML}`;
@@ -420,7 +423,7 @@ function showNoteModal(filename, title) {
             `;
         }
         // 滾動到頂部
-        noteViewerBody.scrollTop = 0;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }).catch(error => {
         console.error('載入筆記內容時發生錯誤:', error);
         noteViewerTitle.textContent = title;
@@ -440,6 +443,7 @@ function closeNoteModal() {
     const breadcrumbNotes = document.querySelector('.breadcrumb-notes');
     const breadcrumbNoteSeparator = document.querySelector('.breadcrumb-note-separator');
     const breadcrumbNoteTitle = document.querySelector('.breadcrumb-note-title');
+    const tocList = document.querySelector('.note-toc-list');
 
     // 移除所有筆記項目的 active 狀態
     document.querySelectorAll('.note-item').forEach(item => {
@@ -452,6 +456,11 @@ function closeNoteModal() {
 
     // 重置內容
     noteViewerBody.innerHTML = '<div class="loading">選擇一個筆記以查看內容</div>';
+
+    // Clear TOC
+    if (tocList) {
+        tocList.innerHTML = '';
+    }
 
     // 重置麵包屑導航 - 隱藏第三層，將"學習筆記"恢復為非連結
     if (breadcrumbNotes && breadcrumbNoteSeparator && breadcrumbNoteTitle) {
@@ -515,3 +524,58 @@ function setupNoteInteractions() {
 
     console.log('筆記互動功能已準備就緒');
 }
+
+// Generate Table of Contents from h2 headers
+function generateTableOfContents() {
+    const noteViewerBody = document.querySelector('.note-viewer-body');
+    const tocList = document.querySelector('.note-toc-list');
+
+    if (!noteViewerBody || !tocList) return;
+
+    // Find all h2 headers in the markdown content
+    const h2Headers = noteViewerBody.querySelectorAll('.markdown-content h2');
+
+    // Clear existing TOC
+    tocList.innerHTML = '';
+
+    if (h2Headers.length === 0) {
+        // If no h2 headers, hide the TOC
+        const noteToc = document.querySelector('.note-toc');
+        if (noteToc) {
+            noteToc.style.display = 'none';
+        }
+        return;
+    }
+
+    // Show TOC if there are h2 headers
+    const noteToc = document.querySelector('.note-toc');
+    if (noteToc) {
+        noteToc.style.display = '';
+    }
+
+    // Generate TOC items
+    h2Headers.forEach((header, index) => {
+        // Add ID to header for anchor linking
+        const headerId = `toc-heading-${index}`;
+        header.id = headerId;
+
+        // Create TOC item
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.className = 'note-toc-item';
+        link.textContent = header.textContent;
+        link.href = `#${headerId}`;
+
+        // Click handler for smooth scrolling
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Scroll to the header
+            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+}
+
