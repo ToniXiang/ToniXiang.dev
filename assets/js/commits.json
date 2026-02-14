@@ -1,6 +1,16 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-14 20:05:51 +0800",
+                        "message":  "feat: implement responsive Table of Contents and enhance layout for better mobile experience",
+                        "sha":  "29210cf9e5873ceb2bcea160225be23c81e3ac87"
+                    },
+                    {
+                        "date":  "2026-02-14 15:02:24 +0800",
+                        "message":  "feat: enhance Algorithm and Backend documentation with detailed sections on data boundaries and common pitfalls",
+                        "sha":  "98dc3e0a08a3827d0fb0e727000551736b328223"
+                    },
+                    {
                         "date":  "2026-02-13 19:31:26 +0800",
                         "message":  "feat: generate notes metadata and enhance loading functionality",
                         "sha":  "ed8cb48938c40919471c16d45b946e39a6d25007"

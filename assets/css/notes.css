@@ -1388,3 +1388,99 @@ code[class*="language-"] {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* Note Navigation Buttons */
+.note-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 32px;
+}
+
+.note-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 48%;
+}
+
+.note-nav-button:hover {
+    .note-nav-label{
+        color: var(--accent-color);
+    }
+    .note-nav-title{
+        font-weight: 500;
+    }
+}
+
+.note-nav-prev {
+    justify-content: flex-start;
+}
+
+.note-nav-next {
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.note-nav-arrow {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    filter: var(--current-icon-filter);
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.note-nav-button:hover .note-nav-arrow {
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(133deg) brightness(95%) contrast(101%);
+}
+
+.note-nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+.note-nav-next .note-nav-content {
+    text-align: right;
+}
+
+.note-nav-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.note-nav-title {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+/* 手機版樣式 */
+@media (max-width: 768px) {
+    .note-navigation {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .note-nav-button {
+        max-width: 100%;
+    }
+
+    .note-nav-next {
+        margin-left: 0;
+    }
+}
+

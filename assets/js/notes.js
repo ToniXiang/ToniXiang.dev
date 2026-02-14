@@ -408,6 +408,9 @@ function showNoteModal(filename, title) {
 
                 // Generate table of contents from h2 headers
                 generateTableOfContents();
+
+                // Generate navigation buttons (prev/next)
+                generateNoteNavigation(filename);
             } else {
                 // 純文字內容保持原格式，並在底部添加更新時間
                 noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>${footerHTML}`;
@@ -579,3 +582,94 @@ function generateTableOfContents() {
     });
 }
 
+// 找出當前筆記在分類中的位置，並返回上一篇和下一篇的資訊
+function getNoteNavigationInfo(currentFilename) {
+    let prevNote = null;
+    let nextNote = null;
+    let found = false;
+
+    // 遍歷所有分類
+    for (const category of noteCategories) {
+        const notes = category.notes;
+        const currentIndex = notes.findIndex(note => note.filename === currentFilename);
+
+        if (currentIndex !== -1) {
+            // 找到當前筆記
+            found = true;
+
+            // 上一篇（如果不是第一篇）
+            if (currentIndex > 0) {
+                prevNote = notes[currentIndex - 1];
+            }
+
+            // 下一篇（如果不是最後一篇）
+            if (currentIndex < notes.length - 1) {
+                nextNote = notes[currentIndex + 1];
+            }
+
+            break; // 找到後就停止搜尋
+        }
+    }
+
+    return { prevNote, nextNote, found };
+}
+
+// 生成筆記導航按鈕（上一篇/下一篇）
+function generateNoteNavigation(currentFilename) {
+    const noteViewerBody = document.querySelector('.note-viewer-body');
+    if (!noteViewerBody) return;
+
+    // 移除現有的導航按鈕
+    const existingNav = noteViewerBody.querySelector('.note-navigation');
+    if (existingNav) {
+        existingNav.remove();
+    }
+
+    const { prevNote, nextNote } = getNoteNavigationInfo(currentFilename);
+
+    // 如果沒有上一篇也沒有下一篇，就不顯示導航
+    if (!prevNote && !nextNote) {
+        return;
+    }
+
+    // 創建導航容器
+    const navContainer = document.createElement('div');
+    navContainer.className = 'note-navigation';
+
+    // 上一篇按鈕
+    if (prevNote) {
+        const prevButton = document.createElement('button');
+        prevButton.className = 'note-nav-button note-nav-prev';
+        prevButton.innerHTML = `
+            <img src="assets/images/arrow_square_left.svg" alt="上一篇" class="note-nav-arrow" width="16" height="16">
+            <div class="note-nav-content">
+                <span class="note-nav-label">上一篇</span>
+                <span class="note-nav-title">${prevNote.title}</span>
+            </div>
+        `;
+        prevButton.addEventListener('click', () => {
+            showNoteModal(prevNote.filename, prevNote.title);
+        });
+        navContainer.appendChild(prevButton);
+    }
+
+    // 下一篇按鈕
+    if (nextNote) {
+        const nextButton = document.createElement('button');
+        nextButton.className = 'note-nav-button note-nav-next';
+        nextButton.innerHTML = `
+            <div class="note-nav-content">
+                <span class="note-nav-label">下一篇</span>
+                <span class="note-nav-title">${nextNote.title}</span>
+            </div>
+            <img src="assets/images/arrow_square_right.svg" alt="上一篇" class="note-nav-arrow" width="16" height="16">
+        `;
+        nextButton.addEventListener('click', () => {
+            showNoteModal(nextNote.filename, nextNote.title);
+        });
+        navContainer.appendChild(nextButton);
+    }
+
+    // 將導航添加到內容底部
+    noteViewerBody.appendChild(navContainer);
+}
