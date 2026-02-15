@@ -1,6 +1,11 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-15 11:08:32 +0800",
+                        "message":  "feat: update sidebar layout and enhance brand information display",
+                        "sha":  "a14e017d0efd7128a50874eac4ca9f98a7434531"
+                    },
+                    {
                         "date":  "2026-02-15 01:00:01 +0800",
                         "message":  "feat: enhance mobile navigation and scrolling behavior for note viewer",
                         "sha":  "97744ceeea713df5d6d25a290a2191ca1b75045b"

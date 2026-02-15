@@ -80,7 +80,6 @@ function loadNavigationAndFooter() {
             <div class="brand-info">
                 <img src="assets/images/me.jpg" class="sidebar-avatar" alt="Avatar">
                 <p>CHEN, GUO-XIANG</p>
-                <p class="brand-subtitle">BUILDING</p>
             </div>
         </div>
         
@@ -184,9 +183,9 @@ function loadNavigationAndFooter() {
                         <p class="name">陳國翔<span class="name-en">CHEN, GUO-XIANG</span></p>
                         <div class="about-section">
                             <p>最初以硬體與 C# 桌面應用程式作為主要學習方向，透過實際電路實作與軟體設計，培養基本的數位邏輯。
-                            進入科技大學後，隨著課程與專題的深入，開始接觸資訊安全、網路通訊與系統相關領域，逐步將視野從單一硬體實作拓展至整體系統與架構層面。
-                            在課業之外，持續強化資料結構與演算法能力，透過線上解題平台訓練邏輯思維與問題拆解能力，並將所學應用於實作專案中，驗證理論在實務情境下的可行性與效能表現。
-                            過程中也逐漸建立以「系統性思考」與「可維護性」為導向的開發習慣，期望能在軟硬體整合、系統設計與實務應用之間取得平衡。</p>
+                            進入科技大學後，隨著課程與專題的深入，開始接觸資訊安全相關領域。在課業之外，持續強化資料結構與演算法能力，
+                            透過線上解題平台訓練邏輯思維與問題拆解能力，並將所學應用於實作專案中，驗證理論在實務情境下的可行性。
+                            過程中也逐漸建立以「系統性思考」與「可維護性」為導向的開發習慣，打造的不只是功能正確，更是經得起時間考驗的軟體系統。</p>
                         </div>
                     </div>
                     

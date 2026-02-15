@@ -603,7 +603,9 @@ body:not(.dark-theme) {
     gap: 8px;
     margin-bottom: 20px;
     font-size: 0.875rem;
-    flex-wrap: wrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .breadcrumb-link {
@@ -1506,7 +1508,7 @@ code[class*="language-"] {
 }
 
 .note-nav-button:hover {
-    .note-nav-label {
+    .note-nav-label, .note-nav-title {
         color: var(--accent-color);
     }
 
@@ -1595,7 +1597,8 @@ code[class*="language-"] {
     .note-nav-next {
         margin-left: 0;
     }
-    .note-complete{
+
+    .note-complete {
         max-width: 100%;
         margin-left: 0;
     }

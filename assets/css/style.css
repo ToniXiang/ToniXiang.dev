@@ -89,7 +89,7 @@ body > main {
 .sidebar-avatar {
     width: 80px;
     height: 80px;
-    border-radius: 12px;
+    border-radius: 50%;
     object-fit: cover;
     border: 1px solid var(--sidebar-divider);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -106,12 +106,6 @@ body > main {
 
 .sidebar-avatar:active {
     transform: scale(0.98);
-}
-
-.brand-subtitle {
-    font-size: 0.75rem;
-    opacity: 0.6;
-    margin-top: 0.25rem;
 }
 
 .brand-info h4 {
@@ -947,13 +941,6 @@ footer .specialty-text {
 .farea-brand {
     flex: 2;
     min-width: 300px;
-}
-
-.brand-subtitle {
-    margin: 0;
-    font-size: 0.9em;
-    color: var(--text-color);
-    opacity: 0.8;
 }
 
 .author-description {

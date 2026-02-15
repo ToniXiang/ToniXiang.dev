@@ -12,6 +12,7 @@ const noteCategories = [
             {filename: 'Queue.md', title: '佇列與雙端佇列'},
             {filename: 'Binary_Search.md', title: '二分搜尋演算法'},
             {filename: 'Priority.md', title: '堆積與優先佇列'},
+            {filename: 'Tree.md', title: '樹與二元樹'},
         ]
     },
     {
@@ -38,7 +39,7 @@ noteCategories.forEach(category => {
 
 // 根據標識符取得檔案資訊（支援檔名、slug、標題）
 function getNoteFileInfo(identifier) {
-    if (!identifier) return noteFiles[0] || { filename: 'Algorithm.md', title: '演算法解題' };
+    if (!identifier) return noteFiles[0] || {filename: 'Algorithm.md', title: '演算法解題'};
 
     const id = identifier.trim().toLowerCase();
 
@@ -48,7 +49,7 @@ function getNoteFileInfo(identifier) {
         const slug = filename.replace(/\.(md|txt)$/i, '');
         const title = n.title.toLowerCase();
         return filename === id || slug === id || title === id;
-    }) || noteFiles[0] || { filename: 'Algorithm.md', title: '演算法解題' };
+    }) || noteFiles[0] || {filename: 'Algorithm.md', title: '演算法解題'};
 }
 
 // 載入筆記元資料（從 notes-metadata.json）
@@ -129,7 +130,6 @@ function handleUrlHash() {
     if (hash && hash.length > 1) {
         // 移除 # 符號並解碼
         const noteIdentifier = decodeURIComponent(hash.substring(1));
-        console.log('從 URL hash 載入筆記:', noteIdentifier);
 
         // 延遲一點時間確保頁面完全載入
         setTimeout(() => {
@@ -157,8 +157,6 @@ function handleInternalNoteClick(event) {
 
     // 根據 note 屬性獲取檔案資訊
     const fileInfo = getNoteFileInfo(noteAttr);
-
-    console.log('點擊筆記 -','檔案:', fileInfo.filename, '標題:', fileInfo.title);
 
     // 使用檔案名和標題顯示筆記
     showNoteModal(fileInfo.filename, fileInfo.title);
@@ -312,9 +310,6 @@ function parseMarkdown(text) {
 
 
 function showNoteModal(filename, title) {
-    console.log('正在顯示筆記 - 檔案:', filename, '標題:', title);
-
-
     // 更新 URL hash，使用檔案名（不含副檔名）作為識別符
     const filenameWithoutExt = filename.replace(/\.(md|txt)$/, '');
     const newHash = `#${encodeURIComponent(filenameWithoutExt)}`;
@@ -432,9 +427,9 @@ function showNoteModal(filename, title) {
             const noteViewerBody = document.querySelector('.note-viewer-body');
             if (noteViewerBody) {
                 noteViewerBody.scrollTop = 0;
-                noteViewerBody.scrollTo({ top: 0, behavior: 'instant' });
+                noteViewerBody.scrollTo({top: 0, behavior: 'instant'});
             }
-            window.scrollTo({ top: 0, behavior: 'instant' });
+            window.scrollTo({top: 0, behavior: 'instant'});
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         }, 50);
@@ -585,7 +580,7 @@ function generateTableOfContents() {
             e.preventDefault();
 
             // Scroll to the header
-            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            header.scrollIntoView({behavior: 'smooth', block: 'start'});
         });
 
         li.appendChild(link);
@@ -622,7 +617,7 @@ function getNoteNavigationInfo(currentFilename) {
         }
     }
 
-    return { prevNote, nextNote, found };
+    return {prevNote, nextNote, found};
 }
 
 // 生成筆記導航按鈕（上一篇/下一篇）
@@ -636,7 +631,7 @@ function generateNoteNavigation(currentFilename) {
         existingNav.remove();
     }
 
-    const { prevNote, nextNote } = getNoteNavigationInfo(currentFilename);
+    const {prevNote, nextNote} = getNoteNavigationInfo(currentFilename);
 
     // 如果沒有上一篇也沒有下一篇，就不顯示導航
     if (!prevNote && !nextNote) {
@@ -670,7 +665,7 @@ function generateNoteNavigation(currentFilename) {
                         const noteViewerBody = document.querySelector('.note-viewer-body');
                         if (noteViewerBody) {
                             noteViewerBody.scrollTop = 0;
-                            noteViewerBody.scrollTo({ top: 0, behavior: 'instant' });
+                            noteViewerBody.scrollTo({top: 0, behavior: 'instant'});
                         }
                     }, 150);
                 }, 100);
@@ -705,7 +700,7 @@ function generateNoteNavigation(currentFilename) {
                         const noteViewerBody = document.querySelector('.note-viewer-body');
                         if (noteViewerBody) {
                             noteViewerBody.scrollTop = 0;
-                            noteViewerBody.scrollTo({ top: 0, behavior: 'instant' });
+                            noteViewerBody.scrollTo({top: 0, behavior: 'instant'});
                         }
                     }, 150);
                 }, 100);
