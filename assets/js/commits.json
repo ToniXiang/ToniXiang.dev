@@ -1,6 +1,16 @@
 {
     "commits":  [
                     {
+                        "date":  "2026-02-15 01:00:01 +0800",
+                        "message":  "feat: enhance mobile navigation and scrolling behavior for note viewer",
+                        "sha":  "97744ceeea713df5d6d25a290a2191ca1b75045b"
+                    },
+                    {
+                        "date":  "2026-02-15 00:40:01 +0800",
+                        "message":  "feat: improve mobile experience with responsive design and scroll functionality in notes",
+                        "sha":  "34d88fee21b98222c005107681336998e1e4e43e"
+                    },
+                    {
                         "date":  "2026-02-14 21:41:39 +0800",
                         "message":  "feat: enhance navigation with completion message and update TOC header",
                         "sha":  "ff6f2f87f196a37b1e762bcd6a00281935218dab"

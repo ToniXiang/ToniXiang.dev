@@ -80,10 +80,7 @@ function loadNavigationAndFooter() {
             <div class="brand-info">
                 <img src="assets/images/me.jpg" class="sidebar-avatar" alt="Avatar">
                 <p>CHEN, GUO-XIANG</p>
-                <div class="sidebar-tags">
-                    <span class="tag tag-experience">10+Repo</span>
-                    <span class="tag tag-leetcode">LC500+DSA</span>
-                </div>
+                <p class="brand-subtitle">BUILDING</p>
             </div>
         </div>
         
