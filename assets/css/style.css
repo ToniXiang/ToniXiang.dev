@@ -279,6 +279,7 @@ body > main {
     padding: 6px;
     border-radius: 10px;
     cursor: pointer;
+    user-select: none;
     z-index: 21;
     background: transparent;
     transition: all 0.2s ease;

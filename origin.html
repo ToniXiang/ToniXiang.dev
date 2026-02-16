@@ -38,10 +38,9 @@
                     <span class="info-badge">網站概述</span>
                     <ul>
                         <li>ToniXiang.me 這裡不只是專業能力的對外呈現，而是一個持續維護的項目。筆記涵蓋從問題定義、技術選型，到實作細節與設計取捨的完整脈絡，
-                            著重於「為何這樣設計」以及「系統如何運作」，而不僅僅是結論本身。
-                            <span class="highlight">使用 AI 輔助生成，並經人工整理與審校。</span>
-                            這種以工程實作為核心的呈現方式，有助於技術交流、合作與長期職涯發展。
+                            著重於「為何這樣設計」以及「系統如何運作」，而不僅僅是結論本身。 這種以工程實作為核心的呈現方式，有助於技術交流、合作與長期職涯發展。
                         </li>
+                        <li><span class="highlight">使用 AI 輔助生成，並經人工整理與審校。</span></li>
                     </ul>
                 </div>
                 <div class="info-item">
@@ -58,48 +57,9 @@
             </div>
         </div>
     </div>
-    <div class="site-info-section">
-        <h2 class="changelog-title">更新記錄</h2>
-        <div class="changelog-controls">
-            <div class="filter-controls">
-                <label for="typeFilter" class="sr-only">篩選類型：</label>
-                <select id="typeFilter" class="filter-select">
-                    <option value="">所有類型</option>
-                    <option value="feat">新功能 (feat)</option>
-                    <option value="fix">修復 (fix)</option>
-                    <option value="docs">文檔 (docs)</option>
-                    <option value="style">樣式 (style)</option>
-                    <option value="refactor">重構 (refactor)</option>
-                    <option value="perf">性能 (perf)</option>
-                    <option value="test">測試 (test)</option>
-                    <option value="build">構建 (build)</option>
-                    <option value="ci">CI/CD (ci)</option>
-                    <option value="chore">雜項 (chore)</option>
-                </select>
-            </div>
-            <div role="button" id="sortToggle" class="sort-toggle" onclick="toggleSortOrder()" tabindex="0">
-                按時間排序：新 → 舊
-            </div>
-            <div class="loading-indicator" id="loadingIndicator">
-                <div class="loading-text-spinner"></div>
-                <span>載入中...</span>
-            </div>
-        </div>
-        <div class="changelog-container">
-            <div id="changelogContent" class="changelog-list">
-                <!-- 動態載入的commit內容 -->
-            </div>
-            <div id="errorMessage" class="error-message" style="display: none;">
-                <h3>載入失敗</h3>
-                <p>無法載入更新記錄，請稍後再試或檢查網路連接。</p>
-                <button type="button" onclick="loadChangelog()" class="retry-btn">重試</button>
-            </div>
-        </div>
-    </div>
 </main>
 <footer></footer>
 <script src="assets/js/script.js" defer></script>
-<script src="assets/js/origin.js" defer></script>
 </body>
 
 </html>
