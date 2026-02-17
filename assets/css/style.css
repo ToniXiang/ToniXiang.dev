@@ -86,28 +86,6 @@ body > main {
     text-align: center;
 }
 
-.sidebar-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid var(--sidebar-divider);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: zoom-in;
-    user-select: none;
-}
-
-.sidebar-avatar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
-
-.sidebar-avatar:active {
-    transform: scale(0.98);
-}
-
 .brand-info h4 {
     margin: 0;
     color: var(--sidebar-text);
@@ -868,7 +846,7 @@ td a:hover {
 
 .highlight {
     background-color: #009879;
-    font-weight: bold;
+    color: #ffffff;
 }
 
 #closeBar {

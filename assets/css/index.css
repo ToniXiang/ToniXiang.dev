@@ -9,7 +9,7 @@
     overflow: hidden;
     background-image: url('../images/homebg.jpg');
     background-size: cover;
-    background-position: center 20%;
+    background-position: center center;
     background-repeat: no-repeat;
 }
 
@@ -42,6 +42,18 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* 桌面版本背景優化 - 針對手機直拍照片 */
+@media (min-width: 1024px) {
+    .welcome-container {
+        background-position: center 25%;
+        background-size: cover;
+    }
+
+    .welcome-container::before {
+        background: rgba(0, 0, 0, 0.5);
     }
 }
 

@@ -8,7 +8,6 @@ body {
     max-width: 100vw;
 }
 
-/* 深色主題的麵包屑顏色 */
 :root {
     --accent-color-bright: #7ee6b3;
     --text-secondary: rgba(0, 0, 0, 0.55);
@@ -19,7 +18,6 @@ body {
     --text-secondary: rgba(255, 255, 255, 0.55);
 }
 
-/* 淺色主題的麵包屑顏色 */
 .light-theme {
     --accent-color-bright: #047857;
     --text-secondary: rgba(255, 255, 255, 0.55);

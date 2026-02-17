@@ -78,7 +78,6 @@ function loadNavigationAndFooter() {
     blogTitle.innerHTML = `
         <div class="sidebar-header">
             <div class="brand-info">
-                <img src="assets/images/me.jpg" class="sidebar-avatar" alt="Avatar">
                 <p>CHEN, GUO-XIANG</p>
             </div>
         </div>
