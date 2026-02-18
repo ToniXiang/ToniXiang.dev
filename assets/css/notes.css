@@ -700,6 +700,8 @@ body:not(.dark-theme) {
     padding: 0;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
 
 /* Table of Contents Container */
@@ -1454,34 +1456,28 @@ code[class*="language-"] {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* Note Viewer Body 滾動條美化 */
+/* Note Viewer Body 滾動條隱藏 */
 .note-viewer-body::-webkit-scrollbar {
-    width: 2px;
+    width: 0;
+    background: transparent;
 }
 
 .note-viewer-body::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 3px;
 }
 
 .note-viewer-body::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.12);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
+    background: transparent;
 }
 
 .note-viewer-body::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
+    background: transparent;
 }
 
-.dark-theme .note-viewer-body::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-.dark-theme .note-viewer-body::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+/* 確保 Firefox 也隱藏滾動條 */
+.note-viewer-body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
 
 /* Note Navigation Buttons */
@@ -1603,9 +1599,10 @@ code[class*="language-"] {
         margin-left: 0;
     }
 
-    /* 手機版 note-viewer-body 滾動條美化 */
+    /* 手機版 note-viewer-body 滾動條隱藏 */
     .split-view .note-viewer-body::-webkit-scrollbar {
-        width: 4px; /* 手機版更細 */
+        width: 0;
+        background: transparent;
     }
 
     .split-view .note-viewer-body::-webkit-scrollbar-track {
@@ -1613,21 +1610,19 @@ code[class*="language-"] {
     }
 
     .split-view .note-viewer-body::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.15);
-        border-radius: 2px;
-        transition: all 0.2s ease;
+        background: transparent;
     }
 
     .split-view .note-viewer-body::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.3);
+        background: transparent;
     }
 
     .dark-theme .split-view .note-viewer-body::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.15);
+        background: transparent;
     }
 
     .dark-theme .split-view .note-viewer-body::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: transparent;
     }
 }
 

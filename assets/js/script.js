@@ -78,7 +78,7 @@ function loadNavigationAndFooter() {
     blogTitle.innerHTML = `
         <div class="sidebar-header">
             <div class="brand-info">
-                <p>CHEN, GUO-XIANG</p>
+                <p style="font-weight: bold">個人筆記網站</p>
             </div>
         </div>
         
