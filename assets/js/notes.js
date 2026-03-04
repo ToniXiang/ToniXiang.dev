@@ -1,41 +1,5 @@
-/* global Prism */
-// 筆記元資料（最後更新時間）
-let notesMetadata = {};
-
-// 筆記分類配置 - 使用分類結構管理
-const noteCategories = [
-    {
-        title: '演算法',
-        notes: [
-            {filename: 'Algorithm.md', title: '演算法解題'},
-            {filename: 'Unordered.md', title: '雜湊表應用'},
-            {filename: 'Queue.md', title: '佇列與雙端佇列'},
-            {filename: 'Binary_Search.md', title: '二分搜尋演算法'},
-            {filename: 'Priority.md', title: '堆積與優先佇列'},
-            {filename: 'Tree.md', title: '樹與二元樹'},
-        ]
-    },
-    {
-        title: '系統開發',
-        notes: [
-            {filename: 'Backend.md', title: '後端服務整合'},
-            {filename: 'Pagination.md', title: '分頁設計指南'},
-            {filename: 'Authentication.md', title: 'Authentication Service 設計指南'},
-            {filename: 'Email.md', title: 'Email Service 設計指南'},
-        ]
-    }
-];
-
-// 砲佳相容性 - 保留舊的 noteFiles 配置方式
-const noteFiles = [];
-noteCategories.forEach(category => {
-    category.notes.forEach(note => {
-        noteFiles.push({
-            filename: note.filename,
-            title: note.title
-        });
-    });
-});
+// 筆記分類配置 - 從 Supabase 動態載入
+let noteCategories = [];
 
 // 根據標識符取得檔案資訊（支援檔名、slug、標題）
 function getNoteFileInfo(identifier) {
@@ -52,18 +16,87 @@ function getNoteFileInfo(identifier) {
     }) || noteFiles[0] || {filename: 'Algorithm.md', title: '演算法解題'};
 }
 
-// 載入筆記元資料（從 notes-metadata.json）
-async function loadNotesMetadata() {
+// ==================== 從 Supabase 載入筆記資料 ====================
+// 載入分類和筆記資料
+async function loadNotesFromSupabase() {
     try {
-        const response = await fetch('assets/js/notes-metadata.json');
-        if (response.ok) {
-            notesMetadata = await response.json();
-            console.log('已載入筆記元資料:', Object.keys(notesMetadata).length, '個檔案');
-        } else {
-            console.warn('無法載入筆記元資料');
+        console.log('開始從 Supabase 載入筆記資料...');
+
+        // 同時載入分類和筆記 - 使用 Promise.all 優化效能
+        const [categoriesResult, notesResult] = await Promise.all([
+            db.from('categories').select('*').order('id', { ascending: true }),
+            db.from('notes').select('*').order('category_id, id', { ascending: true })
+        ]);
+
+        // 錯誤處理
+        if (categoriesResult.error) {
+            console.error('載入分類失敗:', categoriesResult.error);
+            throw categoriesResult.error;
         }
+        if (notesResult.error) {
+            console.error('載入筆記失敗:', notesResult.error);
+            throw notesResult.error;
+        }
+
+        const categories = categoriesResult.data || [];
+        const notes = notesResult.data || [];
+        console.log(`載入了 ${categories.length} 個分類和 ${notes.length} 篇筆記`);
+
+        // 將筆記按分類組織 - 複用現有的資料結構格式
+        noteCategories = categories.map(category => {
+            const categoryNotes = notes
+                .filter(note => note.category_id === category.id)
+                .map(note => ({
+                    id: note.id,
+                    filename: note.filename,
+                    title: note.title,
+                    content: note.content || '',
+                    created_at: note.created_at
+                }));
+
+            return {
+                id: category.id,
+                title: category.title,
+                notes: categoryNotes,
+                created_at: category.created_at
+            };
+        });
+
+        // 更新 noteFiles 陣列以保持向後相容性 - 複用現有的扁平化邏輯
+        noteFiles = [];
+        noteCategories.forEach(category => {
+            category.notes.forEach(note => {
+                noteFiles.push({
+                    id: note.id,
+                    filename: note.filename,
+                    title: note.title,
+                    content: note.content
+                });
+            });
+        });
+
+        console.log('筆記資料載入完成:', noteCategories);
+        return true;
+
     } catch (error) {
-        console.warn('載入筆記元資料時發生錯誤:', error);
+        console.error('從 Supabase 載入筆記時發生錯誤:', error);
+
+        // 失敗時使用空陣列，避免後續邏輯崩潰
+        noteCategories = [];
+        noteFiles = [];
+
+        // 顯示使用者友善的錯誤訊息
+        const notesGrid = document.querySelector('.notes-grid');
+        if (notesGrid) {
+            notesGrid.innerHTML = `
+                <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
+                    <p>載入筆記失敗，請稍後再試</p>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">錯誤: ${error.message}</p>
+                </div>
+            `;
+        }
+
+        return false;
     }
 }
 
@@ -110,18 +143,22 @@ function generateNotesHTML() {
 }
 
 // 筆記頁面功能
-document.addEventListener('DOMContentLoaded', () => {
-    // 先載入筆記元資料
-    loadNotesMetadata().then(() => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // 先從 Supabase 載入筆記資料
+    const loaded = await loadNotesFromSupabase();
+
+    if (loaded) {
+        // 載入成功後，生成 HTML 並初始化功能
         generateNotesHTML();
         initializeNotes();
         setupNoteInteractions();
         handleUrlHash();
-        // 頁面載入完成，隱藏載入動畫
-        setTimeout(() => {
-            document.body.classList.add('loaded');
-        }, 300);
-    });
+    }
+
+    // 頁面載入完成，隱藏載入動畫
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 300);
 });
 
 // 處理 URL hash 參數，自動打開指定的筆記
@@ -162,36 +199,50 @@ function handleInternalNoteClick(event) {
     showNoteModal(fileInfo.filename, fileInfo.title);
 }
 
-// 從檔案讀取筆記內容，支持 .md 和 .txt
-// return { success: boolean, path?: string, type?: 'markdown' | 'text', lastModified?: string, error?: string }
+// 從 Supabase 讀取筆記內容
+// return { success: boolean, content?: string, type?: 'markdown' | 'text', lastModified?: string, error?: string }
 async function loadNoteContent(filename) {
-    // 先嘗試讀取指定的檔案
     try {
-        const response = await fetch(`assets/notes/${filename}`);
-        if (response.ok) {
-            const content = await response.text();
-            const fileType = filename.endsWith('.md') ? 'markdown' : 'text';
+        const { data, error } = await db
+            .from('notes')
+            .select('*')
+            .eq('filename', filename)
+            .single();
 
-            // 從 notesMetadata 取得最後修改時間
-            let lastModified = null;
-            if (notesMetadata[filename] && notesMetadata[filename].lastModified) {
-                lastModified = notesMetadata[filename].lastModified;
+        if (error) {
+            console.error('從 Supabase 讀取筆記失敗:', error);
+            throw error;
+        }
+
+        if (data) {
+            const fileType = filename.endsWith('.md') ? 'markdown' : 'text';
+            const lastModified = data.created_at ?
+                new Date(data.created_at).toLocaleDateString('zh-TW') : null;
+
+            // 更新 noteFiles 中的內容
+            const existingNote = noteFiles.find(n => n.filename === filename);
+            if (existingNote) {
+                existingNote.content = data.content || '';
             }
 
             return {
                 success: true,
-                content: content,
+                content: data.content || '',
                 type: fileType,
                 lastModified: lastModified
             };
         }
+
+        // 找不到筆記
+        throw new Error(`筆記不存在: ${filename}`);
+
     } catch (error) {
-        console.log(`指定檔案不存在: ${filename}`);
+        console.error(`載入筆記內容失敗: ${filename}`, error);
+        return {
+            success: false,
+            error: error.message || `無法找到筆記: ${filename}`
+        };
     }
-    return {
-        success: false,
-        error: `無法找到檔案: ${filename}`
-    };
 }
 
 
@@ -417,7 +468,6 @@ function showNoteModal(filename, title) {
             noteViewerBody.innerHTML = `
                 <div class="error-message">
                     <p class="error-detail">${result.error}</p>
-                    <p class="note-placeholder">這是 <strong>${title}</strong> 的佔位內容，實際內容將從對應的 .md 或 .txt 檔案載入。</p>
                 </div>
             `;
         }

@@ -5,7 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupBackToTop();
     setupAvatarClick();
     loadPage();
+    setTimeout(() => {
+        loadAnnouncements();
+    }, 500);
 });
+
 // 頁面載入動畫處理
 function loadPage(){
     // 頁面載入完成後移除載入動畫
@@ -122,6 +126,13 @@ function loadNavigationAndFooter() {
                         <option value="dark">深色模式</option>
                     </select>
                 </div>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-label">公告</div>
+            <div id="announcements-container" class="announcements-container">
+                <div class="announcement-loading">載入中...</div>
             </div>
         </div>
         `;
@@ -250,7 +261,8 @@ function playSidebarEnterAnimation() {
     const navItems = blogTitle.querySelectorAll('.nav-item');
     const sidebarHeader = blogTitle.querySelector('.sidebar-header');
     const sidebarFooter = blogTitle.querySelector('.sidebar-footer');
-    
+    const announcementItems = blogTitle.querySelectorAll('.announcement-item');
+
     setTimeout(() => {
         if (sidebarHeader) {
             sidebarHeader.style.animation = 'slideInFromTop 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards';
@@ -269,6 +281,15 @@ function playSidebarEnterAnimation() {
                 sidebarFooter.style.animation = `slideInFromRight 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards`;
             }, navItems.length * 100 + 200);
         }
+
+        // 為公告項目添加動畫
+        announcementItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                item.style.animation = `slideInFromTop 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) ${index * 0.1 + 0.1}s forwards`;
+            }, 100);
+        });
     }, 100);
 }
 
@@ -280,7 +301,8 @@ function toggleMenu() {
     const sidebarHeader = blogTitle.querySelector('.sidebar-header');
     const sidebarFooter = blogTitle.querySelector('.sidebar-footer');
     const overlay = document.querySelector('.sidebar-overlay');
-    
+    const announcementItems = blogTitle.querySelectorAll('.announcement-item');
+
     blogTitle.classList.toggle('show');
     
     const currentSrc = menuIcon ? menuIcon.getAttribute('src') : '';
@@ -305,6 +327,12 @@ function toggleMenu() {
             item.style.opacity = '';
             item.style.transform = '';
         });
+        // 重置公告項目動畫
+        announcementItems.forEach(item => {
+            item.style.animation = '';
+            item.style.opacity = '';
+            item.style.transform = '';
+        });
     }
 }
 
@@ -316,7 +344,8 @@ function closeSidebar() {
     const navItems = blogTitle.querySelectorAll('.nav-item');
     const sidebarHeader = blogTitle.querySelector('.sidebar-header');
     const sidebarFooter = blogTitle.querySelector('.sidebar-footer');
-    
+    const announcementItems = blogTitle.querySelectorAll('.announcement-item');
+
     if (blogTitle && blogTitle.classList.contains('show')) {
         blogTitle.classList.remove('show');
         if (overlay) overlay.classList.remove('show');
@@ -326,6 +355,12 @@ function closeSidebar() {
         if (sidebarHeader) sidebarHeader.style.animation = '';
         if (sidebarFooter) sidebarFooter.style.animation = '';
         navItems.forEach(item => {
+            item.style.animation = '';
+            item.style.opacity = '';
+            item.style.transform = '';
+        });
+        // 重置公告項目動畫
+        announcementItems.forEach(item => {
             item.style.animation = '';
             item.style.opacity = '';
             item.style.transform = '';
@@ -454,6 +489,78 @@ function setupAvatarClick() {
         if (e.target.classList.contains('sidebar-avatar')) {
             e.target.style.cursor = 'pointer';
         }
+    });
+}
+
+// 初始化 Supabase 客戶端
+const { createClient } = supabase;
+const db = createClient(
+    "https://zkbgnxmjyxlcnmuqzobo.supabase.co",
+    "sb_publishable_RuVfedFCsoK72edn5B12Qg_2gCidBCi"
+);
+
+// 載入公告
+async function loadAnnouncements() {
+    const container = document.getElementById('announcements-container');
+
+    if (!container) return;
+
+    try {
+        const { data, error } = await db
+            .from("announcements")
+            .select("*")
+            .order("created_at", { ascending: false })
+            .limit(5); // 限制顯示最新 5 則公告
+
+        if (error) {
+            console.error('載入公告錯誤:', error);
+            container.innerHTML = '<div class="announcement-error">無法載入公告</div>';
+            return;
+        }
+
+        console.log('公告資料:', data);
+
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="announcement-empty">目前沒有公告</div>';
+            return;
+        }
+
+        // 顯示公告
+        container.innerHTML = data.map(announcement => `
+            <div class="announcement-item">
+                <div class="announcement-title">${escapeHtml(announcement.title || '無標題')}</div>
+                <div class="announcement-content">${escapeHtml(announcement.content || '')}</div>
+                <div class="announcement-date">${formatDate(announcement.created_at)}</div>
+            </div>
+        `).join('');
+
+    } catch (err) {
+        console.error('載入公告異常:', err);
+        container.innerHTML = '<div class="announcement-error">載入失敗</div>';
+    }
+}
+
+// HTML 轉義函數，防止 XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// 格式化日期 - 顯示完整的建立時間
+function formatDate(dateString) {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+
+    // 顯示完整日期時間：YYYY/MM/DD HH:MM
+    return date.toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
     });
 }
 
