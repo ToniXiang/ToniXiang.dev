@@ -1,12 +1,57 @@
+// 初始化 Supabase 客戶端
+const { createClient } = supabase;
+const db = createClient(
+    "https://zkbgnxmjyxlcnmuqzobo.supabase.co",
+    "sb_publishable_RuVfedFCsoK72edn5B12Qg_2gCidBCi"
+);
+
+// 動態計算基礎路徑 - 自動適配不同環境
+function getBasePath() {
+    const path = window.location.pathname;
+    // 如果在 pages 子目錄，返回 '../'
+    if (path.includes('/pages/')) {
+        return '../';
+    }
+    // 如果在根目錄，返回 './'
+    return './';
+}
+
+// 獲取資源路徑
+function getAssetPath(relativePath) {
+    return getBasePath() + relativePath;
+}
+
+// 獲取頁面路徑
+function getPagePath(pageName) {
+    const basePath = getBasePath();
+    if (pageName === 'index.html') {
+        return basePath + 'index.html';
+    }
+    // notes.html 和 origin.html 在 pages 目錄
+    if (basePath === './') {
+        // 當前在根目錄，需要加 pages/
+        return 'pages/' + pageName;
+    } else {
+        // 當前在 pages 目錄，直接用檔名
+        return pageName;
+    }
+}
+
+// DOMContentLoaded 事件處理
 document.addEventListener('DOMContentLoaded', () => {
     loadNavigationAndFooter();
     loadDefaultTheme();
     setupKeyboardEvents();
     setupBackToTop();
-    setupAvatarClick();
     loadPage();
     setTimeout(() => {
-        loadAnnouncements();
+        loadAnnouncements()
+            .then(() => {
+                console.log('公告載入完成');
+            })
+            .catch(err => {
+                console.error('公告載入失敗', err);
+            });
     }, 500);
 });
 
@@ -88,9 +133,9 @@ function loadNavigationAndFooter() {
         
         <div class="nav-section">
             <div class="nav-label">導覽</div>
-            <nav class="nav-item${currentPage === 'index'||currentPage==='' ? ' active' : ''}" onclick="redirectToPage('index.html')">
+            <nav class="nav-item${currentPage === 'index'||currentPage==='' ? ' active' : ''}" onclick="redirectToPage('${getPagePath('index.html')}')">
                 <div class="nav-icon">
-                    <img src="assets/images/home.svg" alt="home" class="nav-icon-img" aria-hidden="true">
+                    <img src="${getAssetPath('assets/images/home.svg')}" alt="home" class="nav-icon-img" aria-hidden="true">
                 </div>
                 <div class="nav-text">
                     <p>主要頁面</p>
@@ -98,16 +143,16 @@ function loadNavigationAndFooter() {
                 </div>
                 <div class="nav-indicator"></div>
             </nav>
-            <nav class="nav-item${currentPage === 'notes' ? ' active' : ''}" onclick="redirectToPage('notes.html')">
-                <img src="assets/images/description.svg" alt="notes" class="nav-icon-img" aria-hidden="true">
+            <nav class="nav-item${currentPage === 'notes' ? ' active' : ''}" onclick="redirectToPage('${getPagePath('notes.html')}')">
+                <img src="${getAssetPath('assets/images/description.svg')}" alt="notes" class="nav-icon-img" aria-hidden="true">
                 <div class="nav-text">
                     <p>學習筆記</p>
                     <span class="nav-description">技術筆記整理</span>
                 </div>
                 <div class="nav-indicator"></div>
             </nav>
-            <nav class="nav-item${currentPage === 'origin' ? ' active' : ''}" onclick="redirectToPage('origin.html')">
-                <img src="assets/images/changelog.svg" alt="origin" class="nav-icon-img" aria-hidden="true">
+            <nav class="nav-item${currentPage === 'origin' ? ' active' : ''}" onclick="redirectToPage('${getPagePath('origin.html')}')">
+                <img src="${getAssetPath('assets/images/changelog.svg')}" alt="origin" class="nav-icon-img" aria-hidden="true">
                 <div class="nav-text">
                     <p>關於本站</p>
                     <span class="nav-description">版本變更紀錄</span>
@@ -147,13 +192,13 @@ function loadNavigationAndFooter() {
                 <div class="footer-brand">
                     <div class="footer-specialties">
                         <div class="specialty-item">
-                            <img src="assets/images/copyright.svg" alt="copyright" class="specialty-icon" aria-hidden="true">   
+                            <img src="${getAssetPath('assets/images/copyright.svg')}" alt="copyright" class="specialty-icon" aria-hidden="true">   
                             <span class="specialty-text">2026 陳國翔</span>
                         </div>
                     </div>
                     <div class="footer-specialties">
                         <div class="specialty-item">
-                            <img src="assets/images/mail.svg" alt="email" class="specialty-icon" aria-hidden="true">
+                            <img src="${getAssetPath('assets/images/mail.svg')}" alt="email" class="specialty-icon" aria-hidden="true">
                             <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>
@@ -162,14 +207,14 @@ function loadNavigationAndFooter() {
                 </div>
                 
                 <div class="footer-nav">
-                    <h3 onclick="redirectToPage('origin.html')" style="cursor: pointer;">本站連結</h3>
-                    <a href="index.html">主要頁面</a>
-                    <a href="notes.html">學習筆記</a>
-                    <a href="origin.html">關於本站</a>
+                    <h3 onclick="redirectToPage('${getPagePath('origin.html')}')" style="cursor: pointer;">本站連結</h3>
+                    <a href="${getPagePath('index.html')}">主要頁面</a>
+                    <a href="${getPagePath('notes.html')}">學習筆記</a>
+                    <a href="${getPagePath('origin.html')}">關於本站</a>
                 </div>
                 
                 <div class="footer-nav">
-                    <h3 onclick="redirectToPage('origin.html')" style="cursor: pointer;">外部連結</h3>
+                    <h3 onclick="redirectToPage('${getPagePath('origin.html')}')" style="cursor: pointer;">外部連結</h3>
                     <a href="https://github.com/ToniXiang" target="_blank">GitHub</a>
                     <a href="https://leetcode.com/u/chen199940/" target="_blank">Leetcode</a>
                     <a href="https://github.com/ToniXiang/ToniXiang.github.io" target="_blank">儲存庫</a>
@@ -185,7 +230,7 @@ function loadNavigationAndFooter() {
             <div class="more-info-overlay" onclick="toggleMoreInfo()"></div>
             <div class="more-info-content">
                 <button class="close-card" onclick="toggleMoreInfo()" aria-label="關閉">
-                    <img src="assets/images/close.svg" alt="Close" width="20" height="20">
+                    <img src="${getAssetPath('assets/images/close.svg')}" alt="Close" width="20" height="20">
                 </button>
                 
                 <div class="postcard-layout">
@@ -202,7 +247,7 @@ function loadNavigationAndFooter() {
                     <div class="postcard-right">
                         <div class="info-section">
                             <div class="education-list">
-                                <p><img src="assets/images/school.svg" alt="school">學歷</p>
+                                <p><img src="${getAssetPath('assets/images/school.svg')}" alt="school">學歷</p>
                                 <div class="education-item" data-title="2023/9~2027/6">
                                     <div class="item-content">
                                         <div class="education-school">國立臺中科技大學</div>
@@ -219,7 +264,7 @@ function loadNavigationAndFooter() {
                         </div>
                         
                         <div class="info-section">
-                            <p><img src="assets/images/license.svg" alt="license">證書</p>
+                            <p><img src="${getAssetPath('assets/images/license.svg')}" alt="license">證書</p>
                             <div class="achievement-list">
                                 <div class="achievement-item" data-title="證書號:ACE-25-06-A003">
                                     <span class="item-text">Andes Certified Engineer-ACE 高級</span>
@@ -282,7 +327,6 @@ function playSidebarEnterAnimation() {
             }, navItems.length * 100 + 200);
         }
 
-        // 為公告項目添加動畫
         announcementItems.forEach((item, index) => {
             item.style.opacity = '0';
             item.style.transform = 'translateY(-20px)';
@@ -297,11 +341,7 @@ function playSidebarEnterAnimation() {
 function toggleMenu() {
     const blogTitle = document.querySelector('.blogTitle');
     const menuIcon = document.querySelector('.menu img.icon');
-    const navItems = blogTitle.querySelectorAll('.nav-item');
-    const sidebarHeader = blogTitle.querySelector('.sidebar-header');
-    const sidebarFooter = blogTitle.querySelector('.sidebar-footer');
     const overlay = document.querySelector('.sidebar-overlay');
-    const announcementItems = blogTitle.querySelectorAll('.announcement-item');
 
     blogTitle.classList.toggle('show');
     
@@ -309,35 +349,25 @@ function toggleMenu() {
     if (currentSrc && currentSrc.indexOf('menu.svg') !== -1) {
         blogTitle.classList.add('show');
         if (overlay) overlay.classList.add('show');
-        if (menuIcon) menuIcon.setAttribute('src', 'assets/images/menu_open.svg');
-        
+        if (menuIcon) menuIcon.setAttribute('src', getAssetPath('assets/images/menu_open.svg'));
+
         // 添加進入動畫
         playSidebarEnterAnimation();
         
     } else {
-        blogTitle.classList.remove('show');
-        if (overlay) overlay.classList.remove('show');
-        if (menuIcon) menuIcon.setAttribute('src', 'assets/images/menu.svg');
-        
-        // 重置動畫
-        if (sidebarHeader) sidebarHeader.style.animation = '';
-        if (sidebarFooter) sidebarFooter.style.animation = '';
-        navItems.forEach(item => {
-            item.style.animation = '';
-            item.style.opacity = '';
-            item.style.transform = '';
-        });
-        // 重置公告項目動畫
-        announcementItems.forEach(item => {
-            item.style.animation = '';
-            item.style.opacity = '';
-            item.style.transform = '';
-        });
+        closeSidebarOnClick();
     }
 }
 
 // 關閉側邊欄函數
 function closeSidebar() {
+    const blogTitle = document.querySelector('.blogTitle');
+    if (blogTitle && blogTitle.classList.contains('show')) {
+        closeSidebarOnClick();
+    }
+}
+// blogTile 關閉側邊欄的點擊事件
+function closeSidebarOnClick() {
     const blogTitle = document.querySelector('.blogTitle');
     const menuIcon = document.querySelector('.menu img.icon');
     const overlay = document.querySelector('.sidebar-overlay');
@@ -345,29 +375,25 @@ function closeSidebar() {
     const sidebarHeader = blogTitle.querySelector('.sidebar-header');
     const sidebarFooter = blogTitle.querySelector('.sidebar-footer');
     const announcementItems = blogTitle.querySelectorAll('.announcement-item');
+    blogTitle.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (menuIcon) menuIcon.setAttribute('src', getAssetPath('assets/images/menu.svg'));
 
-    if (blogTitle && blogTitle.classList.contains('show')) {
-        blogTitle.classList.remove('show');
-        if (overlay) overlay.classList.remove('show');
-        if (menuIcon) menuIcon.setAttribute('src', 'assets/images/menu.svg');
-        
-        // 重置動畫
-        if (sidebarHeader) sidebarHeader.style.animation = '';
-        if (sidebarFooter) sidebarFooter.style.animation = '';
-        navItems.forEach(item => {
-            item.style.animation = '';
-            item.style.opacity = '';
-            item.style.transform = '';
-        });
-        // 重置公告項目動畫
-        announcementItems.forEach(item => {
-            item.style.animation = '';
-            item.style.opacity = '';
-            item.style.transform = '';
-        });
-    }
+    // 重置動畫
+    if (sidebarHeader) sidebarHeader.style.animation = '';
+    if (sidebarFooter) sidebarFooter.style.animation = '';
+    navItems.forEach(item => {
+        item.style.animation = '';
+        item.style.opacity = '';
+        item.style.transform = '';
+    });
+    // 重置公告項目動畫
+    announcementItems.forEach(item => {
+        item.style.animation = '';
+        item.style.opacity = '';
+        item.style.transform = '';
+    });
 }
-
 // 設置鍵盤事件
 function setupKeyboardEvents() {
     document.addEventListener('keydown', (event) => {
@@ -471,34 +497,6 @@ function toggleMoreInfo() {
     }
 }
 
-// 設置頭像點擊開啟更多資訊功能
-function setupAvatarClick() {
-    // 使用事件委派，因為側邊欄是動態生成的
-    document.addEventListener('click', (e) => {
-        // 檢查點擊的元素或其父元素是否為 sidebar-avatar
-        const target = e.target;
-        if (target.classList.contains('sidebar-avatar')) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMoreInfo();
-        }
-    });
-
-    // 為已存在的頭像添加視覺提示
-    document.addEventListener('mouseover', (e) => {
-        if (e.target.classList.contains('sidebar-avatar')) {
-            e.target.style.cursor = 'pointer';
-        }
-    });
-}
-
-// 初始化 Supabase 客戶端
-const { createClient } = supabase;
-const db = createClient(
-    "https://zkbgnxmjyxlcnmuqzobo.supabase.co",
-    "sb_publishable_RuVfedFCsoK72edn5B12Qg_2gCidBCi"
-);
-
 // 載入公告
 async function loadAnnouncements() {
     const container = document.getElementById('announcements-container');
@@ -510,7 +508,6 @@ async function loadAnnouncements() {
             .from("announcements")
             .select("*")
             .order("created_at", { ascending: false })
-            .limit(5); // 限制顯示最新 5 則公告
 
         if (error) {
             console.error('載入公告錯誤:', error);

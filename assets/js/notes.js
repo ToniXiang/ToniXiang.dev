@@ -1,3 +1,19 @@
+// 動態計算基礎路徑 - 自動適配不同環境
+function getBasePath() {
+    const path = window.location.pathname;
+    // 如果在 pages 子目錄，返回 '../'
+    if (path.includes('/pages/')) {
+        return '../';
+    }
+    // 如果在根目錄，返回 './'
+    return './';
+}
+
+// 獲取資源路徑
+function getAssetPath(relativePath) {
+    return getBasePath() + relativePath;
+}
+
 // 筆記分類配置 - 從 Supabase 動態載入
 let noteCategories = [];
 
@@ -16,7 +32,25 @@ function getNoteFileInfo(identifier) {
     }) || noteFiles[0] || {filename: 'Algorithm.md', title: '演算法解題'};
 }
 
-// ==================== 從 Supabase 載入筆記資料 ====================
+// 筆記頁面功能
+document.addEventListener('DOMContentLoaded', async () => {
+    // 先從 Supabase 載入筆記資料
+    const loaded = await loadNotesFromSupabase();
+
+    if (loaded) {
+        // 載入成功後，生成 HTML 並初始化功能
+        generateNotesHTML();
+        initializeNotes();
+        setupNoteInteractions();
+        handleUrlHash();
+    }
+
+    // 頁面載入完成，隱藏載入動畫
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 300);
+});
+
 // 載入分類和筆記資料
 async function loadNotesFromSupabase() {
     try {
@@ -31,11 +65,11 @@ async function loadNotesFromSupabase() {
         // 錯誤處理
         if (categoriesResult.error) {
             console.error('載入分類失敗:', categoriesResult.error);
-            throw categoriesResult.error;
+            return null;
         }
         if (notesResult.error) {
             console.error('載入筆記失敗:', notesResult.error);
-            throw notesResult.error;
+            return null;
         }
 
         const categories = categoriesResult.data || [];
@@ -119,7 +153,7 @@ function generateNotesHTML() {
         headerElement.innerHTML = `
             <div class="category-title">
                 <span class="category-title-text">${category.title}</span>
-                <img src="assets/images/chevron_right.svg" alt="展開" class="category-chevron" width="16" height="16">
+                <img src="${getAssetPath('assets/images/chevron_right.svg')}" alt="展開" class="category-chevron" width="16" height="16">
             </div>
         `;
 
@@ -141,25 +175,6 @@ function generateNotesHTML() {
         notesGrid.appendChild(categoryElement);
     });
 }
-
-// 筆記頁面功能
-document.addEventListener('DOMContentLoaded', async () => {
-    // 先從 Supabase 載入筆記資料
-    const loaded = await loadNotesFromSupabase();
-
-    if (loaded) {
-        // 載入成功後，生成 HTML 並初始化功能
-        generateNotesHTML();
-        initializeNotes();
-        setupNoteInteractions();
-        handleUrlHash();
-    }
-
-    // 頁面載入完成，隱藏載入動畫
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 300);
-});
 
 // 處理 URL hash 參數，自動打開指定的筆記
 function handleUrlHash() {
@@ -211,7 +226,7 @@ async function loadNoteContent(filename) {
 
         if (error) {
             console.error('從 Supabase 讀取筆記失敗:', error);
-            throw error;
+            return null;
         }
 
         if (data) {
@@ -234,7 +249,7 @@ async function loadNoteContent(filename) {
         }
 
         // 找不到筆記
-        throw new Error(`筆記不存在: ${filename}`);
+        return null;
 
     } catch (error) {
         console.error(`載入筆記內容失敗: ${filename}`, error);
@@ -426,7 +441,7 @@ function showNoteModal(filename, title) {
         if (blogTitle && blogTitle.classList.contains('show')) {
             blogTitle.classList.remove('show');
             if (overlay) overlay.classList.remove('show');
-            if (menuIcon) menuIcon.setAttribute('src', 'assets/images/menu.svg');
+            if (menuIcon) menuIcon.setAttribute('src', getAssetPath('assets/images/menu.svg'));
         }
 
         // 使用 requestAnimationFrame 確保 DOM 更新後再添加 class
@@ -697,7 +712,7 @@ function generateNoteNavigation(currentFilename) {
         const prevButton = document.createElement('button');
         prevButton.className = 'note-nav-button note-nav-prev';
         prevButton.innerHTML = `
-            <img src="assets/images/arrow_square_left.svg" alt="上一篇" class="note-nav-arrow" width="16" height="16">
+            <img src="${getAssetPath('assets/images/arrow_square_left.svg')}" alt="上一篇" class="note-nav-arrow" width="16" height="16">
             <div class="note-nav-content">
                 <span class="note-nav-label">上一篇</span>
                 <span class="note-nav-title">${prevNote.title}</span>
@@ -736,7 +751,7 @@ function generateNoteNavigation(currentFilename) {
                 <span class="note-nav-label">下一篇</span>
                 <span class="note-nav-title">${nextNote.title}</span>
             </div>
-            <img src="assets/images/arrow_square_right.svg" alt="下一篇" class="note-nav-arrow" width="16" height="16">
+            <img src="${getAssetPath('assets/images/arrow_square_right.svg')}" alt="下一篇" class="note-nav-arrow" width="16" height="16">
         `;
         nextButton.addEventListener('click', () => {
             // 手機版：先關閉再打開，確保滾動位置重置
