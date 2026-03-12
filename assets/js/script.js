@@ -151,11 +151,11 @@ function loadNavigationAndFooter() {
                 </div>
                 <div class="nav-indicator"></div>
             </nav>
-            <nav class="nav-item${currentPage === 'origin' ? ' active' : ''}" onclick="redirectToPage('${getPagePath('origin.html')}')">
-                <img src="${getAssetPath('assets/images/changelog.svg')}" alt="origin" class="nav-icon-img" aria-hidden="true">
+            <nav class="nav-item${currentPage === 'about' ? ' active' : ''}" onclick="redirectToPage('${getPagePath('about.html')}')">
+                <img src="${getAssetPath('assets/images/person.svg')}" alt="origin" class="nav-icon-img" aria-hidden="true">
                 <div class="nav-text">
-                    <p>關於本站</p>
-                    <span class="nav-description">版本變更紀錄</span>
+                    <p>關於我</p>
+                    <span class="nav-description">自我介紹</span>
                 </div>
                 <div class="nav-indicator"></div>
             </nav>
@@ -202,15 +202,13 @@ function loadNavigationAndFooter() {
                             <span class="specialty-text">admin@tonixiang.me</span>
                         </div>
                     </div>
-                    <span class="more-info-trigger" onclick="toggleMoreInfo()">關於我<span class="chevron">›</span>
-                    </span>
                 </div>
                 
                 <div class="footer-nav">
                     <h3 onclick="redirectToPage('${getPagePath('origin.html')}')" style="cursor: pointer;">本站連結</h3>
                     <a href="${getPagePath('index.html')}">主要頁面</a>
                     <a href="${getPagePath('notes.html')}">學習筆記</a>
-                    <a href="${getPagePath('origin.html')}">關於本站</a>
+                    <a href="${getPagePath('about.html')}">關於我</a>
                 </div>
                 
                 <div class="footer-nav">
@@ -222,60 +220,6 @@ function loadNavigationAndFooter() {
             </div>
             <div class="footer-bottom">
                 <p>Engineering-oriented notes and long-term learning documentation.</p>
-            </div>
-        </div>
-        
-        <!-- 更多資訊卡片 -->
-        <div id="moreInfoCard" class="more-info-card">
-            <div class="more-info-overlay" onclick="toggleMoreInfo()"></div>
-            <div class="more-info-content">
-                <button class="close-card" onclick="toggleMoreInfo()" aria-label="關閉">
-                    <img src="${getAssetPath('assets/images/close.svg')}" alt="Close" width="20" height="20">
-                </button>
-                
-                <div class="postcard-layout">
-                    <div class="postcard-left">
-                        <p class="name">陳國翔<span class="name-en">CHEN, GUO-XIANG</span></p>
-                        <div class="about-section">
-                            <p>最初以硬體與 C# 桌面應用程式作為主要學習方向，透過實際電路實作與軟體設計，培養基本的數位邏輯。
-                            進入科技大學後，隨著課程與專題的深入，開始接觸資訊安全相關領域。在課業之外，持續強化資料結構與演算法能力，
-                            透過線上解題平台訓練邏輯思維與問題拆解能力，並將所學應用於實作專案中，驗證理論在實務情境下的可行性。
-                            過程中也逐漸建立以「系統性思考」與「可維護性」為導向的開發習慣，打造的不只是功能正確，更是經得起時間考驗的軟體系統。</p>
-                        </div>
-                    </div>
-                    
-                    <div class="postcard-right">
-                        <div class="info-section">
-                            <div class="education-list">
-                                <p><img src="${getAssetPath('assets/images/school.svg')}" alt="school">學歷</p>
-                                <div class="education-item" data-title="2023/9~2027/6">
-                                    <div class="item-content">
-                                        <div class="education-school">國立臺中科技大學</div>
-                                        <div class="education-department">資訊工程系 學士班</div>
-                                    </div>
-                                </div>
-                                <div class="education-item" data-title="2020/9~2023/6 家長會長獎">
-                                    <div class="item-content">
-                                        <div class="education-school">國立龍潭高級中學</div>
-                                        <div class="education-department">電子科</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="info-section">
-                            <p><img src="${getAssetPath('assets/images/license.svg')}" alt="license">證書</p>
-                            <div class="achievement-list">
-                                <div class="achievement-item" data-title="證書號:ACE-25-06-A003">
-                                    <span class="item-text">Andes Certified Engineer-ACE 高級</span>
-                                </div>
-                                <div class="achievement-item" data-title="證書號:B-S11-4747-2025">
-                                    <span class="item-text">iPAS 資訊安全工程師 初級能力鑑定</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>`;
 
@@ -403,13 +347,7 @@ function setupKeyboardEvents() {
                                document.activeElement.isContentEditable;
 
         if (event.key === 'Escape') {
-            // 檢查是否有更多資訊卡片需要關閉
-            const moreInfoCard = document.getElementById('moreInfoCard');
-            if (moreInfoCard && moreInfoCard.classList.contains('active')) {
-                toggleMoreInfo();
-                return;
-            }
-            // 最後關閉側邊欄
+            // 關閉側邊欄
             closeSidebar();
         }
         // 只有在不處於輸入狀態時才觸發快捷鍵
@@ -483,19 +421,6 @@ function setupBackToTop() {
     });
 }
 
-// 切換更多資訊卡片
-function toggleMoreInfo() {
-    const card = document.getElementById('moreInfoCard');
-    if (card) {
-        card.classList.toggle('active');
-        // 防止背景滾動
-        if (card.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    }
-}
 
 // 載入公告
 async function loadAnnouncements() {

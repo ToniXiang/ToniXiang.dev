@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToniXiang</title>
+
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/css/about.css">
+  <link rel="shortcut icon" href="../assets/images/code.svg" type="image/x-icon">
+</head>
+
+<body>
+<!-- 載入動畫 -->
+<div class="loading-screen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading...</div>
+</div>
+
+<div id="background"></div>
+<header class="blogTitle"></header>
+<div class="menu" onclick="toggleMenu()" aria-label="切換選單" title="快捷鍵 M">
+  <img src="../assets/images/menu.svg" alt="選單" width="20" height="20" class="icon" aria-hidden="true">
+</div>
+<main>
+  <div class="site-info-section">
+    <div class="breadcrumb-nav">
+      <a href="../index.html" class="breadcrumb-link">首頁</a>
+      <span class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-current">關於我</span>
+    </div>
+    <h2>關於我</h2>
+    <div class="site-info-content">
+      <p>
+        我是陳國翔，就讀國立臺中科技大學，資訊工程系，目前大三下學期。對於新興科技始終保持高度興趣，並持續透過自學與實作累積技術能力，補充課本以外的知識。過去幾年間，主要專注於軟體開發與演算法相關領域，並接觸多種程式語言與開發框架。例如在規劃跨平台應用程式時，主動學習 Dart 語言與 Flutter 框架，以理解現代行動應用開發的技術架構。透過實際專案的開發過程，逐漸建立從需求分析、系統設計到實作與除錯的完整軟體開發流程觀念。
+      </p>
+      <p>
+        在學期間，除專注於課業學習外，也積極準備資訊技術相關證照，以強化專業基礎並驗證自身能力。準備證照的過程培養了良好的時間管理能力與持續學習的習慣，能夠長時間專注於特定技術知識，並透過系統化方式歸納重點，提升學習效率。
+      </p>
+      <p>
+        在課程分組合作方面，重視團隊協作與責任分工。進行小組專案時，通常先共同討論整體目標，再依據每位成員的專長進行工作分配。在專案執行過程中，會使用 Git 進行版本控制，並搭配 Trello 進行專案進度管理，以確保團隊協作的效率與透明度。同時也會主動協助處理尚未解決的問題，並持續關注專案進度，使各階段任務能夠如期完成。
+      </p>
+      <div class="site-info-details">
+        <div class="info-item">
+          <span class="info-badge">學歷</span>
+          <ul>
+            <li><strong>國立臺中科技大學</strong> 資訊工程系</li>
+            <li><strong>國立龍潭高中</strong> 電子科</li>
+          </ul>
+        </div>
+        <div class="info-item">
+          <span class="info-badge">證照</span>
+          <ul>
+            <li><strong>資訊安全工程師-初級能力鑑定</strong></li>
+            <li><strong>丙級電腦軟體設計技術士</strong></li>
+            <li><strong>Andes Certified Engineer-ACE</strong></li>
+            <li><strong>大學程式能力檢定 C/C++ 進階級</strong></li>
+            <li><strong>多益綠色</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer></footer>
+<script src="../assets/js/script.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</body>
+
+</html>
