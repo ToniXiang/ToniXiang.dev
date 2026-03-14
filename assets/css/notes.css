@@ -728,14 +728,17 @@ body:not(.dark-theme) {
     flex-direction: column;
     width: 220px;
     flex-shrink: 0;
-    position: sticky; /* 使用 sticky 定位 */
-    top: 20px; /* 距離頂部的固定距離 */
-    align-self: flex-start; /* 從頂部開始定位 */
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
     height: fit-content;
-    max-height: calc(100vh - 40px); /* 調整最大高度，留出上下邊距 */
+    max-height: calc(100vh - 40px);
     overflow-y: auto;
-    padding: 20px 0 20px 32px;
-    border-left: 1px solid var(--card-border);
+    padding: 16px 12px;
+    background: var(--category-bg);
+    border-left: none;
+    border-radius: 10px;
+    box-shadow: var(--subtle-shadow);
 }
 
 /* Show TOC only on desktop screens (split view) */
@@ -750,9 +753,9 @@ body:not(.dark-theme) {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     letter-spacing: 0.01em;
-    padding-left: 8px;
+    padding-left: 6px;
 }
 
 .note-toc-list {
@@ -764,7 +767,7 @@ body:not(.dark-theme) {
 .note-toc-list li {
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: none;
 }
 
 .note-toc-list li:last-child {
@@ -773,13 +776,14 @@ body:not(.dark-theme) {
 
 .note-toc-item {
     display: block;
-    padding: 10px 8px;
+    padding: 8px 10px;
     font-size: 0.8125rem;
     color: var(--text-secondary);
     text-decoration: none;
     cursor: pointer;
     line-height: 1.5;
-    transition: color 0.15s ease;
+    border-radius: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 .note-toc-item:hover {
@@ -841,7 +845,6 @@ body:not(.dark-theme) {
     padding: 0;
     border-radius: 0;
     margin: 0;
-    max-width: 860px;
     box-sizing: border-box;
 }
 
@@ -853,6 +856,8 @@ body:not(.dark-theme) {
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.3;
+    position: relative;
+    padding-left: 1.1em; /* space for the left-side section marker */
 }
 
 .markdown-content h1:first-child,
@@ -865,6 +870,34 @@ body:not(.dark-theme) {
     display: none;
 }
 
+.markdown-content h1::before,
+.markdown-content h2::before,
+.markdown-content h3::before {
+    content: "#";
+    position: absolute;
+    left: 0;
+    top: 0.01em;
+    color: var(--accent-color);
+    opacity: 0.65;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.markdown-content h1::before {
+    font-size: 1.0em;
+}
+
+.markdown-content h2::before {
+    content: "▌";
+    font-size: 0.95em;
+    opacity: 0.85;
+    font-weight: 900;
+}
+
+.markdown-content h3::before {
+    font-size: 0.9em;
+}
+
 .markdown-content h1 {
     font-size: 2rem;
     border-bottom: none;
@@ -874,7 +907,7 @@ body:not(.dark-theme) {
 
 .markdown-content h2 {
     font-size: 1.5rem;
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: none;
     padding-bottom: 8px;
     margin-top: 40px;
     margin-bottom: 16px;
@@ -1078,6 +1111,9 @@ body:not(.dark-theme) {
     margin: 16px 0;
     overflow-x: auto;
     box-shadow: none;
+    max-width: 860px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .markdown-content code[class*="language-"] {
@@ -1376,6 +1412,11 @@ code[class*="language-"] {
         flex: 1 !important;
         min-width: 300px !important;
     }
+
+    /* Hide close button on desktop; mobile keeps the back/close action. */
+    .note-viewer-close {
+        display: none;
+    }
 }
 
 .notes-layout.split-view {
@@ -1504,10 +1545,7 @@ code[class*="language-"] {
 }
 
 .note-nav-button:hover {
-    .note-nav-label, .note-nav-title {
-        color: var(--accent-color);
-    }
-
+    background: var(--note-item-hover-bg);
     .note-nav-title {
         font-weight: 500;
     }
