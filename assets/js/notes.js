@@ -374,6 +374,53 @@ function parseMarkdown(text) {
     return html;
 }
 
+// highlight.js: highlight code blocks inside a container
+function highlightCodeBlocks(container) {
+    if (!container) return;
+    if (typeof hljs === 'undefined') return;
+
+    // Security: do not attempt to parse HTML embedded in code blocks
+    // (and avoid warnings when notes contain unescaped markup)
+    if (hljs.configure) {
+        hljs.configure({ ignoreUnescapedHTML: true });
+    }
+
+    const blocks = container.querySelectorAll('pre code, code[class*="language-"]');
+    blocks.forEach(block => {
+        try {
+            hljs.highlightElement(block);
+        } catch (e) {
+            // If language is unknown or highlighting fails, keep raw code.
+            // eslint-disable-next-line no-console
+            console.warn('highlight.js failed to highlight a block:', e);
+        }
+    });
+}
+
+// Convert <code class="language-txt">...</code> blocks (used for plain explanatory text)
+// into normal paragraphs to avoid code styling/indentation.
+function normalizeLanguageTxtBlocks(container) {
+    if (!container) return;
+    const blocks = container.querySelectorAll('code.language-txt');
+    blocks.forEach(codeEl => {
+        const text = codeEl.textContent || '';
+        const lines = text.replace(/\r\n?/g, '\n').split('\n');
+        // Render like a code block, but as plain text (no highlight)
+        const wrapper = document.createElement('div');
+        wrapper.className = 'plain-codeblock';
+        wrapper.innerHTML = lines.map(line => `<p>${escapeHtml(line)}</p>`).join('');
+
+        // If it's inside a <pre>, replace the whole <pre> to avoid keeping pre formatting.
+        const pre = codeEl.closest('pre');
+        if (pre) {
+            pre.replaceWith(wrapper);
+        } else {
+            // Otherwise replace just the code element.
+            codeEl.replaceWith(wrapper);
+        }
+    });
+}
+
 
 function showNoteModal(filename, title) {
     // 更新 URL hash，使用檔案名（不含副檔名）作為識別符
@@ -466,7 +513,8 @@ function showNoteModal(filename, title) {
                 // Markdown 內容解析並渲染為 HTML，並在底部添加更新時間
                 const htmlContent = parseMarkdown(result.content);
                 noteViewerBody.innerHTML = `<div class="note-content markdown-content">${htmlContent}</div>${footerHTML}`;
-                Prism.highlightAllUnder(noteViewerBody);
+                normalizeLanguageTxtBlocks(noteViewerBody);
+                highlightCodeBlocks(noteViewerBody);
 
                 // Generate table of contents from h2 headers
                 generateTableOfContents();
@@ -475,8 +523,13 @@ function showNoteModal(filename, title) {
                 generateNoteNavigation(filename);
             } else {
                 // 純文字內容保持原格式，並在底部添加更新時間
-                noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${result.content}</code></pre>${footerHTML}`;
-                Prism.highlightAllUnder(noteViewerBody);
+                const escapedText = String(result.content)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+                noteViewerBody.innerHTML = `<pre class="note-content text-content"><code class="language-text">${escapedText}</code></pre>${footerHTML}`;
+                normalizeLanguageTxtBlocks(noteViewerBody);
+                highlightCodeBlocks(noteViewerBody);
             }
         } else {
             noteViewerTitle.textContent = title;

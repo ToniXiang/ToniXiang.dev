@@ -114,7 +114,6 @@
     overflow: hidden;
     border-radius: 0;
     border-left: 1px solid var(--card-border);
-    margin-left: 12px;
     max-height: 1000px;
     opacity: 1;
     transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
@@ -214,152 +213,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body:not(.dark-theme) {
-    --text-primary: rgba(0, 0, 0, 0.92);
-    --text-secondary: rgba(0, 0, 0, 0.55);
-    --link-color: #059669;
-    --link-hover: #047857;
-    --accent-color: #059669;
-    --accent-color-bright: #047857;
-    --accent-gradient-start: #059669;
-    --accent-gradient-end: #10b981;
-    --category-bg: rgba(0, 0, 0, 0.02);
-    --note-list-bg: rgba(0, 0, 0, 0.04);
-    --note-item-hover-bg: rgba(5, 150, 105, 0.06);
-    --subtle-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    --inner-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
-    --current-icon-filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(55%) contrast(100%);
-}
-
 @media (max-width: 768px) {
-    .notes-layout {
-        flex-direction: column !important;
-        padding: 0 16px !important;
-    }
-
-    .notes-layout.split-view {
-        position: relative;
-        flex-direction: column !important;
-    }
-
-    .split-view .notes-container {
-        max-width: 100%;
-        display: none;
-        padding: 16px 0 50px 0;
-    }
-
-    /* Hide TOC on mobile */
-    .note-toc {
-        display: none !important;
-    }
-
-    /* Make note-viewer-body take full width on mobile */
-    .note-viewer-content-wrapper {
-        flex-direction: column;
-    }
-
-    .split-view .note-viewer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        border-radius: 0;
-        z-index: 10000;
-        background: var(--background-color);
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        padding: 16px;
-        width: 100%;
-        box-sizing: border-box;
-        overflow-x: hidden;
-    }
-
-    .breadcrumb-nav {
-        font-size: 0.8rem;
-        margin-bottom: 16px;
-    }
-
-    .split-view .note-viewer-header {
-        flex-shrink: 0;
-        position: relative;
-        z-index: 10001;
-        margin-bottom: 16px;
-    }
-
-    .note-viewer-title {
-        font-size: 1rem !important;
-        /* 手機版也需要文字截斷 */
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        min-width: 0 !important;
-    }
-
-    .split-view .note-viewer-body {
-        flex: 1;
-        overflow-y: auto !important;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-        padding: 0;
-        height: calc(100vh - 120px);
-        max-height: calc(100vh - 120px);
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        scroll-behavior: auto; /* 強制即時滾動，不要平滑動畫 */
-        overscroll-behavior: none; /* 防止彈性滾動干擾 */
-        position: relative; /* 確保定位正確 */
-    }
-
-    body.split-view-active {
-        overflow: hidden;
-        position: fixed;
-        width: 100%;
-        height: 100vh;
-        touch-action: none;
-    }
-
-    body.split-view-active .menu {
-        display: none !important;
-    }
-
-    body.split-view-active .blogTitle {
-        display: none !important;
-    }
-
-    body.split-view-active .sidebar-overlay {
-        display: none !important;
-    }
-
-    .split-view .note-viewer-body .markdown-content {
-        min-height: 100%;
-        box-sizing: border-box;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .split-view .note-viewer-body .markdown-content pre {
-        overflow-x: auto;
-        white-space: pre;
-        word-wrap: normal;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    .split-view .note-viewer-body {
-        -webkit-overflow-scrolling: touch !important;
-        overflow-y: auto !important;
-        transform: translateZ(0);
-    }
-
-    .note-modal {
-        z-index: 99998;
-    }
 
     .modal-overlay {
         z-index: 99999;
@@ -988,9 +842,9 @@ body:not(.dark-theme) {
     padding: 3px 6px;
     border-radius: 3px;
     font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Liberation Mono', monospace;
-    font-size: 0.875em;
+    font-size: 0.85em;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    color: #24292e;
+    color: var(--text-primary);
 }
 
 .markdown-content pre {
@@ -1002,6 +856,9 @@ body:not(.dark-theme) {
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: none;
     line-height: 1.6;
+    max-width: 860px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .markdown-content pre code {
@@ -1011,6 +868,67 @@ body:not(.dark-theme) {
     line-height: 1.6;
     color: inherit;
     border: none;
+}
+
+/* Plain text code blocks should follow site text color (not highlight theme token colors). */
+.markdown-content pre > code.language-text,
+.markdown-content pre > code.language-txt,
+.note-viewer-body pre > code.language-text,
+.note-viewer-body pre > code.language-txt {
+    color: var(--text-primary) !important;
+}
+
+/* Even in dark theme, keep plain language-text readable */
+.dark-theme .markdown-content pre > code.language-text,
+.dark-theme .markdown-content pre > code.language-txt,
+.dark-theme .note-viewer-body pre > code.language-text,
+.dark-theme .note-viewer-body pre > code.language-txt {
+    color: var(--text-primary) !important;
+}
+
+/* If highlight.js adds .hljs, ensure language-text still uses our text color */
+.markdown-content pre > code.language-text.hljs,
+.markdown-content pre > code.language-txt.hljs,
+.note-viewer-body pre > code.language-text.hljs,
+.note-viewer-body pre > code.language-txt.hljs {
+    color: var(--text-primary) !important;
+}
+/* highlight.js adds .hljs to code blocks; keep layout/overflow but let github(.dark).css handle colors */
+.markdown-content pre code.hljs {
+    display: block;
+    padding: 0;
+    background: transparent;
+}
+
+.plain-codeblock {
+    font-family: Consolas, Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--text-primary);
+    background: #f6f8fa;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 860px;
+}
+
+.dark-theme .plain-codeblock {
+    background: rgba(110, 118, 129, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #abb2bf;
+}
+
+.plain-codeblock p {
+    margin: 0;
+    white-space: pre;
+    font: inherit;
 }
 
 .markdown-content a {
@@ -1076,346 +994,261 @@ body:not(.dark-theme) {
     color: var(--text-primary);
 }
 
-.dark-theme .markdown-content code:not([class*="language-"]) {
-    background: rgba(110, 118, 129, 0.2) !important;
-    border: none !important;
-    color: #f47067 !important;
+/* Dark theme: keep subtle backgrounds for inline/pre (colors still come from github-dark.css) */
+.dark-theme .markdown-content code {
+    background: rgba(110, 118, 129, 0.2);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
-.dark-theme .markdown-content pre:not([class*="language-"]) {
-    background: rgba(110, 118, 129, 0.15) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #abb2bf !important;
-    box-shadow: none;
-}
-
-.dark-theme .markdown-content pre:not([class*="language-"]) code {
-    background: transparent !important;
-    border: none !important;
-    color: inherit !important;
-}
-
-.markdown-content pre[class*="language-"],
-.markdown-content code[class*="language-"] {
-    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--text-primary);
-    background: #f6f8fa;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 6px;
-}
-
-.markdown-content pre[class*="language-"] {
-    padding: 16px;
-    margin: 16px 0;
-    overflow-x: auto;
-    box-shadow: none;
-    max-width: 860px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.markdown-content code[class*="language-"] {
-    padding: 3px 6px;
-    margin: 0;
-    border-radius: 4px;
-}
-
-.markdown-content pre[class*="language-"] code {
-    background: transparent;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    font-size: inherit;
-    color: inherit;
-}
-
-body:not(.dark-theme) .token.comment,
-body:not(.dark-theme) .token.prolog,
-body:not(.dark-theme) .token.doctype,
-body:not(.dark-theme) .token.cdata {
-    color: #708090;
-}
-
-body:not(.dark-theme) .token.punctuation {
-    color: #999;
-}
-
-body:not(.dark-theme) .token.property,
-body:not(.dark-theme) .token.tag,
-body:not(.dark-theme) .token.constant,
-body:not(.dark-theme) .token.symbol,
-body:not(.dark-theme) .token.deleted {
-    color: #905;
-}
-
-body:not(.dark-theme) .token.boolean,
-body:not(.dark-theme) .token.number {
-    color: #164;
-}
-
-body:not(.dark-theme) .token.selector,
-body:not(.dark-theme) .token.attr-name,
-body:not(.dark-theme) .token.string,
-body:not(.dark-theme) .token.char,
-body:not(.dark-theme) .token.builtin,
-body:not(.dark-theme) .token.inserted {
-    color: var(--accent-color);
-}
-
-body:not(.dark-theme) .token.operator,
-body:not(.dark-theme) .token.entity,
-body:not(.dark-theme) .token.url,
-body:not(.dark-theme) .language-css .token.string,
-body:not(.dark-theme) .style .token.string,
-body:not(.dark-theme) .token.variable {
-    color: #a67f59;
-}
-
-body:not(.dark-theme) .token.atrule,
-body:not(.dark-theme) .token.attr-value,
-body:not(.dark-theme) .token.function,
-body:not(.dark-theme) .token.class-name {
-    color: #DD4A68;
-}
-
-body:not(.dark-theme) .token.keyword {
-    color: #07a;
-}
-
-.dark-theme .token.comment,
-.dark-theme .token.prolog,
-.dark-theme .token.doctype,
-.dark-theme .token.cdata {
-    color: #8292a2;
-}
-
-.dark-theme .token.punctuation {
-    color: #f8f8f2;
-}
-
-.dark-theme .token.property,
-.dark-theme .token.tag,
-.dark-theme .token.constant,
-.dark-theme .token.symbol,
-.dark-theme .token.deleted {
-    color: #f92672;
-}
-
-.dark-theme .token.boolean,
-.dark-theme .token.number {
-    color: #ae81ff;
-}
-
-.dark-theme .token.selector,
-.dark-theme .token.attr-name,
-.dark-theme .token.string,
-.dark-theme .token.char,
-.dark-theme .token.builtin,
-.dark-theme .token.inserted {
-    color: var(--accent-color-bright);
-}
-
-.dark-theme .token.operator,
-.dark-theme .token.entity,
-.dark-theme .token.url,
-.dark-theme .language-css .token.string,
-.dark-theme .style .token.string,
-.dark-theme .token.variable {
-    color: #f8f8f2;
-}
-
-.dark-theme .token.atrule,
-.dark-theme .token.attr-value,
-.dark-theme .token.function,
-.dark-theme .token.class-name {
-    color: #e6db74;
-}
-
-.dark-theme .token.keyword {
-    color: #66d9ef;
-}
-
-.dark-theme .token.regex,
-.dark-theme .token.important {
-    color: #fd971f;
-}
-
-pre[class*="language-"] {
-    background: #f6f8fa !important;
-}
-
-code[class*="language-"] {
-    background: #f6f8fa !important;
-}
-
-.dark-theme pre[class*="language-"],
-.dark-theme code[class*="language-"] {
-    background: rgba(40, 44, 52, 0.95) !important;
-    border: none !important;
-    color: #abb2bf !important;
-}
-
-.dark-theme .markdown-content code[class*="language-"] {
-    background: rgba(40, 44, 52, 0.9) !important;
-    border: none !important;
-}
-
-.note-modal .dark-theme pre[class*="language-"],
-.note-modal .dark-theme code[class*="language-"],
-.dark-theme .note-modal pre[class*="language-"],
-.dark-theme .note-modal code[class*="language-"] {
-    backdrop-filter: none !important;
-    filter: none !important;
-}
-
-.dark-theme .note-modal .markdown-content pre[class*="language-"] {
-    background: #282c34 !important;
-    border: 1px solid #3a3f4b !important;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-.dark-theme .note-modal .markdown-content code[class*="language-"] {
-    background: #282c34 !important;
-    border: 1px solid #3a3f4b !important;
-    color: #e06c75 !important;
+.dark-theme .markdown-content pre {
+    background: rgba(110, 118, 129, 0.15);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 768px) {
-    .modal-header {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        width: auto;
-        max-width: none;
-        transform: none;
-        padding: 16px;
-        z-index: 100001;
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 16px 16px 0 0;
+    .notes-layout {
+        flex-direction: column !important;
+        padding: 0 16px !important;
     }
 
-    .modal-content {
-        position: fixed;
-        top: 70px;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        transform: none;
-        width: auto;
-        border-radius: 0 0 16px 16px;
-        z-index: 100000;
-        background: var(--card-bg);
-        backdrop-filter: blur(8px);
-    }
-
-    .modal-body {
-        padding: 16px;
-    }
-
-    .markdown-content {
-        padding: 16px;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        text-align: left;
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-    }
-
-    .markdown-content h1 {
-        font-size: 1.4rem;
-        margin: 12px 0 6px 0;
-    }
-
-    .markdown-content h2 {
-        font-size: 1.1rem;
-        margin: 10px 0 5px 0;
-    }
-
-    .markdown-content h3 {
-        font-size: 1.0rem;
-        margin: 8px 0 4px 0;
-    }
-
-    .markdown-content p {
-        margin: 6px 0;
-    }
-
-    .markdown-content ul,
-    .markdown-content ol {
-        margin: 6px 0;
-    }
-
-    .markdown-content li {
-        margin: 2px 0;
-    }
-
-    .markdown-content pre {
-        padding: 8px;
-        font-size: 0.8rem;
-        margin: 8px 0;
-        overflow-x: auto;
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        white-space: pre;
-        word-wrap: normal;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .markdown-content pre code {
-        white-space: pre;
-        word-wrap: normal;
-        overflow-wrap: normal;
-    }
-
-    .markdown-content code {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        max-width: 100%;
-    }
-
-    /* 確保代碼塊在手機版正確顯示 */
-    .markdown-content pre[class*="language-"] {
-        overflow-x: auto;
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        white-space: pre;
-        word-wrap: normal;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .markdown-content code[class*="language-"] {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        max-width: 100%;
-    }
-}
-
-@media (min-width: 769px) {
     .notes-layout.split-view {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
+        position: relative;
+        flex-direction: column !important;
+    }
+
+    .split-view .notes-container {
+        max-width: 100%;
+        display: none;
+        padding: 16px 0 50px 0;
+    }
+
+    /* Hide TOC on mobile */
+    .note-toc {
+        display: none !important;
+    }
+
+    /* Make note-viewer-body take full width on mobile */
+    .note-viewer-content-wrapper {
+        flex-direction: column;
     }
 
     .split-view .note-viewer {
-        display: flex !important;
-        flex: 1 !important;
-        min-width: 300px !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        border-radius: 0;
+        z-index: 10000;
+        background: var(--background-color);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
-    /* Hide close button on desktop; mobile keeps the back/close action. */
+    /* --- Mobile long-reading typography (smaller, comfortable) --- */
+    .split-view .note-viewer {
+        padding: 14px;
+    }
+
+    .split-view .note-viewer-header {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
     .note-viewer-close {
-        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    }
+
+    .split-view .note-viewer-body {
+        padding: 0 2px;
+    }
+
+    .split-view .note-viewer-body .markdown-content {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        letter-spacing: 0;
+    }
+
+    .split-view .note-viewer-body .markdown-content p,
+    .split-view .note-viewer-body .markdown-content li {
+        font-size: 0.92rem;
+        line-height: 1.75;
+        margin: 10px 0;
+    }
+
+    .split-view .note-viewer-body .markdown-content h1 {
+        font-size: 1.25rem;
+        margin: 14px 0 10px 0;
+    }
+
+    .split-view .note-viewer-body .markdown-content h2 {
+        font-size: 1.08rem;
+        margin: 16px 0 10px 0;
+        scroll-margin-top: 10px;
+    }
+
+    .split-view .note-viewer-body .markdown-content h3 {
+        font-size: 1.0rem;
+        margin: 14px 0 8px 0;
+    }
+
+    /* Inline code: smaller and less visually heavy on mobile */
+    .split-view .note-viewer-body .markdown-content code {
+        font-size: 0.86em;
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    /* Code blocks: smaller, with comfortable padding; horizontal scroll enabled */
+    .split-view .note-viewer-body .markdown-content pre,
+    .split-view .note-viewer-body .plain-codeblock {
+        padding: 12px;
+        margin: 12px 0;
+        border-radius: 10px;
+        max-width: 100%;
+    }
+
+    .split-view .note-viewer-body .markdown-content pre code,
+    .split-view .note-viewer-body .markdown-content pre code.hljs {
+        font-size: 0.78rem;
+        line-height: 1.55;
+    }
+
+    /* Tables: make them scroll instead of forcing tiny font */
+    .split-view .note-viewer-body .markdown-content table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .split-view .note-viewer-body .markdown-content th,
+    .split-view .note-viewer-body .markdown-content td {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+        white-space: nowrap;
+    }
+
+    .breadcrumb-nav {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+    }
+
+    .split-view .note-viewer-header {
+        flex-shrink: 0;
+        position: relative;
+        z-index: 10001;
+        margin-bottom: 16px;
+    }
+
+    .note-viewer-title {
+        font-size: 1rem !important;
+        /* 手機版也需要文字截斷 */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-width: 0 !important;
+    }
+
+    .split-view .note-viewer-body {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+        height: calc(100vh - 120px);
+        max-height: calc(100vh - 120px);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        scroll-behavior: auto; /* 強制即時滾動，不要平滑動畫 */
+        overscroll-behavior: none; /* 防止彈性滾動干擾 */
+        position: relative; /* 確保定位正確 */
+    }
+
+    body.split-view-active {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        touch-action: none;
+    }
+
+    body.split-view-active .menu {
+        display: none !important;
+    }
+
+    body.split-view-active .blogTitle {
+        display: none !important;
+    }
+
+    body.split-view-active .sidebar-overlay {
+        display: none !important;
+    }
+
+    .split-view .note-viewer-body .markdown-content {
+        min-height: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .split-view .note-viewer-body .markdown-content pre {
+        overflow-x: auto;
+        white-space: pre;
+        word-wrap: normal;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .split-view .note-viewer-body {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: auto !important;
+        transform: translateZ(0);
+    }
+
+    .note-modal {
+        z-index: 99998;
+    }
+
+
+    .modal-content {
+        z-index: 100000;
+        position: fixed;
+    }
+
+    .modal-header {
+        z-index: 100001;
+        position: fixed;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .note-list {
+        padding: 8px 16px;
+    }
+
+    .note-item {
+        padding: 6px 8px 6px 16px;
     }
 }
 

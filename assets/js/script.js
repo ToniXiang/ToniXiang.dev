@@ -77,6 +77,7 @@ function loadDefaultTheme() {
         const systemTheme = (prefersDarkMQ && prefersDarkMQ.matches) ? 'dark-theme' : 'light-theme';
         document.body.classList.remove('dark-theme', 'light-theme');
         document.body.classList.add(systemTheme);
+        syncHighlightThemeStyles();
     }
 
     if (savedTheme === 'auto') {
@@ -102,6 +103,9 @@ function loadDefaultTheme() {
         applyTheme('dark-theme');
     }
 
+    // Ensure highlight theme is correct on first paint (even if other code toggles classes)
+    syncHighlightThemeStyles();
+
     // 更新下拉選單的選中項
     updateThemeSelect(savedTheme);
 
@@ -118,6 +122,24 @@ function loadDefaultTheme() {
             updateThemeSelect(newVal);
         }
     });
+}
+
+// Keep highlight.js theme CSS in sync with <body> theme.
+// notes.html includes both:
+//   ../assets/css/github.css (light)
+//   ../assets/css/github-dark.css (dark)
+// and we toggle them by switching the `media` attribute.
+function syncHighlightThemeStyles() {
+    const isDark = document.body.classList.contains('dark-theme');
+    const links = Array.from(document.querySelectorAll('link[rel="stylesheet"][href]'));
+
+    const light = links.find(l => /\/github\.css(\?|#|$)/i.test(l.getAttribute('href') || ''));
+    const dark = links.find(l => /\/github-dark\.css(\?|#|$)/i.test(l.getAttribute('href') || ''));
+
+    if (light && dark) {
+        light.media = isDark ? 'not all' : 'all';
+        dark.media = isDark ? 'all' : 'not all';
+    }
 }
 // 載入時加導覽欄和頁尾的資訊
 function loadNavigationAndFooter() {
@@ -199,7 +221,7 @@ function loadNavigationAndFooter() {
                     <div class="footer-specialties">
                         <div class="specialty-item">
                             <img src="${getAssetPath('assets/images/mail.svg')}" alt="email" class="specialty-icon" aria-hidden="true">
-                            <span class="specialty-text">admin@tonixiang.me</span>
+                            <span class="specialty-text">chen199940@gmail.com</span>
                         </div>
                     </div>
                 </div>
@@ -376,6 +398,7 @@ function handleThemeChange(value) {
         const systemTheme = (prefersDarkMQ && prefersDarkMQ.matches) ? 'dark-theme' : 'light-theme';
         document.body.classList.remove('dark-theme', 'light-theme');
         document.body.classList.add(systemTheme);
+        syncHighlightThemeStyles();
     } else if (value === 'light') {
         applyTheme('light-theme');
     } else if (value === 'dark') {
@@ -395,6 +418,7 @@ function updateThemeSelect(value) {
 function applyTheme(themeName) {
     document.body.classList.remove('dark-theme', 'light-theme');
     document.body.classList.add(themeName);
+    syncHighlightThemeStyles();
 }
 
 

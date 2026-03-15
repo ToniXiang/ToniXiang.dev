@@ -61,6 +61,14 @@ body:not(.dark-theme) {
     padding: 2rem;
 }
 
+/* 讓自傳段落與下方清單(li 文字)左緣對齊，但不使用 ul/li 結構 */
+.site-info-content .info-bio p {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+}
+
 .dark-theme .site-info-image {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
